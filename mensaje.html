@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INMOLINK - Contactar</title>
+</head>
+<body>
+    <header>
+        <h1>INMOLINK</h1>
+        <nav>
+            <ul>
+                <li><a href="error_404.html">Inicio de Sesión</a></li>
+                <li><a href="registro_usuario.html">Registro de Usuario</a></li>
+                <li><a href="formulario_busqueda.html">Buscar Propiedades</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Contactar al Anunciante</h2>
+
+        <form action="error_404.html" method="post">
+            <fieldset>
+                <legend>Detalles del Mensaje</legend>
+                    <label>
+                        <input type="radio" name="tipo" value="información" required> Más información
+                    </label><br>
+
+                    <label>
+                        <input type="radio" name="tipo" value="cita" required> Solicitar cita
+                    </label><br>
+
+                    <label>
+                        <input type="radio" name="tipo" value="oferta" required> Comunicar oferta
+                    </label><br>
+
+
+                <label for="recipient">Destinatario:</label>
+                <input type="text" id="recipient" name="recipient" required>
+                <br><br>
+
+                <label for="message">Mensaje:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+                <br><br>
+
+                <button type="submit">Enviar</button>
+                <button type="reset">Cancelar</button>
+            </fieldset>
+        </form>
+
+        <h2>Volver a la página principal</h2>
+        <a href="index.html">Inicio</a>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 INMOLINK — Proyecto DAW Ingeniería Multimedia.</p>
+    </footer>
+</body>
+</html>
