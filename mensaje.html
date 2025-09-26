@@ -10,7 +10,7 @@
         <h1> INMOLINK </h1>
         <nav>
             <ul>
-                <li><a href="error_404.html">Subir anuncio</a></li>
+                <li><a href="error_404_user.html">Subir anuncio</a></li>
                 <li><a href="formulario_busqueda.html">Buscar Propiedades</a></li>
                 <li>
                     <details>
@@ -30,22 +30,20 @@
 
 
     <main>
+
+        <section>
         <h2>Contactar al Anunciante</h2>
 
-        <form action="error_404.html" method="post">
+        <form action="error_404_user.html" method="post">
             <fieldset>
                 <legend>Detalles del Mensaje</legend>
-                    <label>
-                        <input type="radio" name="tipo" value="información" required> Más información
-                    </label><br>
-
-                    <label>
-                        <input type="radio" name="tipo" value="cita" required> Solicitar cita
-                    </label><br>
-
-                    <label>
-                        <input type="radio" name="tipo" value="oferta" required> Comunicar oferta
-                    </label><br>
+                <label for="tipo">Tipo de consulta:</label>
+                <select id="tipo" name="tipo" required>
+                    <option value="">Selecciona una opción</option>
+                    <option value="información">Más información</option>
+                    <option value="cita">Solicitar cita</option>
+                    <option value="oferta">Comunicar oferta</option>
+                </select><br><br>
 
 
                 <label for="recipient">Destinatario:</label>
@@ -57,12 +55,15 @@
                 <br><br>
 
                 <button type="submit">Enviar</button>
-                <button type="reset">Cancelar</button>
+                <button type="reset">Borrar todo</button>
             </fieldset>
         </form>
+        </section>
 
+        <section>
         <h2>Volver a la página principal</h2>
         <a href="index_user.html">Inicio</a>
+        </section>
     </main>
 
     <footer>
