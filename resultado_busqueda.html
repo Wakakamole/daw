@@ -7,8 +7,8 @@
 </head>
 <body>
 
-        <header>
-             <a href="index.html"> <img src="img/logo.png" alt="Logo INMOLINK" width="100" height="100"></a>
+    <header>
+        <a href="index.html"> <img src="img/logo.png" alt="Logo INMOLINK" width="100" height="100"></a>
         <h1> INMOLINK </h1>
         <nav>
             <ul>
@@ -17,10 +17,57 @@
                 <li><a href="formulario_busqueda.html">Buscar Propiedades</a></li>
             </ul>
         </nav>
+        <search>
+            <h2>Búsqueda rápida</h2>
+            <form action="resultado_busqueda.html" method="GET">
+                <label for="query">Buscar:</label>
+                <input type="text" name="query" placeholder="Escribe aquí...">
+                <button type="submit">Intro</button>
+            </form>
+        </search>
     </header> 
+
     <main>
-        
+        <ul>
+            <li>
+                <article>
+                    <a href="detalle_anuncio.html">
+                        <img src="img/noimage.png" alt="Foto 1" width="200">
+                    </a>
+                    <a href="detalle_anuncio.html">
+                        <h2>Piso en Calle Francia Bilbao</h2>
+                    </a>
+                    
+                    <p><strong>Fecha:</strong> 10/09/2025</p>
+                    <p><strong>Ciudad:</strong> Bilbao</p>
+                    <p><strong>País:</strong> España</p>
+                    <p><strong>Precio:</strong> 320.000€</p>
+                </article>
+            </li>
+
+            <br><br><br><br>
+
+            <li>
+                <article>
+                    <a href="aviso.html">
+                        <img src="img/noimage.png" alt="Foto 1" width="200">
+                    </a>
+                    <a href="aviso.html">
+                        <h2>Piso en Calle Francia Bilbao</h2>
+                    </a>
+                    
+                    <p><strong>Fecha:</strong> 10/09/2025</p>
+                    <p><strong>Ciudad:</strong> Bilbao</p>
+                    <p><strong>País:</strong> España</p>
+                    <p><strong>Precio:</strong> 320.000€</p>
+                </article>
+            </li>
+        </ul>
     </main>
+
+    <footer>
+        <p>&copy; 2025 INMOLINK — Proyecto DAW Ingeniería Multimedia.</p>
+    </footer>
     
 </body>
 </html>
