@@ -1,7 +1,3 @@
-<!-- PÁGINA DE CONTACTO -->
-<!--
-    Página para que el usuario pueda contactar con el anunciante de una propiedad.
--->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,38 +40,24 @@
 
     <main>
 
-        <section>
-        <h2>Contactar al Anunciante</h2>
-
-        <form action="mensaje_respuesta.html" method="post">
-            <fieldset>
-                <legend>Detalles del Mensaje</legend>
-                <label for="tipo">Tipo de consulta:</label>
-                <select id="tipo" name="tipo" required>
-                    <option value="">Selecciona una opción</option>
-                    <option value="información">Más información</option>
-                    <option value="cita">Solicitar cita</option>
-                    <option value="oferta">Comunicar oferta</option>
-                </select><br><br>
-
-
-                <label for="recipient">Destinatario:</label>
-                <input type="text" id="recipient" name="recipient" required>
-                <br><br>
-
-                <label for="message">Mensaje:</label>
-                <textarea id="message" name="message" rows="4" required></textarea>
-                <br><br>
-
-                <button type="submit">Enviar</button>
-                <button type="reset">Borrar todo</button>
-            </fieldset>
-        </form>
+        <section id="user-menu" aria-labelledby="user-menu-title">
+                <h2 id="user-menu-title">Menú de usuario</h2>
+                <nav aria-label="Opciones del usuario">
+                    <ul>
+                        <li><a href="error_404_user.html">Modificar mis datos</a></li>
+                        <li><a href="error_404_user.html">Darme de baja</a></li>
+                        <li><a href="error_404_user.html">Mis anuncios</a></li>
+                        <li><a href="error_404_user.html">Crear anuncio nuevo</a></li>
+                        <li><a href="mis_mensajes.html"> Mis mensajes</a></li>
+                        <li><a href="solicitar_folleto.html">Solicitar folleto publicitario impreso</a></li>
+                        <li><a href="index.html">Salir (cerrar sesión)</a></li>
+                    </ul>
+                </nav>
         </section>
 
         <section>
-        <h2>Volver a la página principal</h2>
-        <a href="index_user.html">Inicio</a>
+                <h2>Volver a la página principal</h2>
+                <a href="index_user.html">Inicio</a>
         </section>
     </main>
 

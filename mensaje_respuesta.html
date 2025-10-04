@@ -1,8 +1,3 @@
-<!-- PÁGINA DE CONTACTO -->
-<!--
-    Página para que el usuario pueda contactar con el anunciante de una propiedad.
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +7,8 @@
 </head>
 <body>
     <header>
-        <h1> INMOLINK </h1>
+        <a href="index_user.html"><img src="img/logo.png" alt="Logo INMOLINK" width="100" height="100"></a>
+        <h1>INMOLINK</h1>
         <nav>
             <ul>
                 <li><a href="error_404_user.html">Subir anuncio</a></li>
@@ -43,40 +39,34 @@
 
 
     <main>
+        <article>
+            <h2>Confirmación: Mensaje enviado</h2>
+            <p>Su mensaje ha sido recibido y almacenado correctamente. A continuación se muestran los datos enviados:</p>
 
-        <section>
-        <h2>Contactar al Anunciante</h2>
+            <section aria-labelledby="datos-envio">
+                <h3 id="datos-envio">Datos del mensaje</h3>
+                <dl>
+                <dt><strong> Tipo de consulta: </strong></dt>
+                    <dd><output id="out-tipo-mensaje">Solicitar cita</output></dd>
 
-        <form action="mensaje_respuesta.html" method="post">
-            <fieldset>
-                <legend>Detalles del Mensaje</legend>
-                <label for="tipo">Tipo de consulta:</label>
-                <select id="tipo" name="tipo" required>
-                    <option value="">Selecciona una opción</option>
-                    <option value="información">Más información</option>
-                    <option value="cita">Solicitar cita</option>
-                    <option value="oferta">Comunicar oferta</option>
-                </select><br><br>
+                    <dt><strong> Destinatario:</strong></dt>
+                    <dd><output id="out-destinatario">persona@gmail.com</output></dd>
 
+                    <dt><strong> Mensaje: </strong></dt>
+                    <dd><output id="out-mensaje">Hola, estoy interesado en el anuncio. ¿Cuando sería posible concertar una cita?</output></dd>
+                </dl>
+            </section>
 
-                <label for="recipient">Destinatario:</label>
-                <input type="text" id="recipient" name="recipient" required>
-                <br><br>
-
-                <label for="message">Mensaje:</label>
-                <textarea id="message" name="message" rows="4" required></textarea>
-                <br><br>
-
-                <button type="submit">Enviar</button>
-                <button type="reset">Borrar todo</button>
-            </fieldset>
-        </form>
-        </section>
-
-        <section>
-        <h2>Volver a la página principal</h2>
-        <a href="index_user.html">Inicio</a>
-        </section>
+            <section>
+                <h3>Acciones</h3>
+                <p>
+                    <a href="detalle_anuncio.html">Volver al anuncio</a>
+                </p>
+                <p>
+                    <a href="index_user.html">Ir al inicio</a>
+                </p>
+            </section>
+        </article>
     </main>
 
     <footer>

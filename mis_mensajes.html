@@ -42,42 +42,45 @@
     </header> 
 
 
-    <main>
+ <main>
+    <h2>Mis Mensajes</h2>
+    <p>Consulta los mensajes enviados y recibidos en la plataforma.</p>
 
-        <section>
-        <h2>Contactar al Anunciante</h2>
+    <!-- Sección de mensajes enviados -->
+    <section>
+        <h3>Mensajes Enviados</h3>
 
-        <form action="mensaje_respuesta.html" method="post">
-            <fieldset>
-                <legend>Detalles del Mensaje</legend>
-                <label for="tipo">Tipo de consulta:</label>
-                <select id="tipo" name="tipo" required>
-                    <option value="">Selecciona una opción</option>
-                    <option value="información">Más información</option>
-                    <option value="cita">Solicitar cita</option>
-                    <option value="oferta">Comunicar oferta</option>
-                </select><br><br>
+        <article>
+            <header>
+                <h4>Tipo: Más información</h4>
+                <p>Enviado a: anunciante@inmolink.com</p>
+            </header>
+            <p>Buenos días, me gustaría conocer más detalles sobre la ubicación exacta de la casa.</p>
+            <footer>
+                <p> Fecha: 19 sept 2025</p>
+            </footer>
+        </article>
+    </section>
 
+    <hr>
 
-                <label for="recipient">Destinatario:</label>
-                <input type="text" id="recipient" name="recipient" required>
-                <br><br>
+    <!-- Sección de mensajes recibidos -->
+    <section>
+        <h3>Mensajes Recibidos</h3>
 
-                <label for="message">Mensaje:</label>
-                <textarea id="message" name="message" rows="4" required></textarea>
-                <br><br>
+        <article>
+            <header>
+                <h4>Tipo: Oferta</h4>
+                <p>Recibido de: comprador@correo.com</p>
+            </header>
+            <p>Buenos días, estoy dispuesto a ofrecer 150.000€ por la casa si aún está disponible.</p>
+            <footer>
+                <p> Fecha: 19 sept 2025</p>
+            </footer>
+        </article>
 
-                <button type="submit">Enviar</button>
-                <button type="reset">Borrar todo</button>
-            </fieldset>
-        </form>
-        </section>
-
-        <section>
-        <h2>Volver a la página principal</h2>
-        <a href="index_user.html">Inicio</a>
-        </section>
-    </main>
+    </section>
+</main>
 
     <footer>
         <p>&copy; 2025 INMOLINK — Proyecto DAW Ingeniería Multimedia.</p>
