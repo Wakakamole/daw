@@ -1,3 +1,6 @@
+
+
+
 /* =====================================================================
    FUENTES Y VARIABLES GLOBALES
 ===================================================================== */
@@ -64,7 +67,7 @@ header {
   padding: 1rem 2rem 0;
   z-index: 1000;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-  overflow: hidden;
+  overflow: visible;
 }
 
 header > a { /* logo se coloca en el área de logo*/
@@ -90,13 +93,12 @@ header a img { /* Logo imagen */
   width: auto;
   transition: var(--transicion); /* Transición suave (hoover) */
   margin-left: 1.5rem; 
+  margin-right: 2rem;
 }
 
 header a img:hover { /* Efecto hover en logo (se agranda)*/
   transform: scale(1.05);
 }
-
-
 
 
 
@@ -117,6 +119,7 @@ nav a { /*selecciona los enlaces dentro de nav*/
   color: #fff;
   font-weight: 500;
   text-transform: uppercase;
+  text-align: center;
   transition: var(--transicion);
   padding: 0.5rem 1rem;
   border-radius: 4px;
@@ -128,6 +131,54 @@ nav a:hover {
   background-color: rgba(255,255,255,0.1);
 }
 
+nav details ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.5rem 0.3rem;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  background: #fff;
+  color: var(--color-texto);
+  min-width: 150px;
+  border-radius: 10px;
+  z-index: 2000;
+  margin-top: 0.3rem;
+  border: 1px solid #e0e0e0;
+  display: none;
+  opacity: 0;
+}
+
+nav details[open] ul {
+  display: flex;
+  opacity: 1;
+}
+
+nav details ul li {
+  width: 100%;
+}
+
+nav details ul a {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.7rem;
+  color: var(--color-texto);
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 500;
+}
+
+nav details ul a:hover {
+  background: var(--color-secundario);
+  color: #fff;
+}
+
+nav details {
+  position: relative;
+}
 
 
 
@@ -225,11 +276,27 @@ search button:active { /* Efecto al hacer clic */
 
 
 /*MAIN CONTENT (CUERPO PRINCIPAL)*/
+
+
+
+
 main {
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
 }
+
+
+main section h1 {
+  color: #0a4592;
+  font-size: 2.5em;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 2px solid #2a7ae2;
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+}
+
 
 main section h2 {
   color: var(--color-secundario);
@@ -237,6 +304,7 @@ main section h2 {
   text-align: center;
   font-size: 1.8rem;
 }
+
 
 /* Lista de artículos*/
 main > ul {
@@ -297,19 +365,19 @@ article footer {
   background-color: #f9f9f9;
 }
 
-article footer p {
+article footer p { /* Párrafos dentro del pie */
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
 }
 
-article footer p:first-child {
+article footer p:first-child { /* Primer párrafo (ubicación) */
   font-size: 1rem;
   color: var(--color-secundario);
   font-weight: 600;
   margin-bottom: 1rem;
 }
 
-article footer p strong {
+article footer p strong { /* Texto en negrita dentro del pie */
   color: var(--color-secundario);
 }
 
@@ -325,6 +393,95 @@ article footer p:last-child {
 }
 
 
+/* ENLACES DE ACCIÓN COMO BOTÓN */
+.boton-enlace {
+  display: inline-block;
+  background: var(--color-secundario);
+  color: #fff;
+  padding: 0.7em 1.5em;
+  border-radius: 25px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  margin-top: 1em;
+}
+
+.boton-enlace:hover {
+  background: var(--color-primario);
+  color: #fff;
+  transform: translateY(-2px) scale(1.04);
+}
+
+
+/* MENÚ DE USUARIO EN PERFIL */
+.perfil-menu-lista {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin: 2em auto 2em auto;
+  padding: 2em 1em;
+  background: #f7fbfd;
+  border-radius: 18px;
+  max-width: 1000px;
+  box-shadow: 0 2px 12px rgba(120,169,185,0.08);
+}
+
+.perfil-menu {
+  flex: 1 1 180px;
+  min-width: 180px;
+  max-width: 220px;
+  font-size: 1.1em;
+  justify-content: flex-start;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  padding-left: 1.2em;
+  box-sizing: border-box;
+}
+.perfil-menu i {
+  font-size: 1.2em;
+  color: var(--color-secundario);
+}
+
+
+
+
+  
+.mensaje-enviado {
+  border-left: 6px solid var(--color-secundario);
+  background: #eaf6fa;
+  margin-bottom: 1.5em;
+  padding: 1.2em 1.5em;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(120,169,185,0.06);
+}
+
+.mensaje-recibido {
+  border-left: 6px solid var(--color-primario);
+  background: #fff6ed;
+  margin-bottom: 1.5em;
+  padding: 1.2em 1.5em;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(210,110,28,0.06);
+}
+
+.mensaje-enviado header,
+.mensaje-recibido header {
+  margin-bottom: 0.7em;
+}
+.mensaje-enviado footer,
+.mensaje-recibido footer {
+  margin-top: 0.7em;
+  font-size: 0.95em;
+  color: #888;
+}
+
 
 /*FOOTER*/
 footer {
@@ -333,36 +490,5 @@ footer {
   text-align: center;
   padding: 2rem 0;
   margin-top: 3rem;
-}
-
-
-
-
-
-
-
-/*ICONOS FONT AWESOME*/
-
-/* Espaciado general para iconos */
-.fa-solid {
-    margin-right: 0.5rem;
-    width: 1.2em;
-    text-align: center;
-}
-
-/* Iconos en navegación */
-nav a .fa-solid {
-    color: #fff;
-    margin-right: 0.5rem;
-}
-
-/* Iconos en búsqueda */
-search h2 .fa-solid {
-    color: #fff;
-    margin-right: 0.5rem;
-}
-
-search button .fa-solid {
-    margin-right: 0.3rem;
 }
 

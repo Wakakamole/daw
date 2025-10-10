@@ -17,6 +17,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Daniel Fernández Estevez, Sandra Moya del Amo">
     <meta name="description" content="Página de perfil de usuario en INMOLINK">
+    <link rel="stylesheet" href="css/inmolink.css">
+    <link rel="stylesheet" href="css/mediaQuery.css">
+    <link rel="stylesheet" href="css/iconos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <title>INMOLINK - Mi perfil</title>
 </head>
 <body>
@@ -24,9 +28,9 @@
          <a href="index.html"> <img src="img/logo.png" alt="Logo INMOLINK" width="100" height="100"></a>
         <nav>
             <ul>
-                <li><a href="index_user.html">Volver a la página principal</a></li>
-                <li><a href="error_404_user.html">Subir anuncio</a></li>
-                <li><a href="formulario_busqueda.html">Buscar Propiedades</a></li>
+                <li><a href="index_user.html"><i class="fa-solid fa-house-chimney"></i> Inicio</a></li>
+                <li><a href="formulario_busqueda.html"><i class="fa-solid fa-magnifying-glass"></i> Buscar Propiedades</a></li>
+                <li><a href="error_404_user.html"><i class="fa-regular fa-square-plus"></i>  Subir anuncio</a></li>
                 <li>
                     <details>
                         <summary>
@@ -58,24 +62,24 @@
         <h1>MI PERFIL</h1>
         </section>
         <section id="user-menu" aria-labelledby="user-menu-title">
-                <h2 id="user-menu-title">Menú de usuario</h2>
-                <nav aria-label="Opciones del usuario">
-                    <ul>
-                        <li><a href="error_404_user.html">Modificar mis datos</a></li>
-                        <li><a href="error_404_user.html">Darme de baja</a></li>
-                        <li><a href="error_404_user.html">Mis anuncios</a></li>
-                        <li><a href="error_404_user.html">Crear anuncio nuevo</a></li>
-                        <li><a href="mis_mensajes.html"> Mis mensajes</a></li>
-                        <li><a href="solicitar_folleto.html">Solicitar folleto publicitario impreso</a></li>
-                        <li><a href="index.html">Salir (cerrar sesión)</a></li>
-                    </ul>
-                </nav>
+            <h2 id="user-menu-title">Menú de usuario</h2>
+            <nav aria-label="Opciones del usuario">
+                <ul class="perfil-menu-lista">
+                    <li><a href="error_404_user.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-user-pen"></i> Modificar mis datos</a></li>
+                    <li><a href="error_404_user.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-user-xmark"></i> Darme de baja</a></li>
+                    <li><a href="error_404_user.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-list"></i> Mis anuncios</a></li>
+                    <li><a href="error_404_user.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-circle-plus"></i> Crear anuncio nuevo</a></li>
+                    <li><a href="mis_mensajes.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-envelope"></i> Mis mensajes</a></li>
+                    <li><a href="solicitar_folleto.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-file-lines"></i> Solicitar folleto </a></li>
+                    <li><a href="index.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-right-from-bracket"></i> Salir (cerrar sesión)</a></li>
+                </ul>
+            </nav>
         </section>
 
-        <section>
-                <h2>Volver a la página principal</h2>
-                <a href="index_user.html">Inicio</a>
-        </section>
+    <section>
+    <h3>Volver a la página principal</h3>
+    <a href="index.html" class="boton-enlace">Página principal</a>
+    </section>
     </main>
 
     <footer>

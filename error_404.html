@@ -11,13 +11,34 @@
     <meta name="description" content="Página de error 404 en INMOLINK">
     <link rel="stylesheet" href="css/inmolink.css">
     <link rel="stylesheet" href="css/mediaQuery.css">
+    <link rel="stylesheet" href="css/iconos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <title>Error 404 - Página no encontrada</title>
 </head>
 
 <body>
-     <a href="index.html"> <img src="img/logo.png" alt="Logo INMOLINK" width="100" height="100"></a>
-</body>
+
+    <header>
+    <a href="index.html"> <img src="img/logo.png" alt="Logo INMOLINK" width="100" height="100"></a>
+
+    <nav>
+        <ul>
+            <li><a href="index.html"><i class="fa-solid fa-house-chimney"></i> Inicio</a></li>
+            <li><a href="formulario_busqueda.html"><i class="fa-solid fa-magnifying-glass"></i> Buscar Propiedades</a></li>
+            <li><a href="inicio_sesion.html"><i class="fa-solid fa-user"></i> Inicio de Sesión</a></li>
+            <li><a href="registro_usuario.html"><i class="fa-solid fa-user-plus"></i> Registro de Usuario</a></li>
+        </ul>
+    </nav>
+
+    <search>
+        <h2>Búsqueda rápida:</h2>
+        <form action="resultado_busqueda.html" method="GET">
+            <label for="query"></label>
+            <input type="text" name="query" placeholder="Escribe aquí...">
+            <button type="submit">Intro</button>
+        </form>
+    </search>
+    </header> 
 
 <main>
     <section>
@@ -26,7 +47,8 @@
     </section>
 
     <section>
-    <a href="index.html">Volver a la página principal</a>
+    <h3>Volver a la página principal</h3>
+    <a href="index.html" class="boton-enlace">Página principal</a>
     </section>
 </main>
 </html>

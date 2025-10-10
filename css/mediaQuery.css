@@ -84,6 +84,21 @@ Enfoque: Desktop First (Ordenador → Tablet → Móvil)
     justify-content: center;
   }
   
+
+
+  nav details ul {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    min-width: 140px;
+    font-size: 1rem;
+    padding: 0.5rem 0.2rem;
+  }
+  nav details ul a {
+    padding: 0.6rem 0.7rem;
+    font-size: 1rem;
+  }
+
   /* Búsqueda vertical */
   search {
     flex-direction: column;
