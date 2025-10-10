@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Daniel Fernández Estevez, Sandra Moya del Amo">
     <meta name="description" content="Página principal de INMOLINK (usuario no registrado)">
+    <link rel="stylesheet" href="css/inmolink.css">
+    <link rel="stylesheet" href="css/mediaQuery.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <title> INMOLINK </title>
 </head>
 
@@ -16,17 +19,17 @@
 
     <nav>
         <ul>
-            <li><a href="index.html">Volver a la página principal</a></li>
-            <li><a href="inicio_sesion.html">Inicio de Sesión</a></li>
-            <li><a href="registro_usuario.html">Registro de Usuario</a></li>
-            <li><a href="formulario_busqueda.html">Buscar Propiedades</a></li>
+            <li><a href="index.html"><i class="fa-solid fa-house-chimney"></i> Inicio</a></li>
+            <li><a href="formulario_busqueda.html"><i class="fa-solid fa-magnifying-glass"></i> Buscar Propiedades</a></li>
+            <li><a href="inicio_sesion.html"><i class="fa-solid fa-user"></i> Inicio de Sesión</a></li>
+            <li><a href="registro_usuario.html"><i class="fa-solid fa-user-plus"></i> Registro de Usuario</a></li>
         </ul>
     </nav>
 
     <search>
-        <h2>Búsqueda rápida</h2>
+        <h2>Búsqueda rápida:</h2>
         <form action="resultado_busqueda.html" method="GET">
-            <label for="query">Buscar:</label>
+            <label for="query"></label>
             <input type="text" name="query" placeholder="Escribe aquí...">
             <button type="submit">Intro</button>
         </form>

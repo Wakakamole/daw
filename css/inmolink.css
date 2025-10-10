@@ -1,0 +1,368 @@
+/* =====================================================================
+   FUENTES Y VARIABLES GLOBALES
+===================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+:root {
+  /* Paleta de colores */
+  --color-primario: #d26e1c;          /* Gris azulado */
+  --color-secundario: #78a9b9;        /* Verde azulado suave */
+  --color-texto: #2a2a2a;             /* Texto principal */
+  --color-fondo: #f2fdff;             /* Fondo general */
+  --color-footer-bg: #78a9b9;         /* Fondo del footer */
+  --color-footer-texto: #000000;      /* Texto del footer */
+  
+  /* Transición global */
+  --transicion: all 0.3s ease;
+}
+
+
+
+
+/*RESETEO BÁSICO */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+
+/*CONTENEDOR GLOBAL */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+
+
+/*HEADER (ENCABEZADO) - GRID LAYOUT */
+header {
+  background-color: var(--color-secundario);
+  color: #fff;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas: 
+    "logo nav"
+    "search search";
+  align-items: center;
+  padding: 1rem 2rem 0;
+  z-index: 1000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+header > a { /* logo se coloca en el área de logo*/
+  grid-area: logo;
+}
+
+header > nav { /* nav se coloca en el área de nav*/
+  grid-area: nav;
+  justify-self: center;
+}
+
+header > search { /* search se coloca en el área de search*/
+  grid-area: search;
+  margin: 1rem -2rem 0;
+  background-color: rgba(255,255,255,0.1);
+  border-top: 2px solid rgba(255,255,255,0.3);
+  width: calc(100% + 4rem);
+}
+
+/* LOGO - Solo imagen */
+header a img { /* Logo imagen */
+  height: 100px;
+  width: auto;
+  transition: var(--transicion); /* Transición suave (hoover) */
+  margin-left: 1.5rem; 
+}
+
+header a img:hover { /* Efecto hover en logo (se agranda)*/
+  transform: scale(1.05);
+}
+
+
+
+
+
+
+/*NAVEGACIÓN PRINCIPAL*/
+nav ul { /*seleciona la lista dentro de nav*/
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilo de los enlaces del menú */
+nav a { /*selecciona los enlaces dentro de nav*/
+  color: #fff;
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: var(--transicion);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+/* Hover en los enlaces */
+nav a:hover {
+  color: var(--color-primario);
+  background-color: rgba(255,255,255,0.1);
+}
+
+
+
+
+
+
+
+/*BÚSQUEDA RÁPIDA*/
+search { /*selecciona el elemento search*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem; 
+}
+
+search h2 { /* Título de la búsqueda */
+  margin: 0;
+  font-size: 1.1rem;
+  color: #fff;
+  font-weight: 600;
+  white-space: nowrap; 
+}
+
+search form {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin: 0;
+  background-color: rgba(255,255,255,0.1);
+  padding: 0.5rem;
+  border-radius: 25px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+search label {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+search input {
+  padding: 0.8rem 1rem;
+  border: none;
+  border-radius: 20px;
+  min-width: 250px;
+  font-size: 0.9rem;
+  background-color: #fff;
+  color: var(--color-texto);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: var(--transicion);
+}
+
+search input:focus {
+  outline: 2px solid rgba(255,255,255,0.8);
+  outline-offset: 2px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transform: translateY(-2px);
+}
+
+search input::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+search button { /* Botón de búsqueda */
+  background-color: var(--color-primario);
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: var(--transicion);
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  white-space: nowrap;
+}
+
+search button:hover {
+  background-color: #b85b14; 
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+search button:active { /* Efecto al hacer clic */
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+
+
+
+
+
+
+/*MAIN CONTENT (CUERPO PRINCIPAL)*/
+main {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+main section h2 {
+  color: var(--color-secundario);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+/* Lista de artículos*/
+main > ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* para las ofertas de pisos */
+article {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: var(--transicion);
+  border: 1px solid #eee;
+}
+
+article:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* Título del anuncio */
+article h3 {
+  background-color: var(--color-secundario);
+  color: #fff;
+  padding: 1rem;
+  margin: 0;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+/* Imagen y enlace */
+article a {
+  display: block;
+  padding: 1rem;
+  text-align: center;
+}
+
+article img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: var(--transicion);
+}
+
+article img:hover {
+  transform: scale(1.05);
+}
+
+/* Pie del anuncio (detalles) */
+article footer {
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+}
+
+article footer p {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+article footer p:first-child {
+  font-size: 1rem;
+  color: var(--color-secundario);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+article footer p strong {
+  color: var(--color-secundario);
+}
+
+/* Precio destacado */
+article footer p:last-child {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-primario);
+  text-align: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid #eee;
+}
+
+
+
+/*FOOTER*/
+footer {
+  background-color: var(--color-footer-bg);
+  color: var(--color-footer-texto);
+  text-align: center;
+  padding: 2rem 0;
+  margin-top: 3rem;
+}
+
+
+
+
+
+
+
+/*ICONOS FONT AWESOME*/
+
+/* Espaciado general para iconos */
+.fa-solid {
+    margin-right: 0.5rem;
+    width: 1.2em;
+    text-align: center;
+}
+
+/* Iconos en navegación */
+nav a .fa-solid {
+    color: #fff;
+    margin-right: 0.5rem;
+}
+
+/* Iconos en búsqueda */
+search h2 .fa-solid {
+    color: #fff;
+    margin-right: 0.5rem;
+}
+
+search button .fa-solid {
+    margin-right: 0.3rem;
+}
+
