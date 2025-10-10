@@ -451,6 +451,103 @@ article footer p:last-child {
 
 
 
+/* FORUMULARIOS */
+form {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  max-width: 700px;
+  margin: 2rem auto;
+  transition: var(--transicion);
+}
+
+fieldset {
+  border: 2px solid var(--color-secundario);
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  background-color: #fdfdfd;
+  box-shadow: 0 2px 8px rgba(120,169,185,0.1);
+  transition: var(--transicion);
+}
+
+fieldset:hover {      /* efecto hover (cuando el ratón pasa sobre el fieldset) */
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(120,169,185,0.2);
+}
+
+legend {        /* titulo del fieldset */
+  font-weight: 700;
+  color: var(--color-primario);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background-color: #fff6ed;
+  border: 1px solid var(--color-primario);
+  font-size: 1.2rem;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: var(--color-texto);
+}
+
+input, select {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1.8px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  color: var(--color-texto);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  transition: var(--transicion);
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--color-secundario);
+  box-shadow: 0 0 5px rgba(120,169,185,0.4);
+}
+
+input::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+
+fieldset button[type="submit"] {
+  display: block;
+  width: 100%;
+  background-color: var(--color-primario);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  padding: 0.9rem;
+  cursor: pointer;
+  transition: var(--transicion);
+  box-shadow: 0 3px 8px rgba(210,110,28,0.25);
+}
+
+fieldset button[type="submit"]:hover {  
+  background-color: #b85b14;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(210,110,28,0.35);
+}
+
+fieldset button[type="submit"]:active {     /* Botón al hacer clic */
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(210,110,28,0.25);
+}
+
+fieldset + fieldset {     /* espacio entre fieldsets */
+  margin-top: 2rem;
+}
+
+
 
   
 .mensaje-enviado {
