@@ -136,118 +136,120 @@
             </p>
 
             <form action="solicitar_folleto_respuesta.html" method="post">
-
-                <!-- Nombre -->
-                <label for="nombre">Nombre completo (*):</label><br>
-                <input type="text" id="nombre" name="nombre" maxlength="200" required>
-                <br><br>
-
-                <!-- Correo electrónico -->
-                <label for="email">Correo electrónico (*):</label><br>
-                <input type="email" id="email" name="email" maxlength="200" required>
-                <br><br>
-
-                <!-- Texto adicional -->
-                <label for="textoAdicional">Texto adicional:</label><br>
-                <textarea id="textoAdicional" name="textoAdicional" maxlength="4000" rows="4" cols="50"></textarea>
-                <br><br>
-
-
-                <!-- Dirección -->
                 <fieldset>
-                    <legend>Dirección (*)</legend>
-                    
-                    <label for="calle">Calle:</label>
-                    <input type="text" id="calle" name="calle" required>
-                    
-                    <label for="numero">Número:</label>
-                    <input type="text" id="numero" name="numero" required>
-                    
-                    <label for="cp">CP:</label>
-                    <input type="text" id="cp" name="cp" required>
-                    
-                    <label for="localidad">Localidad:</label>
-                    <input type="text" id="localidad" name="localidad" required>
-                    
-                    <label for="input-provincia">Provincia:</label>
-                    <input list="provincias-lista" id="input-provincia" name="provincia" required> 
-                    <datalist id="provincias-lista">
-                        <option value="Ciudad Real">
-                        <option value="Albacete">
-                        <option value="Toledo">
-                        <option value="Cuenca">
-                        <option value="Guadalajara">
-                        <option value="Alicante">
-                        <option value="Valencia">
-                        <option value="Castellon">
-                        <option value="A Coruña">
-                        <option value="Lugo">
-                        <option value="Ourense">
-                        <option value="Pontevedra">
-                    </datalist>
+                    <legend>Datos Personales</legend>
+                    <!-- Nombre -->
+                    <label for="nombre">Nombre completo (*):</label>
+                    <input type="text" id="nombre" name="nombre" maxlength="200" required>
+                    <br><br>
 
-                    <label for="pais">País:</label>
-                    <input type="text" id="pais" name="pais" required>
+                    <!-- Correo electrónico -->
+                    <label for="email">Correo electrónico (*):</label>
+                    <input type="email" id="email" name="email" maxlength="200" required>
+                    <br><br>
 
+                    <!-- Texto adicional -->
+                    <label for="textoAdicional">Texto adicional:</label>
+                    <textarea id="textoAdicional" name="textoAdicional" maxlength="4000" rows="4" cols="50"></textarea>
+                    <br><br>
+
+
+                    <!-- Dirección -->
+                    <fieldset>
+                        <legend>Dirección (*)</legend>
+                        
+                        <label for="calle">Calle:</label>
+                        <input type="text" id="calle" name="calle" required>
+                        
+                        <label for="numero">Número:</label>
+                        <input type="text" id="numero" name="numero" required>
+                        
+                        <label for="cp">CP:</label>
+                        <input type="text" id="cp" name="cp" required>
+                        
+                        <label for="localidad">Localidad:</label>
+                        <input type="text" id="localidad" name="localidad" required>
+                        
+                        <label for="input-provincia">Provincia:</label>
+                        <input list="provincias-lista" id="input-provincia" name="provincia" required> 
+                        <datalist id="provincias-lista">
+                            <option value="Ciudad Real">
+                            <option value="Albacete">
+                            <option value="Toledo">
+                            <option value="Cuenca">
+                            <option value="Guadalajara">
+                            <option value="Alicante">
+                            <option value="Valencia">
+                            <option value="Castellon">
+                            <option value="A Coruña">
+                            <option value="Lugo">
+                            <option value="Ourense">
+                            <option value="Pontevedra">
+                        </datalist>
+
+                        <label for="pais">País:</label>
+                        <input type="text" id="pais" name="pais" required>
+
+                    </fieldset>
+                    <br><br>
+
+                    <!-- Telefono -->
+                    <label for="telefono">Teléfono:</label>
+                    <input type="tel" id="telefono" name="telefono">
+                    <br><br>
+
+                    <!-- Color de la portada -->
+                    <label for="colorPortada">Color de la portada:</label>
+                    <input type="color" id="colorPortada" name="colorPortada" value="#000000">
+                    <br><br>
+
+                    <!-- Número de copias -->
+                    <label for="copias">Número de copias:</label>
+                    <input type="number" id="copias" name="copias" min="1" max="99" value="1">
+                    <br><br>
+
+                    <!-- Resolución de impresión -->
+                    <label for="resolucion">Resolución de impresión:</label>
+                    <select id="resolucion" name="resolucion">
+                        <option value="150">150 dpi</option>
+                        <option value="300">300 dpi</option>
+                        <option value="450">450 dpi</option>
+                        <option value="600">600 dpi</option>
+                        <option value="750">750 dpi</option>
+                        <option value="900">900 dpi</option>
+                    </select>
+                    <br><br>
+
+                    <!-- Anuncio -->
+                    <label for="anuncio">Anuncio (*):</label>
+                    <select id="anuncio" name="anuncio" required>
+                        <option value="anuncio1">Anuncio 1</option>
+                        <option value="anuncio2">Anuncio 2</option>
+                    </select><br><br>
+
+                    <!-- Fecha de recepción -->
+                    <label for="fechaRecepcion">Fecha de recepción:</label>
+                    <input type="date" id="fechaRecepcion" name="fechaRecepcion">
+                    <br><br>
+
+                    <!-- Impresión a color -->
+                    <p>Color de la impresión</p>
+                    <input type="radio" id="aColor" name="colorImpresion" value="color">
+                    <label for="aColor">Color</label>
+                    <input type="radio" id="colorNo" name="colorImpresion" value="byn">
+                    <label for="colorNo">Blanco y negro</label>
+                    <br><br>
+
+                    <!-- Impresión del precio -->
+                    <p>¿Imprimir el precio en el folleto?</p>
+                    <input type="radio" id="precioSi" name="impresionPrecio" value="si">
+                    <label for="precioSi">Sí</label>
+                    <input type="radio" id="precioNo" name="impresionPrecio" value="no">
+                    <label for="precioNo">No</label>
+                    <br><br>
+
+                    <button type="submit">Solicitar</button>
                 </fieldset>
-                <br><br>
-
-                <!-- Telefono -->
-                <label for="telefono">Teléfono:</label><br>
-                <input type="tel" id="telefono" name="telefono">
-                <br><br>
-
-                <!-- Color de la portada -->
-                <label for="colorPortada">Color de la portada:</label><br>
-                <input type="color" id="colorPortada" name="colorPortada" value="#000000">
-                <br><br>
-
-                <!-- Número de copias -->
-                <label for="copias">Número de copias:</label><br>
-                <input type="number" id="copias" name="copias" min="1" max="99" value="1">
-                <br><br>
-
-                <!-- Resolución de impresión -->
-                <label for="resolucion">Resolución de impresión:</label><br>
-                <select id="resolucion" name="resolucion">
-                    <option value="150">150 dpi</option>
-                    <option value="300">300 dpi</option>
-                    <option value="450">450 dpi</option>
-                    <option value="600">600 dpi</option>
-                    <option value="750">750 dpi</option>
-                    <option value="900">900 dpi</option>
-                </select>
-                <br><br>
-
-                <!-- Anuncio -->
-                <label for="anuncio">Anuncio (*):</label><br>
-                <select id="anuncio" name="anuncio" required>
-                    <option value="anuncio1">Anuncio 1</option>
-                    <option value="anuncio2">Anuncio 2</option>
-                </select><br><br>
-
-                <!-- Fecha de recepción -->
-                <label for="fechaRecepcion">Fecha de recepción:</label><br>
-                <input type="date" id="fechaRecepcion" name="fechaRecepcion">
-                <br><br>
-
-                <!-- Impresión a color -->
-                <p>Color de la impresión</p>
-                <input type="checkbox" id="aColor" name="impresionColor" value="color" checked>
-                <label for="aColor">Color</label>
-                <input type="checkbox" id="colorNo" name="blancoYNegro" value="byn">
-                <label for="blancoYNegro">Blanco y negro</label>
-                <br><br>
-
-                <!-- Impresión del precio -->
-                <p>¿Imprimir el precio en el folleto?</p>
-                <input type="checkbox" id="precioSi" name="impresionPrecio" value="si" checked>
-                <label for="precioSi">Sí</label>
-                <input type="checkbox" id="precioNo" name="impresionPrecio" value="no">
-                <label for="precioNo">No</label>
-                <br><br>
-
-                <button type="submit">Solicitar</button>
             </form>
         </section>
 

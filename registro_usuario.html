@@ -68,12 +68,24 @@
                 <br>
                 <br>
 
-                <label>Sexo: </label>   <br>
-                <input type="radio" name="sexo" value="hombre"> Hombre  <br>
-                <input type="radio" name="sexo" value="mujer"> Mujer    <br>
-                <input type="radio" name="sexo" value="otro"> Otro
+                <label>Sexo:</label>
+                <div class="radio-group">
+                <label for="sexo_hombre">
+                    Hombre
+                    <input type="radio" id="sexo_hombre" name="sexo" value="hombre">
+                </label>
+                <label for="sexo_mujer">
+                    Mujer
+                    <input type="radio" id="sexo_mujer" name="sexo" value="mujer">
+                </label>
+                <label for="sexo_otro">
+                    Otro
+                    <input type="radio" id="sexo_otro" name="sexo" value="otro">
+                </label>
+                </div>
                 <br>
                 <br>
+
 
                 <label for="birthdate">Fecha de nacimiento: </label>
                 <input type="date" id="birthdate" name="birthdate">
