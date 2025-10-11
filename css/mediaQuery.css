@@ -48,6 +48,17 @@ Enfoque: Desktop First (Ordenador → Tablet → Móvil)
   search input {
     min-width: 200px;
   }
+
+  /* Ajustes para mensajes */
+  .mis-mensajes-main {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .columna-1, .columna-2 {
+    width: 90%;
+    margin: 0 auto 1.5rem auto;
+  }
 }
 
 /* =====================================================================
@@ -142,21 +153,16 @@ Enfoque: Desktop First (Ordenador → Tablet → Móvil)
   article footer {
     padding: 1rem;
   }
-}
 
-/* =====================================================================
-   MENSAJES 
-===================================================================== */
-@media (max-width: 900px) {
+  /* Ajustes para mensajes */
   .mis-mensajes-main {
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
   }
   .columna-1, .columna-2 {
-    width: 99vw;
-    max-width: 99vw;
-    margin: 0 auto 2rem auto;
+    width: 100%;
+    margin: 0 auto 1rem auto;
   }
 }
 

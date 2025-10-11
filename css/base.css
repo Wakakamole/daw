@@ -26,45 +26,6 @@ a {
   margin: 0 auto;
 }
 
-/*MAIN CONTENT (CUERPO PRINCIPAL)*/
-main {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-main section h1 {
-  color: #0a4592;
-  font-size: 2.5em;
-  font-weight: bold;
-  text-align: center;
-  border-bottom: 2px solid #2a7ae2;
-  padding-bottom: 0.5em;
-  margin-bottom: 1em;
-}
-
-/* Estilo general para todos los h2 */
-h2 {
-  color: var(--color-secundario);
-  font-size: 1.8rem;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-/* Estilo específico para los h2 dentro de main section */
-main section h2 {
-  font-size: 2rem; /* Ajuste específico si es necesario */
-}
-
-/* Lista de artículos*/
-main > ul {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
 /******************
 ENLACES DE ACCIÓN COMO BOTÓN 
 *******************/
