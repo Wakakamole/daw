@@ -3,318 +3,18 @@
 ===================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 
-:root {
-  /* Paleta de colores */
-  --color-primario: #d26e1c;          /* Gris azulado */
-  --color-secundario: #78a9b9;        /* Verde azulado suave */
-  --color-texto: #2a2a2a;             /* Texto principal */
-  --color-fondo: #f2fdff;             /* Fondo general */
-  --color-footer-bg: #78a9b9;         /* Fondo del footer */
-  --color-footer-texto: #000000;      /* Texto del footer */
-  
-  /* Transición global */
-  --transicion: all 0.3s ease;
+/* Importar los archivos CSS separados */
+@import url('./variables.css');
+@import url('./base.css');
+@import url('./header_footer.css');
+@import url('./main.css');
 
-  /* Variables para el mensaje */
-  --color-mensaje-fondo: #f9f9f9;
-  --color-mensaje-texto: #333;
-  --color-mensaje-borde: #d26e1c;
-}
 
 
 
-
-/*RESETEO BÁSICO */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'Montserrat', sans-serif;
-  background-color: var(--color-fondo);
-  color: var(--color-texto);
-  line-height: 1.6;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-
-
-/*CONTENEDOR GLOBAL */
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-
-
-
-/*HEADER (ENCABEZADO) - GRID LAYOUT */
-header {
-  background-color: var(--color-secundario);
-  color: #fff;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto auto;
-  grid-template-areas: 
-    "logo nav"
-    "search search";
-  align-items: center;
-  padding: 1rem 2rem 0;
-  z-index: 1000;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-  overflow: visible;
-}
-
-header > a { /* logo se coloca en el área de logo*/
-  grid-area: logo;
-}
-
-header > nav { /* nav se coloca en el área de nav*/
-  grid-area: nav;
-  justify-self: center;
-}
-
-header > search { /* search se coloca en el área de search*/
-  grid-area: search;
-  margin: 1rem -2rem 0;
-  background-color: rgba(255,255,255,0.1);
-  border-top: 2px solid rgba(255,255,255,0.3);
-  width: calc(100% + 4rem);
-}
-
-/* LOGO - Solo imagen */
-header a img { /* Logo imagen */
-  height: 100px;
-  width: auto;
-  transition: var(--transicion); /* Transición suave (hoover) */
-  margin-left: 1.5rem; 
-  margin-right: 2rem;
-}
-
-header a img:hover { /* Efecto hover en logo (se agranda)*/
-  transform: scale(1.05);
-}
-
-
-
-
-/*NAVEGACIÓN PRINCIPAL*/
-nav ul { /*seleciona la lista dentro de nav*/
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  margin: 0;
-  padding: 0;
-}
-
-/* Estilo de los enlaces del menú */
-nav a { /*selecciona los enlaces dentro de nav*/
-  color: #fff;
-  font-weight: 500;
-  text-transform: uppercase;
-  text-align: center;
-  transition: var(--transicion);
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-}
-
-/* Hover en los enlaces */
-nav a:hover {
-  color: var(--color-primario);
-  background-color: rgba(255,255,255,0.1);
-}
-
-nav details ul {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  padding: 0.5rem 0.3rem;
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  right: auto;
-  transform: translateX(-50%);
-  background: #fff;
-  color: var(--color-texto);
-  min-width: 150px;
-  border-radius: 10px;
-  z-index: 2000;
-  margin-top: 0.3rem;
-  border: 1px solid #e0e0e0;
-  display: none;
-  opacity: 0;
-}
-
-nav details[open] ul {
-  display: flex;
-  opacity: 1;
-}
-
-nav details ul li {
-  width: 100%;
-}
-
-nav details ul a {
-  display: block;
-  width: 100%;
-  padding: 0.5rem 0.7rem;
-  color: var(--color-texto);
-  border-radius: 6px;
-  text-align: center;
-  font-weight: 500;
-}
-
-nav details ul a:hover {
-  background: var(--color-secundario);
-  color: #fff;
-}
-
-nav details {
-  position: relative;
-}
-
-
-
-
-
-
-/*BÚSQUEDA RÁPIDA*/
-search { /*selecciona el elemento search*/
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem; 
-}
-
-search h2 { /* Título de la búsqueda */
-  margin: 0;
-  font-size: 1.1rem;
-  color: #fff;
-  font-weight: 600;
-  white-space: nowrap; 
-}
-
-search form {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  flex-wrap: wrap;
-  margin: 0;
-  background-color: rgba(255,255,255,0.1);
-  padding: 0.5rem;
-  border-radius: 25px;
-  border: 1px solid rgba(255,255,255,0.2);
-}
-
-search label {
-  color: #fff;
-  font-size: 0.9rem;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-search input {
-  padding: 0.8rem 1rem;
-  border: none;
-  border-radius: 20px;
-  min-width: 250px;
-  font-size: 0.9rem;
-  background-color: #fff;
-  color: var(--color-texto);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: var(--transicion);
-}
-
-search input:focus {
-  outline: 2px solid rgba(255,255,255,0.8);
-  outline-offset: 2px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  transform: translateY(-2px);
-}
-
-search input::placeholder {
-  color: #999;
-  font-style: italic;
-}
-
-search button { /* Botón de búsqueda */
-  background-color: var(--color-primario);
-  color: #fff;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: var(--transicion);
-  font-weight: 600;
-  font-size: 0.9rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  white-space: nowrap;
-}
-
-search button:hover {
-  background-color: #b85b14; 
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-}
-
-search button:active { /* Efecto al hacer clic */
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-
-
-
-
-
-
-/*MAIN CONTENT (CUERPO PRINCIPAL)*/
-
-
-
-
-main {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-
-main section h1 {
-  color: #0a4592;
-  font-size: 2.5em;
-  font-weight: bold;
-  text-align: center;
-  border-bottom: 2px solid #2a7ae2;
-  padding-bottom: 0.5em;
-  margin-bottom: 1em;
-}
-
-
-/* Estilo general para todos los h2 */
-h2 {
-  color: var(--color-secundario);
-  font-size: 1.8rem;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-/* Estilo específico para los h2 dentro de main section */
-main section h2 {
-  font-size: 2rem; /* Ajuste específico si es necesario */
-}
-
-
-/* Lista de artículos*/
+/************************
+  ANUNCIOS
+*************************/
 main > ul {
   list-style: none;
   display: grid;
@@ -401,29 +101,10 @@ article footer p:last-child {
 }
 
 
-/* ENLACES DE ACCIÓN COMO BOTÓN */
-.boton-enlace {
-  display: inline-block;
-  background: var(--color-secundario);
-  color: #fff;
-  padding: 0.7em 1.5em;
-  border-radius: 25px;
-  font-weight: 600;
-  text-align: center;
-  text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  transition: background 0.2s, color 0.2s, transform 0.2s;
-  margin-top: 1em;
-}
 
-.boton-enlace:hover {
-  background: var(--color-primario);
-  color: #fff;
-  transform: translateY(-2px) scale(1.04);
-}
-
-
-/* MENÚ DE USUARIO EN PERFIL */
+/*********************************** 
+MENÚ DE USUARIO EN PERFIL 
+************************************/
 .perfil-menu-lista {
   display: flex;
   flex-direction: row;
@@ -457,6 +138,9 @@ article footer p:last-child {
   font-size: 1.2em;
   color: var(--color-secundario);
 }
+
+
+
 
 /* TABLAS */
 table {
@@ -774,7 +458,10 @@ fieldset input[type="color"] {
 
 
 
-/* CONTENEDOR DE COLUMNAS DE MENSAJES */
+/***********************
+  MIS MENSAJES  
+***********************/
+
 .mis-mensajes-main {
   display: flex;
   flex-direction: row;
@@ -806,7 +493,6 @@ fieldset input[type="color"] {
   background: #fff6ed;
   margin-right: auto;
 }
-
 
 .mensaje-enviado header,
 .mensaje-recibido header {
@@ -843,7 +529,12 @@ fieldset input[type="color"] {
 }
 
 
-/* AVISO TARJETA (solo una clase) */
+
+
+/*************************************************
+AVISO- pero tamb está aplicado para ERROR404
+**************************************************/
+
 .aviso-tarjeta {
   background: #fff;
   max-width: 480px;
@@ -869,90 +560,6 @@ fieldset input[type="color"] {
 .aviso-tarjeta > a {
   display: inline-block;
   margin: 1.5em 0.75em 0 0.75em;
-}
-
-.registro-link {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1em;
-  text-align: left;
-  margin-top: 2.2em;
-  font-size: 1.08em;
-}
-.registro-link a {
-  margin: 0;
-}
-
-/*FOOTER*/
-footer {
-  background-color: var(--color-footer-bg);
-  color: var(--color-footer-texto);
-  text-align: center;
-  padding: 2rem 0;
-  margin-top: 3rem;
-}
-
-/* Estilo para el contenedor del mensaje */
-.mensaje-contenedor {
-  background-color: var(--color-mensaje-fondo);
-  color: var(--color-mensaje-texto);
-  border: 2px solid var(--color-mensaje-borde);
-  border-radius: 10px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin: 2rem auto;
-  max-width: 800px;
-}
-
-.mensaje-contenedor h1 {
-  color: var(--color-mensaje-borde);
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.mensaje-contenedor p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  text-align: center;
-}
-
-/* Estilos para los datos del mensaje */
-.mensaje-contenedor dl {
-  margin: 1.5rem 0;
-  padding: 1rem;
-  background-color: #fdf1e9;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-left: 4px solid var(--color-primario);
-}
-
-.mensaje-contenedor dt {
-  font-weight: bold;
-  color: var(--color-primario);
-  font-size: 1.1rem;
-  margin-top: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.mensaje-contenedor dt::before {
-  content: '\f05a'; /* Icono de Font Awesome */
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 900;
-  color: var(--color-secundario);
-}
-
-.mensaje-contenedor dd {
-  margin-left: 1.5rem;
-  font-size: 1rem;
-  color: var(--color-texto);
-  background-color: #ffffff;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 
