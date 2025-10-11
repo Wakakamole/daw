@@ -44,7 +44,6 @@
         <search>
             <h2>Búsqueda rápida</h2>
             <form action="resultado_busqueda.html" method="GET">
-                <label for="query">Buscar:</label>
                 <input type="text" name="query" placeholder="Escribe aquí...">
                 <button type="submit">Intro</button>
             </form>
@@ -53,10 +52,11 @@
 
 
     <main>
-        <article>
+        <article class="mensaje-contenedor">
             <section>
             <h1>CONFIRMACIÓN: Mensaje enviado</h1>
-            <p>Su mensaje ha sido recibido y almacenado correctamente. A continuación se muestran los datos enviados:</p>
+            <p><strong>Su mensaje ha sido recibido y almacenado correctamente. A continuación se muestran los datos enviados:</strong></p> 
+            <br>
             </section>
 
             <section aria-labelledby="datos-envio">
@@ -72,14 +72,9 @@
                     <dd><output id="out-mensaje">Hola, estoy interesado en el anuncio. ¿Cuando sería posible concertar una cita?</output></dd>
                 </dl>
             </section>
-
             <section>
-                <h3>Acciones</h3>
                 <p>
-                    <a href="detalle_anuncio.html">Volver al anuncio</a>
-                </p>
-                <p>
-                    <a href="index_user.html">Ir al inicio</a>
+                    <a href="detalle_anuncio.html"  class="boton-enlace" >Ok</a>
                 </p>
             </section>
         </article>
