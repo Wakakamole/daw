@@ -40,7 +40,6 @@ Enfoque: Desktop First (Ordenador → Tablet → Móvil)
     gap: 1.5rem;
   }
   
-  /* Elementos más compactos */
   article img {
     height: 180px;
   }
@@ -49,7 +48,6 @@ Enfoque: Desktop First (Ordenador → Tablet → Móvil)
     min-width: 200px;
   }
 
-  /* Ajustes para mensajes */
   .mis-mensajes-main {
     flex-direction: column;
     align-items: center;
@@ -58,6 +56,18 @@ Enfoque: Desktop First (Ordenador → Tablet → Móvil)
   .columna-1, .columna-2 {
     width: 90%;
     margin: 0 auto 1.5rem auto;
+  }
+
+  #solicitud-folleto {
+    padding: 1.5rem;
+  }
+
+  #solicitud-folleto table {
+    font-size: 0.95rem;
+  }
+
+  #solicitud-folleto fieldset {
+    padding: 1rem 1.5rem;
   }
 }
 
@@ -163,6 +173,44 @@ Enfoque: Desktop First (Ordenador → Tablet → Móvil)
   .columna-1, .columna-2 {
     width: 100%;
     margin: 0 auto 1rem auto;
+  }
+
+  #solicitud-folleto {
+    padding: 1rem;
+  }
+
+  #descripcion-folleto h1 {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  #descripcion-folleto p {
+    font-size: 0.95rem;
+    text-align: justify;
+  }
+
+  #tabla-tarifas table {
+    width: 100%;
+    font-size: 0.9rem;
+    border-collapse: collapse;
+  }
+
+  #tabla-tarifas th, 
+  #tabla-tarifas td {
+    padding: 0.5rem;
+    text-align: left;
+  }
+
+  #formulario fieldset {
+    padding: 1rem;
+  }
+
+  #formulario input,
+  #formulario select,
+  #formulario textarea,
+  #formulario button {
+    width: 100%;
+    font-size: 1rem;
   }
 }
 

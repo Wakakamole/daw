@@ -455,6 +455,113 @@ fieldset input[type="color"] {
 }
 
 
+/***********************
+  DETALLE ANUNCIO  
+***********************/
+
+#cabecera-detalle h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--color-secundario);
+  border-bottom: 2px solid var(--color-primario);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+#imagen-principal img {
+  display: block;
+  width: 75%;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+  margin: 0 auto 1.5rem auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+#info-basica {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.5rem 1rem;
+  margin-bottom: 2rem;
+  color: var(--color-texto);
+}
+
+#info-basica p {
+  background: #f9fafb;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+#galeria {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+#galeria img {
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#galeria img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+#descripcion h3,
+#caracteristicas h3 {
+  color: var(--color-secundario);
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+}
+
+#descripcion p {
+  text-align: justify;
+  line-height: 1.6;
+  color: var(--color-texto);
+  margin-bottom: 2rem;
+}
+
+#caracteristicas ul {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+#caracteristicas li {
+  background-color: #f7fbfd;
+  margin-bottom: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--color-secundario);
+}
+
+#contacto-anunciante {
+  text-align: center;
+}
+
+#contacto-anunciante button {
+  background-color: var(--color-primario);
+  color: #fff;
+  font-weight: 600;
+  padding: 0.9rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: var(--transicion);
+  box-shadow: 0 4px 10px rgba(210,110,28,0.25);
+}
+
+#contacto-anunciante button:hover {
+  background-color: #b85b14;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(210,110,28,0.35);
+}
 
 
 
