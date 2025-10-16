@@ -1,23 +1,23 @@
 /* Fondo y texto general */
 body {
-    background-color: #ffffff; /* blanco puro */
-    color: #000000;            /* texto negro */
+    background-color: #ffffff;
+    color: #000000;
 }
 
 /* Cabecera y pie */
 header, footer {
-    background-color: #002b5c; /* azul marino oscuro */
+    background-color: #002b5c;
     color: #ffffff;
 }
 
 header a, footer a {
-    color: #ffea00; /* amarillo brillante para links */
+    color: #ffea00;
     text-decoration: underline;
 }
 
 header a:hover, footer a:hover {
     color: #ffffff;
-    background-color: #0057b8; /* azul más vivo */
+    background-color: #0057b8;
 }
 
 /* Navegación */
