@@ -1,0 +1,61 @@
+@page {
+    size: A4;
+    margin: 2cm;
+}
+
+body {
+    background-color: #fff !important;
+    color: #000 !important;
+    font-family: "Times New Roman", serif;
+    font-size: 12pt;
+    line-height: 1.4;
+}
+
+/* Eliminar elementos de navegación, botones y formularios */
+header, nav, footer, button, input, select, textarea, .perfil-menu-lista, .radio-group {
+    display: none !important;
+}
+
+/* Mantener contenido principal */
+main, article, section, #confirmacion {
+    display: block;
+}
+
+/* Imágenes importantes */
+img {
+    max-width: 100%;
+    height: auto;
+    page-break-inside: avoid;
+}
+
+/* Mostrar URLs de los enlaces */
+a::after {
+    content: " (" attr(href) ")";
+    font-size: 10pt;
+}
+
+/* Líneas divisorias más visibles */
+hr {
+    border: 1px solid #000;
+    page-break-after: avoid;
+}
+
+/* Páginas */
+h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+}
+
+/* Evitar cortar artículos a la mitad */
+article {
+    page-break-inside: avoid;
+}
+
+/* Añadir copyright al final */
+footer::after {
+    content: "© INMOLINK - Todos los derechos reservados";
+    display: block;
+    text-align: center;
+    font-size: 10pt;
+    margin-top: 1cm;
+}
