@@ -225,22 +225,15 @@ footer {
 }
 
 footer p {
-  margin: 0 0 0.8rem 0;
+  margin: 0;
 }
 
-footer nav {
-  margin-top: 0.5rem;
-}
-
-footer nav a {
+footer a {
   color: var(--color-footer-texto);
-  font-size: 0.9rem;
-  font-weight: 500;
   transition: var(--transicion);
-  padding: 0.3rem 0.5rem;
+  text-decoration: underline;
 }
 
-footer nav a:hover {
+footer a:hover {
   color: var(--color-primario);
-  text-decoration: underline;
 }

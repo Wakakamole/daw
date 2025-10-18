@@ -92,6 +92,7 @@ article footer {
 article footer p { /* Párrafos dentro del pie */
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
+  color: var(--color-texto); /* Asegurar que el texto sea visible */
 }
 
 article footer p:first-child { /* Primer párrafo (ubicación) */

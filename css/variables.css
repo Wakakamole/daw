@@ -7,7 +7,7 @@
   --color-texto: #2a2a2a;             /* Texto principal */
   --color-fondo: #f2fdff;             /* Fondo general */
   --color-footer-bg: #78a9b9;         /* Fondo del footer */
-  --color-footer-texto: #000000;      /* Texto del footer */
+  --color-footer-texto: #ffffff;      /* Texto del footer */
 
   /* Transición global */
   --transicion: all 0.3s ease;

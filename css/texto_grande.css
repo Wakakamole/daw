@@ -1,32 +1,32 @@
 /*
-	Hoja de estilo alternativa: Texto grande (accesible)
-	Objetivo: aumentar la legibilidad para personas con baja visión que necesitan un tamaño de letra mayor.
-	Nota: No cambia colores (no es alto contraste); se centra en tipografía, espaciados y foco visible.
+	Hoja de estilo alternativa: Texto grande
 */
+
+
 
 /* Aumenta el tamaño base para que todas las unidades rem escalen */
 html { font-size: 150% !important; }
 
-/* Mejora la altura de línea global y el espaciado de párrafos y listas */
-body { line-height: 1.8; }
+
+
 
 p, li, dd { margin-bottom: 0.8em; }
 
-/* Subrayado claro en enlaces para mayor identificabilidad */
+/* Subrayado claro en enlaces*/
 a {
 	text-decoration: underline;
 	text-underline-offset: 0.2em;
 	text-decoration-thickness: 2px;
 }
 
-/* Foco visible y cómodo en teclado (usa colores existentes) */
+/*Foco visible*/
 :where(a, button, input, select, textarea, summary, [tabindex])
 :focus-visible {
 	outline: 3px solid var(--color-secundario);
 	outline-offset: 3px;
 }
 
-/* Objetivos táctiles mínimos recomendados (44x44px) */
+/*tamaño mínimo para elementos interactivos*/
 :where(a, button,
 	input[type="button"], input[type="submit"], input[type="reset"],
 	.boton-enlace) {
@@ -34,11 +34,11 @@ a {
 	min-width: 44px;
 }
 
-/* Navegación y acciones ligeramente mayores */
+/* Navegación y acciones mayores */
 nav a { font-size: 1.1em; }
 .boton-enlace { font-size: 1.1em; padding: 0.9em 1.6em; }
 
-/* Formularios: agranda etiquetas y campos, mejora separación */
+/* Formularios, agranda etiquetas y campos, mejora separación */
 fieldset legend { font-size: 1.3rem; }
 fieldset label { font-size: 1.125rem; margin-top: 0.4rem; }
 fieldset input,
@@ -49,21 +49,21 @@ fieldset textarea {
 	padding: 0.9rem 1.1rem;
 }
 
-/* Botones de formularios mayores */
+/* Botones de formularios */
 fieldset button { font-size: 1.125rem; padding: 1rem; }
 
-/* Títulos y contenidos en tarjetas un poco más grandes sin alterar colores */
+/* Títulos y contenidos en tarjetas*/
 article h3 { font-size: 1.4rem; }
 article footer p { font-size: 1rem; }
 
-/* Búsqueda rápida del header más legible */
+/* Búsqueda rápida*/
 search h2 { font-size: 1.2rem; }
 search input { font-size: 1.05rem; }
 search button { font-size: 1.05rem; padding: 0.9rem 1.6rem; }
 
-/* Listas de resultados y secciones con algo más de aire visual */
+/* Listas de resultados y secciones  */
 main { padding: 2.2rem; }
 main > ul { gap: 2.2rem; }
 
-/* Límites suaves para evitar líneas demasiado largas en textos de lectura */
-#descripcion p { max-width: 80ch; }
+
+#descripcion p { max-width: 80ch; } /* límite de ancho maximo para parrafos*/
