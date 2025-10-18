@@ -1,7 +1,7 @@
 <!-- PÁGINA ACCESIBILIDAD-->
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,27 +62,24 @@
         </search>
     </header> 
 
-
-<main>
-    <section>
     <main>
         <section>
             <h1>DECLARACIÓN DE ACCESIBILIDAD</h1>
         </section>
 
-        <section>
+        <section class="accesibilidad-seccion">
             <h2>Alcance</h2>
             <p>Esta declaración describe el nivel de accesibilidad de las páginas públicas del proyecto <strong>INMOLINK</strong>. Incluye medidas técnicas y de contenido adoptadas para mejorar la accesibilidad.</p>
         </section>
 
-        <section>
+        <section class="accesibilidad-seccion">
             <h2>Estado de conformidad</h2>
             <p>Se ha diseñado el sitio con criterios de accesibilidad web. Nuestro objetivo es cumplir, en lo posible, las <strong>WCAG 2.1 Nivel AA</strong>. No obstante, puede haber páginas o elementos que no alcancen todavía todos los requisitos.</p>
         </section>
 
-        <section>
+        <section class="accesibilidad-seccion">
             <h2>Características de accesibilidad implementadas</h2>
-            <ul>
+            <ul class="lista-caracteristicas">
                 <li>Uso de HTML semántico (header, nav, main, article, footer, form).</li>
                 <li>Contrastes de color pensados para lectura.</li>
                 <li>Hojas de estilo alternativas disponibles: modo noche, alto contraste, texto grande y combinación.</li>
@@ -91,10 +88,10 @@
             </ul>
         </section>
 
-        <section">
+        <section class="accesibilidad-seccion estilos-alternos">
             <h2>Cómo activar los estilos accesibles</h2>
             <p>Hemos publicado varias hojas de estilo alternativas que puedes seleccionar desde el navegador. Los títulos de estilo disponibles son:</p>
-            <ul>
+            <ul class="lista-estilos">
                 <li><strong>Estilo principal</strong> (por defecto)</li>
                 <li><strong>modoNoche</strong> (tema oscuro)</li>
                 <li><strong>altoContraste</strong> (alto contraste)</li>
@@ -102,29 +99,30 @@
                 <li><strong>altoContraste+textoGrande</strong> (combinado)</li>
             </ul>
 
-            <h3>En Mozilla Firefox (recomendado para pruebas)</h3>
-            <ol>
-                <li>Abre la página.</li>
-                <li>Pulsa <kbd>Alt</kbd> para mostrar la barra de menú.</li>
-                <li>Ve a <strong>Ver &gt; Estilo de página</strong> y selecciona el estilo deseado.</li>
-            </ol>
+            <div class="instrucciones-navegador">
+                <h3>En Mozilla Firefox (recomendado para pruebas)</h3>
+                <ol>
+                    <li>Abre la página.</li>
+                    <li>Pulsa <kbd>Alt</kbd> para mostrar la barra de menú.</li>
+                    <li>Ve a <strong>Ver &gt; Estilo de página</strong> y selecciona el estilo deseado.</li>
+                </ol>
 
-            <h3>Si usas Google Chrome</h3>
-            <p>Chrome no ofrece menú nativo para seleccionar estilos alternativos. Para probar una hoja de impresión o emular la impresión, usa la vista previa de impresión o las herramientas de desarrollador (Emulate CSS media → print). Si deseas que los usuarios cambien estilos desde la propia web, contacta con nosotros (más abajo hay un formulario) y te indicamos una solución basada en JavaScript y cookies.</p>
+                <h3>Si usas Google Chrome</h3>
+                <p>Chrome no ofrece menú nativo para seleccionar estilos alternativos. Para probar una hoja de impresión o emular la impresión, usa la vista previa de impresión o las herramientas de desarrollador (Emulate CSS media → print). Si deseas que los usuarios cambien estilos desde la propia web, contacta con nosotros (más abajo hay un formulario) y te indicamos una solución basada en JavaScript y cookies.</p>
+            </div>
         </section>
 
-
-        <section>
+        <section class="accesibilidad-seccion">
             <h2>Tipografía y lectura</h2>
             <p>En estilos accesibles hemos incluido la opción de usar <em>OpenDyslexic</em> (si la conexión lo permite vía Google Fonts). También se han ajustado interlineados y anchuras de líneas para facilitar la lectura.</p>
         </section>
 
-        <section>
+        <section class="accesibilidad-seccion">
             <h2>Navegación y teclado</h2>
-            <p>La navegación por teclado está soportada: puedes recorrer enlaces y controles con <kbd>Tab</kbd>. Los elementos interactivos muestran un foco visible.
+            <p>La navegación por teclado está soportada: puedes recorrer enlaces y controles con <kbd>Tab</kbd>. Los elementos interactivos muestran un foco visible.</p>
+        </section>
 
-
-        <section>
+        <section class="accesibilidad-seccion formulario-contacto">
             <h2>Cómo reportar incidencias o pedir alternativas</h2>
             <p>Si encuentras problemas de accesibilidad, por favor, contáctanos usando el formulario debajo o envía un correo a <a href="mailto:daw@inmolink.example">daw@inmolink.example</a>. Incluye:</p>
             <ul>
@@ -133,32 +131,32 @@
                 <li>Tu propuesta (si tienes) o captura de pantalla.</li>
             </ul>
 
-            <form action="mailto:daw" method="post" enctype="text/plain" aria-label="Formulario rápido de contacto">
-                <h3>Formulario rápido de contacto</h3>
+            <form>
+                <fieldset>
+                    <legend>Formulario rápido de contacto</legend>
 
-                <label for="nombre">Nombre</label><br>
-                <input name="nombre" type="text" required aria-required="true"><br><br>
+                    <label for="nombre">Nombre</label><br>
+                    <input id="nombre" name="nombre" type="text" required aria-required="true"><br><br>
 
-                <label for="email">Correo electrónico</label><br>
-                <input name="email" type="email" required aria-required="true"><br><br>
+                    <label for="email">Correo electrónico</label><br>
+                    <input id="email" name="email" type="email" required aria-required="true"><br><br>
 
-                <label for="url">URL afectada</label><br>
-                <input name="url" type="url" placeholder="https://..."><br><br>
+                    <label for="url">URL afectada</label><br>
+                    <input id="url" name="url" type="url" placeholder="https://..."><br><br>
 
-                <label for="mensaje">Mensaje</label><br>
-                <textarea name="mensaje" rows="6" required aria-required="true"></textarea><br><br>
+                    <label for="mensaje">Mensaje</label><br>
+                    <textarea id="mensaje" name="mensaje" rows="6" required aria-required="true"></textarea><br><br>
 
-                <p>
-                    <button type="submit">Enviar</button>
-                    <button type="reset">Limpiar</button>
-                </p>
+                    <p>
+                        <button type="submit">Enviar</button>
+                        <button type="reset">Limpiar</button>
+                    </p>
+                </fieldset>
             </form>
         </section>
+    </main>
 
-
-</main>
-
-<footer>
+    <footer>
     <p>&copy; 2025 INMOLINK Proyecto DAW Ingeniería Multimedia.</p>
 </footer>
     

@@ -677,4 +677,139 @@ header a .logo-contraste {
 }
 
 
+/* ========================================
+   PÁGINA ACCESIBILIDAD
+======================================== */
+
+
+/* Secciones */
+.accesibilidad-seccion {
+    background: #fff;
+    padding: 2rem 2.5rem;
+    margin-bottom: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    border-left: 5px solid var(--color-secundario);
+    transition: var(--transicion);
+}
+
+.accesibilidad-seccion:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.accesibilidad-seccion h2 {
+    color: var(--color-secundario);
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e0e0e0;
+    text-align: left;
+}
+
+.accesibilidad-seccion h3 {
+    color: var(--color-primario);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.8rem;
+}
+
+.accesibilidad-seccion p {
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    text-align: justify;
+}
+
+.accesibilidad-seccion a {
+    color: var(--color-secundario);
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.accesibilidad-seccion a:hover {
+    color: var(--color-primario);
+}
+
+.accesibilidad-seccion em {
+    color: var(--color-primario);
+    font-style: italic;
+    font-weight: 600;
+}
+
+.accesibilidad-seccion strong {
+    color: var(--color-secundario);
+    font-weight: 700;
+}
+
+/* Listas */
+.lista-caracteristicas,
+.lista-estilos {
+    list-style: none;
+    padding: 1.5rem 2rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+}
+
+.lista-caracteristicas {
+    padding-left: 0;
+}
+
+.lista-caracteristicas li {
+    background: #f7fbfd;
+    padding: 0.9rem 1.2rem;
+    margin-bottom: 0.8rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--color-primario);
+    transition: var(--transicion);
+}
+
+.lista-caracteristicas li:hover {
+    background: #eaf6fa;
+    transform: translateX(8px);
+}
+
+.lista-caracteristicas li::before {
+    content: "✓ ";
+    color: var(--color-secundario);
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+.lista-estilos {
+    background: #fff6ed;
+}
+
+.lista-estilos li {
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #e0e0e0;
+}
+
+.lista-estilos li:last-child {
+    border-bottom: none;
+}
+
+/* Instrucciones */
+.instrucciones-navegador {
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+}
+
+.instrucciones-navegador ol {
+    padding-left: 2rem;
+}
+
+.instrucciones-navegador kbd {
+    background: var(--color-secundario);
+    color: #fff;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-family: monospace;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
 
