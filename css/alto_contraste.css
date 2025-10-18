@@ -53,6 +53,14 @@ article footer {
     border-top: 2px solid #000;
 }
 
+/* Asegurar alto contraste en los textos de detalles dentro del anuncio */
+article footer,
+article footer p,
+article footer p strong {
+    color: #000 !important; /*negro para q se vea el texto
+     */
+}
+
 /* Formularios */
 form {
     background-color: #fff;
@@ -132,3 +140,45 @@ a:hover {
 hr {
     border: 2px solid #000;
 }
+
+*/
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+summary:focus,
+[tabindex]:focus {
+    outline: 4px solid #ffea00 !important;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 6px #000;
+}
+
+
+input:focus,
+select:focus,
+textarea:focus {
+    border: 3px solid #000 !important;
+    background-color: #fffef0; 
+}
+
+
+nav details[open] ul {
+    border: 3px solid #000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+
+main {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+
+header a .logo-normal {
+    display: none !important;
+}
+header a .logo-contraste {
+    display: inline !important;
+}
+

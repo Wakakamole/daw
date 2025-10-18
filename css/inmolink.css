@@ -669,6 +669,12 @@ AVISO- pero tamb está aplicado para ERROR404
   margin: 1.5em 0.75em 0 0.75em;
 }
 
+header a .logo-normal {
+    display: inline !important;
+}
+header a .logo-contraste {
+    display: none !important;
+}
 
 
 

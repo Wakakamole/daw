@@ -10,3 +10,11 @@ img, video, iframe, svg {
     filter: invert(1) hue-rotate(180deg);
 }
   
+
+
+header a .logo-normal {
+    display: none !important;
+}
+header a .logo-contraste {
+    display: inline !important;
+}
