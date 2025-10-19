@@ -1,61 +1,84 @@
-@page {
-    size: A4;
-    margin: 2cm;
-}
+@media print {
 
-body {
-    background-color: #fff !important;
-    color: #000 !important;
-    font-family: "Times New Roman", serif;
-    font-size: 12pt;
-    line-height: 1.4;
-}
+    body {
+        font-size: 12pt;
+        font-family: 'Times New Roman', Times, serif;
+        color: #000;
+        background-color: #fff;
+        margin: 0;
+    }
 
-/* Eliminar elementos de navegación, botones y formularios */
-header, nav, footer, button, input, select, textarea, .perfil-menu-lista, .radio-group {
-    display: none !important;
-}
+    header,
+    footer,
+    nav,
+    aside,
+    form:not(.formulario-importante),
+    .no-imprimir,
+    .imagen-decorativa,
+    #barra-navegacion,
+    #botones-accion {
+        display: none !important;
+    }
 
-/* Mantener contenido principal */
-main, article, section, #confirmacion {
-    display: block;
-}
+    img:not(.no-imprimir) {
+        max-width: 50% !important;
+        height: auto;
+        display: block;
+        margin: 0.5em auto;
+    }
 
-/* Imágenes importantes */
-img {
-    max-width: 100%;
-    height: auto;
-    page-break-inside: avoid;
-}
+    /* Limpia los flotados para el siguiente contenido */
+    .clear-float {
+        clear: both;
+    }
 
-/* Mostrar URLs de los enlaces */
-a::after {
-    content: " (" attr(href) ")";
-    font-size: 10pt;
-}
 
-/* Líneas divisorias más visibles */
-hr {
-    border: 1px solid #000;
-    page-break-after: avoid;
-}
+    a {
+        text-decoration: underline;
+        color: #000;
+        font-weight: bold;
+    }
 
-/* Páginas */
-h1, h2, h3, h4, h5, h6 {
-    page-break-after: avoid;
-    page-break-inside: avoid;
-}
+    a[href]:after {
+        content: " (" attr(href) ")";
+        font-size: 9pt;
+    }
 
-/* Evitar cortar artículos a la mitad */
-article {
-    page-break-inside: avoid;
-}
+    a[href^="#"]:after {
+        content: "";
+    }
 
-/* Añadir copyright al final */
-footer::after {
-    content: "© INMOLINK - Todos los derechos reservados";
-    display: block;
-    text-align: center;
-    font-size: 10pt;
-    margin-top: 1cm;
+
+    h2, h3, h4 {
+        page-break-after: avoid;
+    }
+
+    p {
+        orphans: 3;
+        widows: 3;
+    }
+
+    .nueva-seccion {
+        page-break-before: always;
+    }
+
+    @page {
+        margin: 2cm;
+    }
+
+
+    #info-impresion:before {
+        content: "URL de la página: " attr(data-url);
+        display: block;
+        margin-top: 1.5em;
+        font-size: 9pt;
+    }
+
+    #info-impresion:after {
+        content: "© Copyright [Tu Nombre o Empresa] - Todos los derechos reservados. Impreso el " counter(page) " de " counter(pages);
+        display: block;
+        font-size: 9pt;
+        text-align: center;
+        margin-top: 0.5em;
+    }
 }
