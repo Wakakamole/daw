@@ -59,33 +59,33 @@
 
     <main>
         <h1>REGISTRO USUARIO</h1>
-        <form action="index_user.html" method="post">
+    <form id="registerForm" action="index_user.html" method="post" novalidate>
             <fieldset>
                 <legend>Datos de Registro</legend>
                 <br>
 
-                <label for="username">Nombre de usuario: </label>
-                <input type="text" id="username" name="username" placeholder="Nombre de usuario">
+                <label for="usuario">Nombre de usuario: </label>
+                <input type="text" id="usuario" name="usuario" placeholder="Nombre de usuario">
                 <br>
                 <br>
 
-                <label for="password">Contraseña: </label>
-                <input type="password" id="password" name="password" placeholder="Contraseña">
+                <label for="contrasena">Contraseña: </label>
+                <input type="password" id="contrasena" name="contrasena" placeholder="Contraseña">
                 <br>
                 <br>
 
-                <label for="confirm_password">Confirmar Contraseña: </label>
-                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmar Contraseña">
+                <label for="confirmar_contrasena">Confirmar Contraseña: </label>
+                <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" placeholder="Confirmar Contraseña">
                 <br>
                 <br>
 
                 <label for="email">Dirección de correo electrónico: </label>
-                <input type="email" id="email" name="email" placeholder="Correo electrónico">
+                <input type="text" id="email" name="email" placeholder="Correo electrónico">
                 <br>
                 <br>
 
-                <label>Sexo:</label>
-                <div class="radio-group">
+                <section class="radio-group" aria-labelledby="sexo_label">
+                <h4 id="sexo_label">Sexo:</h4>
                 <label for="sexo_hombre">
                     Hombre
                     <input type="radio" id="sexo_hombre" name="sexo" value="hombre">
@@ -98,13 +98,17 @@
                     Otro
                     <input type="radio" id="sexo_otro" name="sexo" value="otro">
                 </label>
-                </div>
+                </section>
                 <br>
                 <br>
 
 
-                <label for="birthdate">Fecha de nacimiento: </label>
-                <input type="date" id="birthdate" name="birthdate">
+                <label>Fecha de nacimiento: </label>
+                <input type="number" id="dia_nacimiento" name="dia_nacimiento" placeholder="Día" style="width:70px" min="1" max="31" step="1"> 
+                <select id="mes_nacimiento" name="mes_nacimiento" aria-label="Mes"></select>
+                <input type="number" id="anio_nacimiento" name="anio_nacimiento" placeholder="Año" style="width:90px" min="1900" max="2100" step="1">
+                <!-- Hidden field que realmente se enviará con formato YYYY-MM-DD -->
+                <input type="hidden" id="fecha_nacimiento" name="fecha_nacimiento">
                 <br>
                 <br>
 
@@ -138,6 +142,8 @@
                 <button type="submit">Registrarme</button>
             </fieldset>
         </form>
+
+    <script src="js/validaccion.js"></script>
 
         <p class="registro-link"><strong>¿Ya tienes cuenta? </strong>
             <a href="inicio_sesion.html" class="boton-enlace">Inicia sesion aqui</a>

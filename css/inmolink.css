@@ -1,3 +1,4 @@
+/* Reglas adicionales para evitar overflow por elementos flexibles en móviles */
 /* =====================================================================
    FUENTES Y VARIABLES GLOBALES
 ===================================================================== */
@@ -21,6 +22,7 @@ main > ul {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   margin-top: 2rem;
+
 }
 
 /* para las ofertas de pisos */
@@ -188,6 +190,9 @@ form {
   margin: 2rem auto;
   transition: var(--transicion);
 }
+  form, fieldset, .radio-group, .radio-group label, fieldset label { min-width: 0; }
+  /* Como último recurso ocultar overflow-x en pantallas muy estrechas para evitar scroll horizontal indeseado */
+  body { overflow-x: hidden; }
 
 fieldset {
   border: 2px solid var(--color-secundario);
@@ -212,6 +217,18 @@ fieldset legend {        /* titulo del fieldset */
   border: 1px solid var(--color-primario);
   font-size: 1.2rem;
 }
+
+/* Evitar que el legend se salga del contenedor en pantallas pequeñas */
+fieldset legend {
+  box-sizing: border-box;
+  display: inline-block;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Reducir padding y tamaño del legend en móviles para que quepa mejor */
 
 fieldset label {
   display: block;
@@ -349,6 +366,58 @@ fieldset input[type="color"] {
   margin: 0;
   accent-color: var(--color-primario);
 }
+
+/* Mostrar el grupo de radios en línea dentro del formulario de registro */
+form#registerForm .radio-group {
+  flex-direction: row !important;
+  gap: 0.6rem;
+  width: auto !important;
+  align-items: center;
+}
+form#registerForm .radio-group label {
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.6rem;
+  background-color: transparent;
+  border: 1px solid #eee;
+  border-radius: 6px;
+}
+form#registerForm .radio-group input[type="radio"] {
+  margin: 0;
+}
+
+/* Refuerzo: permitir wrapping y que las labels no obliguen a crecer más allá del contenedor */
+form#registerForm .radio-group {
+  flex-wrap: wrap;
+}
+form#registerForm .radio-group label {
+  min-width: 0;
+}
+
+/* Responsive: en pantallas muy estrechas apilar las opciones de sexo para evitar solapamientos */
+
+/* Ajustes específicos para los controles de fecha en el formulario de registro
+   Usamos selectores con mayor especificidad para sobrescribir las reglas
+   generales que ponen inputs dentro de fieldset al 100% de ancho. */
+form#registerForm fieldset #dia_nacimiento,
+form#registerForm fieldset #mes_nacimiento,
+form#registerForm fieldset #anio_nacimiento {
+  display: inline-block !important;
+  vertical-align: middle;
+  margin-right: 0.6rem;
+  box-sizing: border-box;
+}
+form#registerForm fieldset #dia_nacimiento { width: 60px !important; }
+form#registerForm fieldset #mes_nacimiento { width: 140px !important; }
+form#registerForm fieldset #anio_nacimiento { width: 90px !important; }
+form#registerForm fieldset #dia_nacimiento,
+form#registerForm fieldset #anio_nacimiento {
+  text-align: center;
+  padding: 0.5rem 0.4rem;
+}
+
 
 
 
@@ -811,5 +880,13 @@ header a .logo-contraste {
 }
 
 
-
-
+/* Mostrar controles de fecha en línea sin elementos adicionales */
+label[for="dia_nacimiento"], label[for="mes_nacimiento"], label[for="anio_nacimiento"] { display: inline-block; }
+#dia_nacimiento, #mes_nacimiento, #anio_nacimiento {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+#dia_nacimiento { width: 60px; }
+#mes_nacimiento { min-width: 120px; }
+#anio_nacimiento { width: 80px; }

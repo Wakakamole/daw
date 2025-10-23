@@ -7,6 +7,7 @@ main {
   margin: 0 auto;
 }
 
+main h1,
 main section h1 {
   color: #0a4592;
   font-size: 2.5em;
@@ -116,3 +117,20 @@ article footer p:last-child {
   padding-top: 1rem;
   border-top: 2px solid #eee;
 }
+
+/* Estilos para validación de formularios (inputs en error y mensajes) */
+.input-error {
+  outline: 2px solid #c62828; 
+  box-shadow: 0 0 0 3px rgba(198,40,40,0.06);
+}
+.error-msg {
+  display: inline-block;
+  font-size: 0.9rem;
+  color: #c62828;
+  margin-left: 0.5rem;
+}
+.radio-group .error-msg {
+  display: block;
+  margin-top: 0.5rem;
+}
+

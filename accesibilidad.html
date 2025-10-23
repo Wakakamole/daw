@@ -132,21 +132,21 @@
                 <li>Tu propuesta (si tienes) o captura de pantalla.</li>
             </ul>
 
-            <form>
+            <form novalidate>
                 <fieldset>
                     <legend>Formulario rápido de contacto</legend>
 
                     <label for="nombre">Nombre</label><br>
-                    <input id="nombre" name="nombre" type="text" required aria-required="true"><br><br>
+                    <input id="nombre" name="nombre" type="text" aria-required="true"><br><br>
 
                     <label for="email">Correo electrónico</label><br>
-                    <input id="email" name="email" type="email" required aria-required="true"><br><br>
+                    <input id="email" name="email" type="text" inputmode="email" aria-required="true"><br><br>
 
                     <label for="url">URL afectada</label><br>
                     <input id="url" name="url" type="url" placeholder="https://..."><br><br>
 
                     <label for="mensaje">Mensaje</label><br>
-                    <textarea id="mensaje" name="mensaje" rows="6" required aria-required="true"></textarea><br><br>
+                    <textarea id="mensaje" name="mensaje" rows="6" aria-required="true"></textarea><br><br>
 
                     <p>
                         <button type="submit">Enviar</button>
