@@ -162,6 +162,41 @@ table {
     padding: 20px;
 }
 
+#tableContainer {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: #f7fbfd;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  overflow-x: auto; 
+}
+
+#tabla-costes-generada {
+  table-layout: fixed; 
+  width: 100%;
+  min-width: 800px;
+}
+
+/* Aplicar 16.66% a todas las columnas usando las reglas de nth-child */
+#tabla-costes-generada thead th:nth-child(1),
+#tabla-costes-generada thead th:nth-child(2),
+#tabla-costes-generada thead th:nth-child(3),
+#tabla-costes-generada thead th:nth-child(4),
+#tabla-costes-generada thead th:nth-child(5),
+#tabla-costes-generada thead th:nth-child(6) {
+  width: 16.66%; 
+}
+
+#tabla-costes-generada thead th {
+  vertical-align: middle;
+  text-align: center;
+}
+#tabla-costes-generada tbody td:nth-child(n+3) {
+  text-align: center;
+  font-weight: 600;
+}
+
   /* Bordes tabla */
 table, tr, th, td {
   border-collapse: collapse;
@@ -178,6 +213,37 @@ tbody tr:nth-child(odd) {
   }
   tbody tr:nth-child(even) {
   background-color: #d6dfeb;
+}
+
+/* BOTÓN MOSTRAR / OCULATAR TABLA */
+#mostrarTabla {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin: 1.5rem auto 1.5rem auto;
+
+  background-color: var(--color-secundario);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  padding: 0.9rem 1.5rem;
+  cursor: pointer;
+  transition: var(--transicion);
+  box-shadow: 0 3px 8px rgba(120, 169, 185, 0.35);
+  text-transform: uppercase;
+}
+
+#mostrarTabla:hover {
+  background-color: #6d9abb; 
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(120, 169, 185, 0.45);
+}
+
+#mostrarTabla:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(120, 169, 185, 0.35);
 }
 
 /* FORUMULARIOS */
