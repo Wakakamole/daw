@@ -423,9 +423,28 @@
         function diasEnMesNumber(year, monthNumber){ return new Date(year, monthNumber, 0).getDate(); }
 
         function actualizarHiddenDesdeControles(){
-          var d = parseInt(bd.value,10);
+          var dRaw = bd.value;
+          var d = parseInt(dRaw,10);
           var m = bm.value;
-          var y = parseInt(by.value,10);
+          var yRaw = by.value;
+          // Comprobar que el año tiene exactamente 4 dígitos y solo contiene números
+          if(typeof yRaw === 'string') yRaw = yRaw.trim();
+          if(!yRaw || yRaw.length !== 4){
+            hidden.value = '';
+            // sólo mostrar el error si el usuario ha introducido algo
+            if(yRaw && yRaw.length !== 4) marcarError(hidden, 'El año debe tener exactamente 4 dígitos.');
+            return false;
+          }
+          // verificar que todos los caracteres son dígitos
+          for(var ii=0; ii<yRaw.length; ii++){
+            var ch = yRaw.charAt(ii);
+            if(!esNumero(ch)){
+              hidden.value = '';
+              marcarError(hidden, 'El año sólo puede contener dígitos.');
+              return false;
+            }
+          }
+          var y = parseInt(yRaw,10);
           if(!isNaN(d) && m && !isNaN(y)){
             var max = diasEnMesNumber(y, parseInt(m,10));
             if(d >= 1 && d <= max){
@@ -466,6 +485,14 @@
         // posición consistente con otros mensajes de fecha.
         by.setAttribute('min', '1900'); by.setAttribute('max', '2100'); by.setAttribute('step', '1');
         by.addEventListener('input', function(){
+          // Normalizar la entrada: permitir sólo dígitos y máximo 4 caracteres
+          var s = '';
+          for(var i=0;i<by.value.length;i++){
+            var c = by.value.charAt(i);
+            if(esNumero(c)) s += c;
+            if(s.length >= 4) break;
+          }
+          if(by.value !== s) by.value = s;
           var v = parseInt(by.value, 10);
           if(isNaN(v)) return;
           if(v < 1900){
@@ -475,8 +502,8 @@
             by.value = '2100';
             marcarError(hidden, 'El año introducido excede el máximo permitido.');
           } else {
-            // quitar posible error si ahora está en rango
-            quitarError(hidden);
+            // quitar posible error si ahora está en rango y tiene 4 dígitos
+            if(by.value.length === 4) quitarError(hidden);
           }
         });
 

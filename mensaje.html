@@ -56,7 +56,7 @@
         </nav>
         <search>
             <h2>Búsqueda rápida</h2>
-            <form action="resultado_busqueda.html" method="GET">
+            <form action="resultado_busqueda.php" method="GET">
                 <input type="text" name="query" placeholder="Escribe aquí...">
                 <button type="submit">Intro</button>
             </form>
@@ -69,24 +69,26 @@
         <section>
         <h1>CONTACTAR AL ANUNCIANTE</h1>
 
-        <form action="mensaje_respuesta.html" method="post">
+        <form action="mensaje_respuesta.php" method="post">
+        <!-- campo oculto para recibir el id del anuncio (se rellena desde la querystring) -->
+        <input type="hidden" id="anuncio_id" name="anuncio_id" value="">
             <fieldset>
                 <legend>Detalles del Mensaje</legend>
                 <label for="tipo">Tipo de consulta:</label>
                 <select id="tipo" name="tipo" required>
                     <option value="">Selecciona una opción</option>
-                    <option value="información">Más información</option>
+                    <option value="informacion">Más información</option>
                     <option value="cita">Solicitar cita</option>
                     <option value="oferta">Comunicar oferta</option>
                 </select><br><br>
 
 
-                <label for="recipient">Destinatario:</label>
-                <input type="text" id="recipient" name="recipient" required>
+                <label for="nombre">Tu nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
                 <br><br>
 
-                <label for="message">Mensaje:</label>
-                <textarea id="message" name="message" rows="4" required></textarea>
+                <label for="texto">Mensaje:</label>
+                <textarea id="texto" name="texto" rows="4" required></textarea>
                 <br><br>
                 <button type="submit" >Enviar</button>
                 <button type="reset">Borrar todo</button>
@@ -102,5 +104,20 @@
     <p>&copy; 2025 INMOLINK Proyecto DAW Ingeniería Multimedia | 
     <a href="accesibilidad.html">Accesibilidad</a></p>
     </footer>
+    <script>
+        // Rellenar el campo oculto anuncio_id desde la querystring si existe
+        (function(){
+            try{
+                var params = new URLSearchParams(window.location.search);
+                var id = params.get('id');
+                if(id){
+                    var el = document.getElementById('anuncio_id');
+                    if(el) el.value = id;
+                }
+            }catch(e){
+                // silencio: si no hay URLSearchParams, se deja sin valor
+            }
+        })();
+    </script>
 </body>
 </html>

@@ -1,15 +1,10 @@
-<!-- PÁGINA DEL PERFIL -->
- <!-- Página donde se muestran las opciones que tiene el usuario:
-    - Modificar mis datos
-    - Darme de baja
-    - Mis anuncios
-    - Crear anuncio nuevo
-    - Mis mensajes
-    - Solicitar folleto publicitario impreso
-    - Salir (cerrar sesión)
- -->
-
-
+<?php
+// Cabecera común: DOCTYPE, head, apertura de body y header/nav/search
+if (!isset($page_title)) {
+    $page_title = 'INMOLINK';
+}
+function h_title($v){ return htmlspecialchars($v, ENT_QUOTES, 'UTF-8'); }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,15 +25,15 @@
     <link rel="alternate stylesheet" type="text/css" href="css/texto_grande.css" title="textoGrande">
     <link rel="alternate stylesheet" type="text/css" href="css/texto_grande_dislexia.css" title="textoGrandeDislexia">
     <link rel="alternate stylesheet" type="text/css" href="css/alto_contraste_grande.css" title="altoContraste+textoGrande">
-
+    
     <!-- Estilo para impresión -->
     <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print">
 
-    <title>INMOLINK - Mi perfil</title>
+    <title><?php echo h_title($page_title); ?></title>
 </head>
 <body>
     <header>
-         <a href="index.html">
+        <a href="index_user.html">
             <img src="img/logo.png" alt="Logo INMOLINK" width="100" height="100" class="logo-normal">
             <img src="img/!logo.png" alt="Logo INMOLINK blanco" width="100" height="100" class="logo-contraste">
         </a>
@@ -56,7 +51,6 @@
                         <ul>
                             <li><a href="mi_perfil.html">Mi Perfil</a></li>
                             <li><a href="index.html">Cerrar Sesión</a></li>
-                            
                         </ul>
                     </details>
                 </li>
@@ -69,33 +63,4 @@
                 <button type="submit">Intro</button>
             </form>
         </search>
-    </header> 
-
-
-    <main>
-        <section>
-        <h1>MI PERFIL</h1>
-        </section>
-        <section>
-            <h2>Menú de usuario</h2>
-            <nav aria-label="Opciones del usuario">
-                <ul class="perfil-menu-lista">
-                    <li><a href="error_404_user.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-user-pen"></i> Modificar mis datos</a></li>
-                    <li><a href="error_404_user.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-user-xmark"></i> Darme de baja</a></li>
-                    <li><a href="error_404_user.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-list"></i> Mis anuncios</a></li>
-                    <li><a href="error_404_user.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-circle-plus"></i> Nuevo anuncio</a></li>
-                    <li><a href="mis_mensajes.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-envelope"></i> Mis mensajes</a></li>
-                    <li><a href="solicitar_folleto.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-file-lines"></i> Solicitar folleto </a></li>
-                    <li><a href="index.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
-                </ul>
-            </nav>
-        </section>
-
-    </main>
-
-    <footer>
-    <p>&copy; 2025 INMOLINK Proyecto DAW Ingeniería Multimedia | 
-    <a href="accesibilidad.html">Accesibilidad</a></p>
-    </footer>
-</body>
-</html>
+    </header>

@@ -58,7 +58,7 @@
   <h1>INICIAR SESIÓN</h1>
   </section>
 
-  <form id="loginForm" action="index_user.html" method="post" novalidate>
+  <form id="loginForm" action="control_acceso.php" method="post" novalidate>
     <fieldset>
       <legend>Datos de acceso</legend>
 
@@ -67,14 +67,15 @@
       <br><br>
 
   <label for="contrasena">Contraseña:</label>
-  <input type="password" id="contrasena" name="contrasena" placeholder="••••••">
+  <input type="password" id="contrasena" name="clave" placeholder="••••••">
       <br><br>
 
       <button type="submit">Iniciar Sesión</button>
     </fieldset>
   </form>
 
-  <script src="js/validaccion.js"></script>
+  <!-- validaccion.js desactivado para permitir comprobar validación server-side sólo -->
+  <!-- <script src="js/validaccion.js"></script> -->
 
   <p class="registro-link"><strong>¿No tienes una cuenta?</strong>
     <a href="registro_usuario.html" class="boton-enlace">Regístrate aquí</a>

@@ -59,7 +59,7 @@
 
     <main>
         <h1>REGISTRO USUARIO</h1>
-    <form id="registerForm" action="index_user.html" method="post" novalidate>
+    <form id="registerForm" action="respuestaregistro.php" method="post" novalidate>
             <fieldset>
                 <legend>Datos de Registro</legend>
                 <br>
@@ -70,12 +70,12 @@
                 <br>
 
                 <label for="contrasena">Contraseña: </label>
-                <input type="password" id="contrasena" name="contrasena" placeholder="Contraseña">
+                <input type="password" id="contrasena" name="password" placeholder="Contraseña">
                 <br>
                 <br>
 
                 <label for="confirmar_contrasena">Confirmar Contraseña: </label>
-                <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" placeholder="Confirmar Contraseña">
+                <input type="password" id="confirmar_contrasena" name="repite" placeholder="Confirmar Contraseña">
                 <br>
                 <br>
 
@@ -106,7 +106,7 @@
                 <label>Fecha de nacimiento: </label>
                 <input type="number" id="dia_nacimiento" name="dia_nacimiento" placeholder="Día" style="width:70px" min="1" max="31" step="1"> 
                 <select id="mes_nacimiento" name="mes_nacimiento" aria-label="Mes"></select>
-                <input type="number" id="anio_nacimiento" name="anio_nacimiento" placeholder="Año" style="width:90px" min="1900" max="2100" step="1">
+                <input type="text" id="anio_nacimiento" name="anio_nacimiento" placeholder="Año" style="width:90px" maxlength="4" inputmode="numeric" pattern="[0-9]{4}">
                 <!-- Hidden field que realmente se enviará con formato YYYY-MM-DD -->
                 <input type="hidden" id="fecha_nacimiento" name="fecha_nacimiento">
                 <br>
@@ -143,7 +143,7 @@
             </fieldset>
         </form>
 
-    <script src="js/validaccion.js"></script>
+    <!--elimina la validación JS compleja para forzar validación en PHP.-->
 
         <p class="registro-link"><strong>¿Ya tienes cuenta? </strong>
             <a href="inicio_sesion.html" class="boton-enlace">Inicia sesion aqui</a>
