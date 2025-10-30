@@ -296,11 +296,7 @@
       }
     }
 
-<<<<<<< HEAD
   /*  var city = $('city') || $('ciudad');
-=======
-    /*  var city = $('city') || $('ciudad');
->>>>>>> 4378186341210862d2fcc3a3b510720611d76343
     var country = $('country') || $('pais');
     if(city) { quitarError(city); var cityVal = city.value || ''; if(typeof cityVal.trim === 'function') cityVal = cityVal.trim(); if(estaVacioOEspacios(cityVal)) { marcarError(city, 'La ciudad no puede estar vacía.'); ok = false; } }
     if(country) { quitarError(country); var countryVal = country.value || ''; if(typeof countryVal.trim === 'function') countryVal = countryVal.trim(); if(estaVacioOEspacios(countryVal)) { marcarError(country, 'El país no puede estar vacío.'); ok = false; } }
@@ -371,16 +367,9 @@
 
       Object.keys(mensajes).forEach(id => {
         const campo = $(id);
-<<<<<<< HEAD
         if (campo) {
           const mensaje = document.createElement('small');
           mensaje.textContent = mensajes[id];
-=======
-        if (campo && !campo.nextElementSibling?.classList.contains('info-msg')) {
-          const mensaje = document.createElement('small');
-          mensaje.textContent = mensajes[id];
-          mensaje.classList.add('info-msg');
->>>>>>> 4378186341210862d2fcc3a3b510720611d76343
           mensaje.style.display = 'block';
           mensaje.style.color = '#555';
           mensaje.style.fontSize = '0.9em';
@@ -434,7 +423,6 @@
         function diasEnMesNumber(year, monthNumber){ return new Date(year, monthNumber, 0).getDate(); }
 
         function actualizarHiddenDesdeControles(){
-<<<<<<< HEAD
           var dRaw = bd.value;
           var d = parseInt(dRaw,10);
           var m = bm.value;
@@ -457,11 +445,6 @@
             }
           }
           var y = parseInt(yRaw,10);
-=======
-          var d = parseInt(bd.value,10);
-          var m = bm.value;
-          var y = parseInt(by.value,10);
->>>>>>> 4378186341210862d2fcc3a3b510720611d76343
           if(!isNaN(d) && m && !isNaN(y)){
             var max = diasEnMesNumber(y, parseInt(m,10));
             if(d >= 1 && d <= max){
@@ -502,7 +485,6 @@
         // posición consistente con otros mensajes de fecha.
         by.setAttribute('min', '1900'); by.setAttribute('max', '2100'); by.setAttribute('step', '1');
         by.addEventListener('input', function(){
-<<<<<<< HEAD
           // Normalizar la entrada: permitir sólo dígitos y máximo 4 caracteres
           var s = '';
           for(var i=0;i<by.value.length;i++){
@@ -511,8 +493,6 @@
             if(s.length >= 4) break;
           }
           if(by.value !== s) by.value = s;
-=======
->>>>>>> 4378186341210862d2fcc3a3b510720611d76343
           var v = parseInt(by.value, 10);
           if(isNaN(v)) return;
           if(v < 1900){
@@ -522,13 +502,8 @@
             by.value = '2100';
             marcarError(hidden, 'El año introducido excede el máximo permitido.');
           } else {
-<<<<<<< HEAD
             // quitar posible error si ahora está en rango y tiene 4 dígitos
             if(by.value.length === 4) quitarError(hidden);
-=======
-            // quitar posible error si ahora está en rango
-            quitarError(hidden);
->>>>>>> 4378186341210862d2fcc3a3b510720611d76343
           }
         });
 
