@@ -1,7 +1,14 @@
-<!-- PÁGINA DE CONTACTO -->
-<!--
-    Página para que el usuario pueda contactar con el anunciante de una propiedad.
--->
+<!-- PÁGINA DEL PERFIL -->
+ <!-- Página donde se muestran las opciones que tiene el usuario:
+    - Modificar mis datos
+    - Darme de baja
+    - Mis anuncios
+    - Crear anuncio nuevo
+    - Mis mensajes
+    - Solicitar folleto publicitario impreso
+    - Salir (cerrar sesión)
+ -->
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,13 +28,13 @@
     <link rel="alternate stylesheet" type="text/css" href="css/noche.css" title="modoNoche">
     <link rel="alternate stylesheet" type="text/css" href="css/alto_contraste.css" title="altoContraste">
     <link rel="alternate stylesheet" type="text/css" href="css/texto_grande.css" title="textoGrande">
-    <link rel="alternate stylesheet" type="text/css" href="css/texto_grande_dislexia.css" title="textoGrande+Dislexia">
+    <link rel="alternate stylesheet" type="text/css" href="css/texto_grande_dislexia.css" title="textoGrandeDislexia">
     <link rel="alternate stylesheet" type="text/css" href="css/alto_contraste_grande.css" title="altoContraste+textoGrande">
 
     <!-- Estilo para impresión -->
     <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print">
 
-    <title>INMOLINK - Contactar</title>
+    <title>INMOLINK - Mi perfil</title>
 </head>
 <body>
     <header>
@@ -40,6 +47,7 @@
                 <li><a href="index_user.html"><i class="fa-solid fa-house-chimney"></i> Inicio</a></li>
                 <li><a href="formulario_busqueda.html"><i class="fa-solid fa-magnifying-glass"></i> Buscar Propiedades</a></li>
                 <li><a href="error_404_user.html"><i class="fa-regular fa-square-plus"></i>  Subir anuncio</a></li>
+                <li>
                     <details>
                         <summary>
                             <img src="img/user.webp" alt="Foto de perfil" width="40" height="40">
@@ -65,35 +73,22 @@
 
 
     <main>
-
         <section>
-        <h1>CONTACTAR AL ANUNCIANTE</h1>
-
-        <form action="mensaje_respuesta.html" method="post">
-            <fieldset>
-                <legend>Detalles del Mensaje</legend>
-                <label for="tipo">Tipo de consulta:</label>
-                <select id="tipo" name="tipo" required>
-                    <option value="">Selecciona una opción</option>
-                    <option value="información">Más información</option>
-                    <option value="cita">Solicitar cita</option>
-                    <option value="oferta">Comunicar oferta</option>
-                </select><br><br>
-
-
-                <label for="recipient">Destinatario:</label>
-                <input type="text" id="recipient" name="recipient" required>
-                <br><br>
-
-                <label for="message">Mensaje:</label>
-                <textarea id="message" name="message" rows="4" required></textarea>
-                <br><br>
-                <button type="submit" >Enviar</button>
-                <button type="reset">Borrar todo</button>
-                </section>
-
-            </fieldset>
-        </form>
+        <h1>MI PERFIL</h1>
+        </section>
+        <section>
+            <h2>Menú de usuario</h2>
+            <nav aria-label="Opciones del usuario">
+                <ul class="perfil-menu-lista">
+                    <li><a href="error_404_user.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-user-pen"></i> Modificar mis datos</a></li>
+                    <li><a href="error_404_user.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-user-xmark"></i> Darme de baja</a></li>
+                    <li><a href="error_404_user.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-list"></i> Mis anuncios</a></li>
+                    <li><a href="error_404_user.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-circle-plus"></i> Nuevo anuncio</a></li>
+                    <li><a href="mis_mensajes.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-envelope"></i> Mis mensajes</a></li>
+                    <li><a href="solicitar_folleto.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-file-lines"></i> Solicitar folleto </a></li>
+                    <li><a href="index.html" class="boton-enlace perfil-menu"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
+                </ul>
+            </nav>
         </section>
 
     </main>

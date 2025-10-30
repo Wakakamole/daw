@@ -1,6 +1,10 @@
-<!-- PÁGINA DE CONTACTO -->
+<!-- PÁGINA DE MENSAJES -->
 <!--
-    Página para que el usuario pueda contactar con el anunciante de una propiedad.
+    Página donde se muestran los mensajes del usuario.
+
+    Contiene:
+        - Mensajes enviados
+        - Mensajes recibidos
 -->
 
 <!DOCTYPE html>
@@ -21,13 +25,13 @@
     <link rel="alternate stylesheet" type="text/css" href="css/noche.css" title="modoNoche">
     <link rel="alternate stylesheet" type="text/css" href="css/alto_contraste.css" title="altoContraste">
     <link rel="alternate stylesheet" type="text/css" href="css/texto_grande.css" title="textoGrande">
-    <link rel="alternate stylesheet" type="text/css" href="css/texto_grande_dislexia.css" title="textoGrande+Dislexia">
+    <link rel="alternate stylesheet" type="text/css" href="css/texto_grande_dislexia.css" title="textoGrandeDislexia">
     <link rel="alternate stylesheet" type="text/css" href="css/alto_contraste_grande.css" title="altoContraste+textoGrande">
 
     <!-- Estilo para impresión -->
     <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print">
 
-    <title>INMOLINK - Contactar</title>
+    <title>INMOLINK - Mis Mensajes</title>
 </head>
 <body>
     <header>
@@ -40,6 +44,7 @@
                 <li><a href="index_user.html"><i class="fa-solid fa-house-chimney"></i> Inicio</a></li>
                 <li><a href="formulario_busqueda.html"><i class="fa-solid fa-magnifying-glass"></i> Buscar Propiedades</a></li>
                 <li><a href="error_404_user.html"><i class="fa-regular fa-square-plus"></i>  Subir anuncio</a></li>
+                <li>
                     <details>
                         <summary>
                             <img src="img/user.webp" alt="Foto de perfil" width="40" height="40">
@@ -64,36 +69,47 @@
     </header> 
 
 
-    <main>
+    <main class="mis-mensajes-main">
 
         <section>
-        <h1>CONTACTAR AL ANUNCIANTE</h1>
+        <h1>MIS MENSAJES</h1>
+        <p>Consulta los mensajes enviados y recibidos en la plataforma.</p>
+        </section>
 
-        <form action="mensaje_respuesta.html" method="post">
-            <fieldset>
-                <legend>Detalles del Mensaje</legend>
-                <label for="tipo">Tipo de consulta:</label>
-                <select id="tipo" name="tipo" required>
-                    <option value="">Selecciona una opción</option>
-                    <option value="información">Más información</option>
-                    <option value="cita">Solicitar cita</option>
-                    <option value="oferta">Comunicar oferta</option>
-                </select><br><br>
+        <!-- Sección de mensajes enviados -->
+        <section class="columna-1">
+            <h2>Mensajes Enviados</h2>
 
+            <article class="mensaje-enviado">
+                <header>
+                    <p><strong>Tipo:</strong> Más información</p>
+                    <p><strong>Enviado a:</strong> anunciante@inmolink.com</p>
+                </header>
 
-                <label for="recipient">Destinatario:</label>
-                <input type="text" id="recipient" name="recipient" required>
-                <br><br>
+                <p>Buenos días, me gustaría conocer más detalles sobre la ubicación exacta de la casa.</p>
 
-                <label for="message">Mensaje:</label>
-                <textarea id="message" name="message" rows="4" required></textarea>
-                <br><br>
-                <button type="submit" >Enviar</button>
-                <button type="reset">Borrar todo</button>
-                </section>
+                <footer>
+                    <p><time datetime="2025-09-19">19 sept 2025</time></p>
+                </footer>
+            </article>
+        </section>
 
-            </fieldset>
-        </form>
+        <!-- Sección de mensajes recibidos -->
+        <section class="columna-2">
+            <h2>Mensajes Recibidos</h2>
+
+            <article class="mensaje-recibido">
+                <header>
+                    <p><strong>Tipo:</strong> Oferta</p>
+                    <p><strong>Recibido de:</strong> comprador@correo.com</p>
+                </header>
+
+                <p>Buenos días, estoy dispuesto a ofrecer 150.000€ por la casa si aún está disponible.</p>
+
+                <footer>
+                    <p><time datetime="2025-09-19">19 sept 2025</time></p>
+                </footer>
+            </article>
         </section>
 
     </main>
@@ -102,5 +118,6 @@
     <p>&copy; 2025 INMOLINK Proyecto DAW Ingeniería Multimedia | 
     <a href="accesibilidad.html">Accesibilidad</a></p>
     </footer>
+
 </body>
 </html>

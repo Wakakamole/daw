@@ -1,14 +1,36 @@
-<!-- PÁGINA DE DETALLE DE ANUNCIO -->
+<!-- PÁGINA DE CONFIRMACIÓN DE SOLICITUD DE FOLLETO -->
 <!--
-    Página que muestra el detalle completo de un anuncio.
+    Página que muestra la confirmación de que la solicitud de impresión de un folleto
+    ha sido registrada correctamente.
+    Además muestra los detalles del solicitante, dirección de envío,
+    características del folleto y el coste total.
 
-    Contiene:
-        - Tipo de anuncio (venta/alquiler)
-        - Tipo de vivienda (obra nueva, vivienda, oficina, local, garaje)
-        - Ciudad
+    Incluye la siguiente información:
+
+    - Datos del solicitante:
+        - Nombre
+        - Correo electrónico
+        - Teléfono
+
+    - Dirección de envío:
+        - Calle
+        - Número
+        - Código Postal
+        - Localidad
+        - Provincia
         - País
-        - Precio
-        - Fecha de publicación
+
+    - Detalles del folleto:
+        - Color de la portada
+        - Número de copias
+        - Resolución de impresión
+        - Anuncio seleccionado
+        - Fecha aproximada de recepción
+        - Impresión a color (Sí/No)
+        - Impresión del precio en el folleto (Sí/No)
+        - Texto adicional
+
+    - Coste total del folleto
 -->
 
 <!DOCTYPE html>
@@ -31,16 +53,16 @@
     <link rel="alternate stylesheet" type="text/css" href="css/texto_grande.css" title="textoGrande">
     <link rel="alternate stylesheet" type="text/css" href="css/texto_grande_dislexia.css" title="textoGrandeDislexia">
     <link rel="alternate stylesheet" type="text/css" href="css/alto_contraste_grande.css" title="altoContraste+textoGrande">
-    
+
     <!-- Estilo para impresión -->
     <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print">
-   
-    <title>INMOLINK - Anuncio</title>
-</head>
-<body>
 
+    <title>INMOLINK - Solicitar Folleto</title>
+</head>
+
+<body>
     <header>
-        <a href="index_user.html">
+         <a href="index_user.html">
             <img src="img/logo.png" alt="Logo INMOLINK" width="100" height="100" class="logo-normal">
             <img src="img/!logo.png" alt="Logo INMOLINK blanco" width="100" height="100" class="logo-contraste">
         </a>
@@ -49,12 +71,10 @@
                 <li><a href="index_user.html"><i class="fa-solid fa-house-chimney"></i> Inicio</a></li>
                 <li><a href="formulario_busqueda.html"><i class="fa-solid fa-magnifying-glass"></i> Buscar Propiedades</a></li>
                 <li><a href="error_404_user.html"><i class="fa-regular fa-square-plus"></i>  Subir anuncio</a></li>
-                
                 <li>
                     <details>
                         <summary>
                             <img src="img/user.webp" alt="Foto de perfil" width="40" height="40">
-                            Usuario
                         </summary>
                         <ul>
                             <li><a href="mi_perfil.html">Mi Perfil</a></li>
@@ -72,78 +92,55 @@
                 <button type="submit">Intro</button>
             </form>
         </search>
-    </header>  
+    </header>
+
 
     <main>
-        <section id="cabecera-detalle">
-        <h1> DETALLE DEL ANUNCIO </h1>
-        </section>
+        
+        <section id="confirmacion">
+            <h1>Solicitud registrada con éxito</h1>
+            <p>Tu solicitud para imprimir un folleto publicitario ha sido registrada correctamente. A continuación se muestran los detalles:</p>
 
-        <!-- Imagen principal -->
-        <section id="imagen-principal">
-            <img src="img/noimage.png" alt="imagen anuncio" width="500" height="350">
-        </section>
-
-        <!-- Titulo -->
-        <h2>Piso en Calle Francia Bilbao</h2>
-
-        <section id="info-basica">
-            <p>Tipo de vivienda: Vivienda</p>
-            <p>Tipo de anuncio: Venta</p>
-            <p>Ciudad: Bilbao</p>
-            <p>País: España</p>
-            <p>Precio: 320.000€</p>
-            <p>Fecha de publicación: 10/09/2025</p>
-        </section>
-
-        <!-- Miniaturas de fotos -->
-        <section id="galeria">
-            <img src="img/noimage.png" alt="imagen anuncio1" width="100" height="70">
-            <img src="img/noimage.png" alt="imagen anuncio2" width="100" height="70">
-            <img src="img/noimage.png" alt="imagen anuncio3" width="100" height="70">
-            <img src="img/noimage.png" alt="imagen anuncio4" width="100" height="70">
-            <img src="img/noimage.png" alt="imagen anuncio5" width="100" height="70">
-            <img src="img/noimage.png" alt="imagen anuncio6" width="100" height="70">
-            <img src="img/noimage.png" alt="imagen anuncio7" width="100" height="70">
-        </section>
-
-        <!-- Descripcion -->
-        <section id="descripcion">
-            <h3>Descripcion</h3>
-            <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                It has survived not only five centuries, but also the leap into electronic typesetting, 
-                remaining essentially unchanged.
-            </p>
-        </section>
-
-        <!-- Caracteristicas -->
-            <section id="caracteristicas">
-            <h3>Características</h3>
-            <!-- lista ordenada -->
-            <ul> 
-                <li>Superficie: 120 m²</li>
-                <li>Habitaciones: 3</li>
-                <li>Baños: 2</li>
-                <li>Plantas: 1</li>
-                <li>Año de construcción: 2010</li>
+            <h3>Datos del solicitante</h3>
+            <ul>
+                <li><strong>Nombre:</strong> Juan Pérez</li>
+                <li><strong>Correo electrónico:</strong> juan@example.com</li>
+                <li><strong>Teléfono:</strong> 123456789</li>
             </ul>
-            </section>
 
-            <section id="contacto-anunciante">
-            <a href="mensaje.html">
-                <button>Enviar mensaje al anunciante</button>
-            </a>
-            </section>
+            <h3>Dirección de envío</h3>
+            <ul>
+                <li>Calle: Avenida Principal</li>
+                <li>Número: 10</li>
+                <li>CP: 28001</li>
+                <li>Localidad: Daimiel</li>
+                <li>Provincia: Ciudad Real</li>
+                <li>País: España</li>
+            </ul>
 
+            <h3>Detalles del folleto</h3>
+            <ul>
+                <li><strong>Color de la portada:</strong> Negro</li>
+                <li><strong>Número de copias:</strong> 1</li>
+                <li><strong>Resolución:</strong> 150 dpi</li>
+                <li><strong>Anuncio seleccionado:</strong> Anuncio 1</li>
+                <li><strong>Fecha aproximada de recepción:</strong> 05/10/2025</li>
+                <li><strong>Impresión a color:</strong> Sí</li>
+                <li><strong>Impresión del precio:</strong> Sí</li>
+                <li><strong>Texto adicional:</strong> Sin texto adicional</li>
+            </ul>
+
+            <h3>Coste del folleto</h3>
+            <p><strong>Coste total:</strong> 25 €</p>
+
+            <a href="index_user.html"><button>Volver a la pagina principal</button></a>
+        </section>
     </main>
+
 
     <footer>
     <p>&copy; 2025 INMOLINK Proyecto DAW Ingeniería Multimedia | 
     <a href="accesibilidad.html">Accesibilidad</a></p>
     </footer>
-
 </body>
 </html>

@@ -1,7 +1,9 @@
-<!-- PÁGINA DE CONTACTO -->
-<!--
-    Página para que el usuario pueda contactar con el anunciante de una propiedad.
--->
+<!-- PÁGINA DE RESPUESTA UNA VEZ SE ENVÍA EL MENSAJE -->
+ <!-- 
+    Página que confirma que el mensaje se ha enviado correctamente.
+    A lo mejor en el futuro se podría implementar como un pop-up.
+    
+ -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,17 +23,17 @@
     <link rel="alternate stylesheet" type="text/css" href="css/noche.css" title="modoNoche">
     <link rel="alternate stylesheet" type="text/css" href="css/alto_contraste.css" title="altoContraste">
     <link rel="alternate stylesheet" type="text/css" href="css/texto_grande.css" title="textoGrande">
-    <link rel="alternate stylesheet" type="text/css" href="css/texto_grande_dislexia.css" title="textoGrande+Dislexia">
+    <link rel="alternate stylesheet" type="text/css" href="css/texto_grande_dislexia.css" title="textoGrandeDislexia">
     <link rel="alternate stylesheet" type="text/css" href="css/alto_contraste_grande.css" title="altoContraste+textoGrande">
-
+    
     <!-- Estilo para impresión -->
     <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print">
 
-    <title>INMOLINK - Contactar</title>
+    <title>INMOLINK - Confirmación Mensaje</title>
 </head>
 <body>
     <header>
-         <a href="index.html">
+        <a href="index_user.html">
             <img src="img/logo.png" alt="Logo INMOLINK" width="100" height="100" class="logo-normal">
             <img src="img/!logo.png" alt="Logo INMOLINK blanco" width="100" height="100" class="logo-contraste">
         </a>
@@ -40,6 +42,7 @@
                 <li><a href="index_user.html"><i class="fa-solid fa-house-chimney"></i> Inicio</a></li>
                 <li><a href="formulario_busqueda.html"><i class="fa-solid fa-magnifying-glass"></i> Buscar Propiedades</a></li>
                 <li><a href="error_404_user.html"><i class="fa-regular fa-square-plus"></i>  Subir anuncio</a></li>
+                <li>
                     <details>
                         <summary>
                             <img src="img/user.webp" alt="Foto de perfil" width="40" height="40">
@@ -65,37 +68,32 @@
 
 
     <main>
+        <article class="mensaje-contenedor">
+            <section>
+            <h1>CONFIRMACIÓN: Mensaje enviado</h1>
+            <p><strong>Su mensaje ha sido recibido y almacenado correctamente. A continuación se muestran los datos enviados:</strong></p> 
+            <br>
+            </section>
 
-        <section>
-        <h1>CONTACTAR AL ANUNCIANTE</h1>
+            <section aria-labelledby="datos-envio">
+                <h3 id="datos-envio">Datos del mensaje</h3>
+                <dl>
+                <dt><strong> Tipo de consulta: </strong></dt>
+                    <dd><output id="out-tipo-mensaje">Solicitar cita</output></dd>
 
-        <form action="mensaje_respuesta.html" method="post">
-            <fieldset>
-                <legend>Detalles del Mensaje</legend>
-                <label for="tipo">Tipo de consulta:</label>
-                <select id="tipo" name="tipo" required>
-                    <option value="">Selecciona una opción</option>
-                    <option value="información">Más información</option>
-                    <option value="cita">Solicitar cita</option>
-                    <option value="oferta">Comunicar oferta</option>
-                </select><br><br>
+                    <dt><strong> Destinatario:</strong></dt>
+                    <dd><output id="out-destinatario">persona@gmail.com</output></dd>
 
-
-                <label for="recipient">Destinatario:</label>
-                <input type="text" id="recipient" name="recipient" required>
-                <br><br>
-
-                <label for="message">Mensaje:</label>
-                <textarea id="message" name="message" rows="4" required></textarea>
-                <br><br>
-                <button type="submit" >Enviar</button>
-                <button type="reset">Borrar todo</button>
-                </section>
-
-            </fieldset>
-        </form>
-        </section>
-
+                    <dt><strong> Mensaje: </strong></dt>
+                    <dd><output id="out-mensaje">Hola, estoy interesado en el anuncio. ¿Cuando sería posible concertar una cita?</output></dd>
+                </dl>
+            </section>
+            <section>
+                <p>
+                    <a href="detalle_anuncio.html"  class="boton-enlace" >Ok</a>
+                </p>
+            </section>
+        </article>
     </main>
 
     <footer>
