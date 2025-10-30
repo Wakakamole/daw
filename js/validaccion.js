@@ -480,7 +480,7 @@
         });
 
         // Limitar el input del año a un rango razonable (1900..2100) y avisar si
-        // el usuario introduce un valor absurdo (por ejemplo 351353). Mostramos el
+        // el usuario introduce un valor absurdo (por ejemplo 351353). 
         // mensaje de error en el campo oculto 'birthdate' para mantener la
         // posición consistente con otros mensajes de fecha.
         by.setAttribute('min', '1900'); by.setAttribute('max', '2100'); by.setAttribute('step', '1');
