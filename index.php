@@ -1,4 +1,4 @@
-<!-- PÁGINA PRINCIPAL CUANDO EL USUARIO TIENE LA SESION INICIADA -->
+<!-- PÁGINA PRINCIPAL CUANDO EL USUARIO NO TIENE LA SESION INICIADA O ESTA SIN REGISTRAR -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,59 +20,49 @@
     <link rel="alternate stylesheet" type="text/css" href="css/texto_grande.css" title="textoGrande">
     <link rel="alternate stylesheet" type="text/css" href="css/texto_grande_dislexia.css" title="textoGrandeDislexia">
     <link rel="alternate stylesheet" type="text/css" href="css/alto_contraste_grande.css" title="altoContraste+textoGrande">
-
+    
     <!-- Estilo para impresión -->
     <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print">
 
-    <title>INMOLINK</title>
+    <title> INMOLINK </title>
 </head>
-<body>
 
-    <header>
+<body>
+<header>
     <a href="index.php">
         <img src="img/logo.png" alt="Logo INMOLINK" width="100" height="100" class="logo-normal">
         <img src="img/!logo.png" alt="Logo INMOLINK blanco" width="100" height="100" class="logo-contraste">
     </a>
-    
-        <nav>
-            <ul>
-                <li><a href="index_user.php"><i class="fa-solid fa-house-chimney"></i> Inicio</a></li>
-                <li><a href="formulario_busqueda.html"><i class="fa-solid fa-magnifying-glass"></i> Buscar Propiedades</a></li>
-                <li><a href="error_404_user.html"><i class="fa-regular fa-square-plus"></i>  Subir anuncio</a></li>
-                <li>
-                    <details>
-                        <summary>
-                            <img src="img/user.webp" alt="Foto de perfil" width="40" height="40">
-                        </summary>
-                        <ul>
-                            <li><a href="mi_perfil.html">Mi Perfil</a></li>
-                            <li><a href="index.php">Cerrar Sesión</a></li>
-                            
-                        </ul>
-                    </details>
-                </li>
-            </ul>
-        </nav>
-        <search>
-            <h2>Búsqueda rápida</h2>
-            <form action="resultado_busqueda.php" method="GET">
-                <input type="text" name="query" placeholder="Escribe aquí...">
-                <button type="submit">Intro</button>
-            </form>
-        </search>
-    </header> 
+
+    <nav>
+        <ul>
+            <li><a href="index.php"><i class="fa-solid fa-house-chimney"></i> Inicio</a></li>
+            <li><a href="formulario_busqueda.html"><i class="fa-solid fa-magnifying-glass"></i> Buscar Propiedades</a></li>
+            <li><a href="inicio_sesion.html"><i class="fa-solid fa-user"></i> Inicio de Sesión</a></li>
+            <li><a href="registro_usuario.php"><i class="fa-solid fa-user-plus"></i> Registro de Usuario</a></li>
+        </ul>
+    </nav>
+
+    <search>
+        <h2>Búsqueda rápida:</h2>
+        <form action="resultado_busqueda.php" method="GET">
+            <input type="text" name="query" placeholder="Escribe aquí...">
+            <button type="submit">Intro</button>
+        </form>
+    </search>
+</header> 
 
 
 <main>
     <section>
-    <h1> PÁGINA PRINCIPAL </h1>
+    <h1>PÁGINA PRINCIPAL </h1>
     <h2>Últimos anuncios publicados</h2>
     </section>
     <ul>
         <li>
         <article>
             <h3>Foto 1</h3>
-            <a href="detalle_anuncio.php?id=1">
+            <a href="aviso.html">
                 <img src="img/noimage.png" alt="Foto 1" width="200">
             </a>
             <footer>
@@ -88,7 +78,7 @@
                 <li>
         <article>
             <h3>Foto 2</h3>
-            <a href="detalle_anuncio.php?id=2">
+            <a href="aviso.html">
                 <img src="img/noimage.png" alt="Foto 2" width="200">
             </a>
             <footer>
@@ -104,7 +94,7 @@
                 <li>
         <article>
             <h3>Foto 3</h3>
-            <a href="detalle_anuncio.php?id=3">
+            <a href="aviso.html">
                 <img src="img/noimage.png" alt="Foto 3" width="200">
             </a>
             <footer>
@@ -120,7 +110,7 @@
                 <li>
         <article>
             <h3>Foto 4</h3>
-            <a href="detalle_anuncio.php?id=4">
+            <a href="aviso.html">
                 <img src="img/noimage.png" alt="Foto 4" width="200">
             </a>
             <footer>
@@ -136,7 +126,7 @@
                 <li>
         <article>
             <h3>Foto 5</h3>
-            <a href="detalle_anuncio.php?id=5">
+            <a href="aviso.html">
                 <img src="img/noimage.png" alt="Foto 5" width="200">
             </a>
             <footer>

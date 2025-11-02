@@ -33,13 +33,13 @@ function h_title($v){ return htmlspecialchars($v, ENT_QUOTES, 'UTF-8'); }
 </head>
 <body>
     <header>
-        <a href="index_user.html">
+        <a href="index_user.php">
             <img src="img/logo.png" alt="Logo INMOLINK" width="100" height="100" class="logo-normal">
             <img src="img/!logo.png" alt="Logo INMOLINK blanco" width="100" height="100" class="logo-contraste">
         </a>
         <nav>
             <ul>
-                <li><a href="index_user.html"><i class="fa-solid fa-house-chimney"></i> Inicio</a></li>
+                <li><a href="index_user.php"><i class="fa-solid fa-house-chimney"></i> Inicio</a></li>
                 <li><a href="formulario_busqueda.html"><i class="fa-solid fa-magnifying-glass"></i> Buscar Propiedades</a></li>
                 <li><a href="error_404_user.html"><i class="fa-regular fa-square-plus"></i>  Subir anuncio</a></li>
                 <li>
@@ -50,7 +50,7 @@ function h_title($v){ return htmlspecialchars($v, ENT_QUOTES, 'UTF-8'); }
                         </summary>
                         <ul>
                             <li><a href="mi_perfil.html">Mi Perfil</a></li>
-                            <li><a href="index.html">Cerrar Sesión</a></li>
+                            <li><a href="index.php">Cerrar Sesión</a></li>
                         </ul>
                     </details>
                 </li>

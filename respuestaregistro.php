@@ -77,7 +77,7 @@ require_once __DIR__ . '/includes/cabecera.php';
             <section>
                 <p><em>Por razones de seguridad la contraseña y la foto de perfil no se muestran ni se transfieren en esta página.</em></p>
                 <p>
-                    <a href="index_user.html" class="boton-enlace">Ok</a>
+                    <a href="index_user.php" class="boton-enlace">Ok</a>
                 </p>
             </section>
         </article>
