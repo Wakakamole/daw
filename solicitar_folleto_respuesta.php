@@ -75,12 +75,12 @@ $costeTotal = $costeUnitario * $copias;
 
         <h3>Dirección de envío</h3>
         <ul>
-            <li>Calle: <?= htmlspecialchars($calle) ?></li>
-            <li>Número: <?= htmlspecialchars($numero) ?></li>
-            <li>CP: <?= htmlspecialchars($cp) ?></li>
-            <li>Localidad: <?= htmlspecialchars($localidad) ?></li>
-            <li>Provincia: <?= htmlspecialchars($provincia) ?></li>
-            <li>País: <?= htmlspecialchars($pais) ?></li>
+            <li><strong>Calle:</strong> <?= htmlspecialchars($calle) ?></li>
+            <li><strong>Número:</strong> <?= htmlspecialchars($numero) ?></li>
+            <li><strong>CP:</strong> <?= htmlspecialchars($cp) ?></li>
+            <li><strong>Localidad:</strong> <?= htmlspecialchars($localidad) ?></li>
+            <li><strong>Provincia:</strong> <?= htmlspecialchars($provincia) ?></li>
+            <li><strong>País:</strong> <?= htmlspecialchars($pais) ?></li>
         </ul>
 
         <h3>Detalles del folleto</h3>
