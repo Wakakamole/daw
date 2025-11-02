@@ -23,42 +23,43 @@ const DATOS_FILAS = Array.from({ length: 15 }, (_, i) => ({
 }));
 
 const PARAMETROS_COLUMNAS = [
-    { esColor: false, esAltaResolucion: false }, // Blanco y negro, <= 300 dpi
-    { esColor: false, esAltaResolucion: true },  // Blanco y negro, > 300 dpi
-    { esColor: true, esAltaResolucion: false },  // Color, <= 300 dpi
-    { esColor: true, esAltaResolucion: true }   // Color, > 300 dpi
+    { esColor: false, esAltaResolucion: false },
+    { esColor: false, esAltaResolucion: true },
+    { esColor: true, esAltaResolucion: false },
+    { esColor: true, esAltaResolucion: true }
 ];
 
-//FUNCIÓN QUE CALCULA EL COSTE TOTAL
+//CALCULA EL COSTE TOTAL
 function calcularCosteFolleto(numPaginas, numFotos, esColor, esAltaResolucion) {
     let costeTotal = 0.0;
-
+    let paginasRestantes = numPaginas;
     let costePaginas = 0.0;
-    
-    //Numero de paginas
+
+    let paginasPrevMax = 0;
     for (const tarifa of TARIFAS.PAGINAS) {
-        if (numPaginas <= tarifa.max) {
-            costePaginas = numPaginas * tarifa.precio;
-            break;
-        }
-    }
-    costeTotal += costePaginas;
+        const paginasEnTramo = Math.min(paginasRestantes, tarifa.max - paginasPrevMax);
+        costePaginas += paginasEnTramo * tarifa.precio;
+        paginasRestantes -= paginasEnTramo;
+        paginasPrevMax = tarifa.max;
 
-    //Color (0.5 €/foto)
+        if (paginasRestantes <= 0) break;
+    }
+
     if (esColor) {
-        costeTotal += numFotos * TARIFAS.COLOR;
+        costeTotal+=numFotos*TARIFAS.COLOR;
     }
 
-    //Si es resolucion alta (0.2 €/foto)
     if (esAltaResolucion) {
-        costeTotal += numFotos * TARIFAS.RESOLUCION_ALTA;
+        costeTotal+=numFotos*TARIFAS.RESOLUCION_ALTA;
     }
 
-    costeTotal += TARIFAS.COSTO_ENVIO;  //Le sumamos el coste de envío
-    
-    // Devuelvo el precio con 2 decimales
-    return parseFloat(costeTotal.toFixed(2));
+    costeTotal+=costePaginas;
+
+    costeTotal+=TARIFAS.COSTO_ENVIO;
+
+    return parseFloat(costeTotal.toFixed(2));   //2 decimales
 }
+
 
 
 //FUNCION QUE GENERA LA TABLA (usando DOM nodo a nodo)
@@ -68,7 +69,7 @@ function generarTablaCostes(container) {
     
     // Creo la talba
     const table = document.createElement('table');
-    table.setAttribute('id', 'tabla-costes-generada');
+    table.setAttribute('class', 'tabla-costes-generada');
     
     //THEAD
     const thead = document.createElement('thead');
