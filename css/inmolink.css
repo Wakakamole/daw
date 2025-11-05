@@ -260,6 +260,45 @@ form {
   margin: 2rem auto;
   transition: var(--transicion);
 }
+
+/* Mensajes de error / flash unificados */
+.error-summary,
+.flash {
+  border: 1px solid #f5a1a1; /* borde suave */
+  background: #fff0f0;     /* fondo suave en rojo */
+  padding: 0.8em;
+  margin-bottom: 1em;
+  border-radius: 8px;
+  color: #6b0000; /* texto rojo oscuro para contraste */
+  box-shadow: 0 1px 0 rgba(0,0,0,0.02) inset;
+}
+
+.field-error-text {
+  color: #7a0000;
+  background: #fff6f6; /* pequeño fondo para el texto de campo */
+  display: inline-block;
+  margin-top: 0.3em;
+  font-size: 0.95em;
+  padding: 0.18em 0.4em;
+  border-radius: 4px;
+}
+
+/* Mensaje informativo (recordado) ya tiene inline styles en varias plantillas; darle una clase similar */
+.info-recuerdo {
+  border:1px solid #4a8;
+  background:#eef;
+  padding:0.6em;
+  margin:0.6em 0;
+  border-radius:6px;
+  color: #084;
+}
+
+/* Lista de errores dentro de .error-summary */
+.error-summary ul {
+  margin: 0;
+  padding-left: 1.2em;
+  list-style-position: inside;
+}
   form, fieldset, .radio-group, .radio-group label, fieldset label { min-width: 0; }
   /* Como último recurso ocultar overflow-x en pantallas muy estrechas para evitar scroll horizontal indeseado */
   body { overflow-x: hidden; }

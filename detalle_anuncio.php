@@ -30,7 +30,10 @@ if (isset($anuncios[$id])) {
 function h($v) { return htmlspecialchars($v, ENT_QUOTES, 'UTF-8'); }
 ?>
 <?php
-// incluir cabecera común
+// comprobar acceso con include centralizado (intenta auto-login desde cookies antes de redirigir)
+require_once __DIR__ . '/includes/control_parteprivada.php';
+
+// incluir cabecera común (ya hay sesión válida aquí)
 $page_title = 'INMOLINK - Anuncio';
 require_once __DIR__ . '/includes/cabecera.php';
 ?>
@@ -76,7 +79,7 @@ require_once __DIR__ . '/includes/cabecera.php';
             <section id="caracteristicas">
             <h3>Características</h3>
             <!-- lista ordenada -->
-            <ul> 
+            <ul>
                 <li>Superficie: <?php echo h($anuncio['superficie']); ?></li>
                 <li>Habitaciones: <?php echo h($anuncio['habitaciones']); ?></li>
                 <li>Baños: <?php echo h($anuncio['banos']); ?></li>

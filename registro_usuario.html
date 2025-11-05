@@ -51,7 +51,7 @@
         <ul>
             <li><a href="index.php"><i class="fa-solid fa-house-chimney"></i> Inicio</a></li>
             <li><a href="formulario_busqueda.html"><i class="fa-solid fa-magnifying-glass"></i> Buscar Propiedades</a></li>
-            <li><a href="inicio_sesion.html"><i class="fa-solid fa-user"></i> Inicio de Sesión</a></li>
+            <li><a href="inicio_sesion.php"><i class="fa-solid fa-user"></i> Inicio de Sesión</a></li>
             <li><a href="registro_usuario.html"><i class="fa-solid fa-user-plus"></i> Registro de Usuario</a></li>
         </ul>
     </nav>
@@ -106,11 +106,7 @@
                 <label>Fecha de nacimiento: </label>
                 <input type="number" id="dia_nacimiento" name="dia_nacimiento" placeholder="Día" style="width:70px" min="1" max="31" step="1"> 
                 <select id="mes_nacimiento" name="mes_nacimiento" aria-label="Mes"></select>
-<<<<<<< HEAD
                 <input type="text" id="anio_nacimiento" name="anio_nacimiento" placeholder="Año" style="width:90px" maxlength="4" inputmode="numeric" pattern="[0-9]{4}">
-=======
-                <input type="number" id="anio_nacimiento" name="anio_nacimiento" placeholder="Año" style="width:90px" min="1900" max="2100" step="1">
->>>>>>> 4378186341210862d2fcc3a3b510720611d76343
                 <!-- Hidden field que realmente se enviará con formato YYYY-MM-DD -->
                 <input type="hidden" id="fecha_nacimiento" name="fecha_nacimiento">
                 <br>
@@ -147,14 +143,10 @@
             </fieldset>
         </form>
 
-<<<<<<< HEAD
     <!--elimina la validación JS compleja para forzar validación en PHP.-->
-=======
-    <script src="js/validaccion.js"></script>
->>>>>>> 4378186341210862d2fcc3a3b510720611d76343
 
-        <p class="registro-link"><strong>¿Ya tienes cuenta? </strong>
-            <a href="inicio_sesion.html" class="boton-enlace">Inicia sesion aqui</a>
+                <p class="registro-link"><strong>¿Ya tienes cuenta? </strong>
+            <a href="inicio_sesion.php" class="boton-enlace">Inicia sesion aqui</a>
         </p>
 
     </main>

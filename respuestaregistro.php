@@ -5,6 +5,8 @@
 // procesa el formulario de registro básico
 // de momento sólo prestamos atención a usuario no vacío, password no vacío y si no son iguales
 
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
+
 function h($v){ return htmlspecialchars($v, ENT_QUOTES, 'UTF-8'); }
 
 $usuario = isset($_POST['usuario']) ? trim($_POST['usuario']) : '';
@@ -18,23 +20,19 @@ if (trim($repite) === '') { $errors[] = 'repite_empty'; }
 if ($password !== $repite) { $errors[] = 'password_mismatch'; }
 
 if (!empty($errors)) {
-    // redirigir al formulario de registro con errores en querystring
-    $qsData = [
-        'errors' => implode(',', $errors),
-        'usuario' => $usuario,
-    ];
-    // Añadir otros campos no sensibles para repoblado
+    // Guardar errores en sesión (flash-like) y datos para repoblado
+    $_SESSION['errors'] = $errors;
+    $old = [ 'usuario' => $usuario ];
     $fields = ['email','sexo','fecha_nacimiento','ciudad','pais'];
     foreach($fields as $f){
-        if (isset($_POST[$f])) {
-            $qsData[$f] = $_POST[$f];
-        }
+        if (isset($_POST[$f])) { $old[$f] = $_POST[$f]; }
     }
-    $qs = http_build_query($qsData);
+    $_SESSION['old'] = $old;
+
+    // Redirigir al formulario PHP sin querystring; el formulario consumirá los datos de sesión
     $host = $_SERVER['HTTP_HOST'];
     $uri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-    // Redirigir a la versión PHP del formulario para mostrar errores server-side
-    header("Location: http://$host$uri/registro_usuario.php?$qs");
+    header("Location: http://$host$uri/registro_usuario.php");
     exit;
 }
 

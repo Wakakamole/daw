@@ -1,16 +1,28 @@
 <?php
-// Página de registro convertida a PHP para mostrar errores y repoblar campos desde la querystring
 function h($s){ return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
 
 $errors = [];
-if (!empty($_GET['errors'])) {
+
+// Preferir errores de sesión (flash) cuando vengan de un submit; esto unifica comportamiento con inicio_sesion
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
+if (!empty($_SESSION['errors'])) {
+    $errors = $_SESSION['errors'];
+    unset($_SESSION['errors']);
+}
+// Si no hay errores en sesión, conservar compatibilidad con la versión anterior que usaba GET
+elseif (!empty($_GET['errors'])) {
     $errors = array_filter(explode(',', $_GET['errors']));
 }
 
 $vals = [];
 $fields = ['usuario','email','sexo','fecha_nacimiento','ciudad','pais'];
-foreach ($fields as $f) {
-    $vals[$f] = isset($_GET[$f]) ? $_GET[$f] : '';
+// Priorizar repoblado desde sesión ($_SESSION['old']) si existe
+if (!empty($_SESSION['old'])) {
+    $old = $_SESSION['old'];
+    foreach ($fields as $f) { $vals[$f] = isset($old[$f]) ? $old[$f] : ''; }
+    unset($_SESSION['old']);
+} else {
+    foreach ($fields as $f) { $vals[$f] = isset($_GET[$f]) ? $_GET[$f] : ''; }
 }
 
 // Si hay fecha_nacimiento la parseamos para rellenar día/mes/año por separado
@@ -45,14 +57,14 @@ require_once __DIR__ . '/includes/cabecera.php';
         <h1>REGISTRO USUARIO</h1>
 
         <?php if (!empty($errors)): ?>
-            <div class="error-summary" role="alert" style="border:1px solid #c00;background:#fee;padding:0.6em;margin-bottom:1em;">
+            <section class="error-summary" role="alert" aria-live="assertive">
                 <p><strong>Se han encontrado errores en el formulario:</strong></p>
-                <ul style="margin:0;padding-left:1.2em;list-style-position:inside;">
+                <ul>
                 <?php foreach ($errors as $e): ?>
                     <li><?php echo h(isset($mensajes[$e]) ? $mensajes[$e] : $e); ?></li>
                 <?php endforeach; ?>
                 </ul>
-            </div>
+            </section>
         <?php endif; ?>
 
     <form id="registerForm" action="respuestaregistro.php" method="post" novalidate>
@@ -142,7 +154,7 @@ require_once __DIR__ . '/includes/cabecera.php';
         </form>
 
         <p class="registro-link"><strong>¿Ya tienes cuenta? </strong>
-            <a href="inicio_sesion.html" class="boton-enlace">Inicia sesion aqui</a>
+            <a href="inicio_sesion.php" class="boton-enlace">Inicia sesion aqui</a>
         </p>
 
     </main>
