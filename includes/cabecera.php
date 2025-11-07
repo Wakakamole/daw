@@ -55,7 +55,17 @@ require_once __DIR__ . '/session.php';
                                 <img src="img/user.webp" alt="Foto de perfil" width="40" height="40">
                             </summary>
                             <ul>
-                                <li><a href="mi_perfil.html">Mi Perfil</a></li>
+                                <li>
+                                    <a href="mi_perfil.html">
+                                        <?php
+                                            if (isset($_SESSION['usuario'])) {
+                                                echo 'Perfil de ' . htmlspecialchars($_SESSION['usuario'], ENT_QUOTES, 'UTF-8');
+                                            } else {
+                                                echo 'Mi Perfil';
+                                            }
+                                        ?>
+                                    </a>
+                                </li>
                                 <li><a href="logout.php">Cerrar Sesión</a></li>
                             </ul>
                         </details>

@@ -100,10 +100,4 @@ if (!empty($_SESSION['login']) && $_SESSION['login'] === 'ok') {
     </ul>
 </main>
 
-<footer>
-    <p>&copy; 2025 INMOLINK Proyecto DAW Ingeniería Multimedia | 
-    <a href="accesibilidad.html">Accesibilidad</a></p>
-</footer>
-
-</body>
-</html>
+<?php require_once __DIR__ . '/includes/pie.php'; ?>
