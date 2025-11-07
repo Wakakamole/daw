@@ -50,6 +50,13 @@ $anuncios = [
             </li>
         <?php endforeach; ?>
     </ul>
+
+    <div class="contenedor-boton-anadir">
+        <a href="anadir_foto.php" class="boton-anadir-foto">
+            <i class="fa-solid fa-image"></i> Añadir foto a algún anuncio
+        </a>
+    </div>
+
 </main>
 
 <?php require_once __DIR__ . '/includes/pie.php'; ?>

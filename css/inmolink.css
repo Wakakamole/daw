@@ -1096,3 +1096,32 @@ label[for="dia_nacimiento"], label[for="mes_nacimiento"], label[for="anio_nacimi
 #dia_nacimiento { width: 60px; }
 #mes_nacimiento { min-width: 120px; }
 #anio_nacimiento { width: 80px; }
+
+
+.contenedor-boton-anadir {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.boton-anadir-foto {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background-color:rgb(67, 158, 108);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: var(--transicion);
+  width: 250px;
+  box-shadow: 0 3px 8px rgba(120, 169, 185, 0.25);
+}
+
+.boton-anadir-foto:hover {
+  background-color: #6d9abb;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(120, 169, 185, 0.35);
+}
