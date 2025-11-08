@@ -13,6 +13,8 @@ session_destroy();
 setcookie('remember_user', '', time() - 3600, '/');
 setcookie('remember_pass', '', time() - 3600, '/');
 setcookie('last_visit', '', time() - 3600, '/');
+setcookie('ultimos_anuncios', '', time() - 3600, '/');
+
 
 // Redirigir a página pública
 header('Location: index.php');

@@ -1125,3 +1125,88 @@ label[for="dia_nacimiento"], label[for="mes_nacimiento"], label[for="anio_nacimi
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(120, 169, 185, 0.35);
 }
+
+
+
+#ultimos-anuncios {
+  border: none;
+  background-color: #e3e8e9;
+  padding: 0;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+#ultimos-anuncios h2 {
+  font-size: 1.6rem;
+  color: var(--color-primario);
+  margin-bottom: 1rem;
+  text-align: left;
+  text-align: center;
+}
+
+#ultimos-anuncios ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0;
+  justify-content: center;
+  list-style: none;
+}
+
+#ultimos-anuncios li {
+  flex: 1 1 180px;
+  max-width: 220px;
+  justify-content: center;
+}
+
+#ultimos-anuncios .mini-anuncio {
+  background-color: #d7e0e2;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: var(--transicion);
+  width: 100%;
+  border: 1px solid #eee;
+}
+
+#ultimos-anuncios .mini-anuncio h3 {
+  background-color: var(--color-secundario);
+  color: #fff;
+  font-size: 1rem;
+  padding: 0.6rem;
+  margin: 0;
+  text-align: center;
+}
+
+#ultimos-anuncios .mini-anuncio a {
+  display: block;
+  padding: 0.5rem;
+}
+
+#ultimos-anuncios .mini-anuncio img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: var(--transicion);
+}
+
+#ultimos-anuncios .mini-anuncio img:hover {
+  transform: scale(1.05);
+}
+
+#ultimos-anuncios .mini-anuncio footer {
+  padding: 0.8rem;
+  background-color: #d7e0e2;
+}
+
+#ultimos-anuncios .mini-anuncio footer p {
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+#ultimos-anuncios .mini-anuncio footer p:last-child {
+  font-weight: 600;
+  color: var(--color-primario);
+}

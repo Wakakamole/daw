@@ -33,10 +33,11 @@ if (!file_exists($usersFile)) {
 }
 
 $usuarios = require $usersFile; // devuelve array usuario=>clave
-if (isset($usuarios[$usuario]) && $usuarios[$usuario] === $clave) {
+if (isset($usuarios[$usuario]) && $usuarios[$usuario]['clave'] === $clave) {
     // acceso correcto: crear sesión
     $_SESSION['login'] = 'ok';
     $_SESSION['usuario'] = $usuario;
+    $_SESSION['estilo'] = $usuarios[$usuario]['estilo'];
 
     // Si ha marcado recordar, crear cookies (no accesible desde JS: httponly)
     if ($remember) {

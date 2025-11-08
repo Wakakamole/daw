@@ -13,9 +13,10 @@ if (!$is_logged && isset($_COOKIE['remember_user']) && isset($_COOKIE['remember_
         $usuarios = require $usersFile;
         $u = $_COOKIE['remember_user'];
         $p = $_COOKIE['remember_pass'];
-        if (isset($usuarios[$u]) && $usuarios[$u] === $p) {
+        if (isset($usuarios[$u]) && $usuarios[$u]['clave'] === $p) {
             $_SESSION['login'] = 'ok';
             $_SESSION['usuario'] = $u;
+            $_SESSION['estilo'] = $usuarios[$u]['estilo'];
             $is_logged = true;
             $lastVisitMsg = isset($_COOKIE['last_visit']) ? $_COOKIE['last_visit'] : '';
             if ($lastVisitMsg) {

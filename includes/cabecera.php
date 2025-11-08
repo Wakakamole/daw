@@ -8,6 +8,9 @@ function h_title($v){ return htmlspecialchars($v, ENT_QUOTES, 'UTF-8'); }
 <?php
 // inicializar sesión y auto-login sin salida
 require_once __DIR__ . '/session.php';
+
+// Determinar estilo del usuario (si existe en sesión)
+$estilo = isset($_SESSION['estilo']) ? $_SESSION['estilo'] : '';
 ?>
 
 <!DOCTYPE html>
@@ -25,14 +28,19 @@ require_once __DIR__ . '/session.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Estilos alternativos -->
-    <link rel="alternate stylesheet" type="text/css" href="css/noche.css" title="modoNoche">
-    <link rel="alternate stylesheet" type="text/css" href="css/alto_contraste.css" title="altoContraste">
-    <link rel="alternate stylesheet" type="text/css" href="css/texto_grande.css" title="textoGrande">
-    <link rel="alternate stylesheet" type="text/css" href="css/texto_grande_dislexia.css" title="textoGrandeDislexia">
-    <link rel="alternate stylesheet" type="text/css" href="css/alto_contraste_grande.css" title="altoContraste+textoGrande">
+    <link rel="alternate stylesheet" type="text/css" href="css/noche.css" title="noche">
+    <link rel="alternate stylesheet" type="text/css" href="css/alto_contraste.css" title="alto_contraste">
+    <link rel="alternate stylesheet" type="text/css" href="css/texto_grande.css" title="texto_grande">
+    <link rel="alternate stylesheet" type="text/css" href="css/texto_grande_dislexia.css" title="texto_grande_dislexia">
+    <link rel="alternate stylesheet" type="text/css" href="css/alto_contraste_grande.css" title="alto_contraste_grande">
     
     <!-- Estilo para impresión -->
     <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print">
+
+    <!-- Estilo seleccionado por el usuario -->
+    <?php if ($estilo): ?>
+        <link rel="stylesheet" href="css/<?php echo htmlspecialchars($estilo, ENT_QUOTES, 'UTF-8'); ?>.css">
+    <?php endif; ?>
 
     <title><?php echo h_title($page_title); ?></title>
 </head>
@@ -86,9 +94,61 @@ require_once __DIR__ . '/session.php';
             </form>
         </search>
     </header>
-    <?php if (!empty($_SESSION['remember_message'])): ?>
-        <section class="info-recuerdo" role="status">
-            <?php echo htmlspecialchars($_SESSION['remember_message'], ENT_QUOTES, 'UTF-8'); ?>
-        </section>
-        <?php unset($_SESSION['remember_message']); ?>
-    <?php endif; ?>
+
+
+
+
+
+<?php
+//PANEL DE ÚLTIMOS ANUNCIOS VISITADOS
+$cookie_name = 'ultimos_anuncios';
+$ultimos_anuncios_panel = [];
+
+//leemos la cookie y la convierto en array
+if (isset($_COOKIE[$cookie_name])) {
+    $ultimos_ids = json_decode($_COOKIE[$cookie_name], true);
+    if (is_array($ultimos_ids)) {
+        // Cargar todos los anuncios
+        $anuncios_data = file_exists(__DIR__ . '/../data/anuncios.php') ? require __DIR__ . '/../data/anuncios.php' : [];
+
+        foreach ($ultimos_ids as $aid) {
+            if (isset($anuncios_data[$aid])) {
+                $ultimos_anuncios_panel[] = $anuncios_data[$aid];
+            }
+        }
+    }
+}
+?>
+<?php if (!empty($ultimos_anuncios_panel)): ?>
+    <aside id="ultimos-anuncios">
+        <h2>Últimos anuncios visitados</h2>
+        <ul class="lista-anuncios">
+            <?php foreach ($ultimos_anuncios_panel as $a): ?>
+                <li>
+                    <article class="anuncio-item mini-anuncio">
+                        <h3><?= htmlspecialchars($a['titulo']) ?></h3>
+                        <a href="detalle_anuncio.php?id=<?= $a['id'] ?>">
+                            <img src="<?= htmlspecialchars($a['foto']) ?>" alt="<?= htmlspecialchars($a['titulo']) ?>">
+                        </a>
+                        <footer>
+                            <p><strong>Ciudad:</strong> <?= htmlspecialchars($a['ciudad']) ?></p>
+                            <p><strong>País:</strong> <?= htmlspecialchars($a['pais']) ?></p>
+                            <p><strong>Precio:</strong> <?= htmlspecialchars($a['precio']) ?></p>
+                        </footer>
+                    </article>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </aside>
+<?php endif; ?>
+
+
+
+
+
+<?php if (!empty($_SESSION['remember_message'])): ?>
+    <section class="info-recuerdo" role="status">
+        <?php echo htmlspecialchars($_SESSION['remember_message'], ENT_QUOTES, 'UTF-8'); ?>
+    </section>
+    <?php unset($_SESSION['remember_message']); ?>
+<?php endif; ?>

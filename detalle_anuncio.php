@@ -33,6 +33,35 @@ function h($v) { return htmlspecialchars($v, ENT_QUOTES, 'UTF-8'); }
 // comprobar acceso con include centralizado (intenta auto-login desde cookies antes de redirigir)
 require_once __DIR__ . '/includes/control_parteprivada.php';
 
+
+
+//PANEL DE ÚLTIMOS ANUNCIOS VISITADOS
+$cookie_name = 'ultimos_anuncios';
+$max_anuncios = 4;
+
+$ultimos_anuncios = [];
+//comprobamos que la cookie existe
+if (isset($_COOKIE[$cookie_name])) {
+    $ultimos_anuncios = json_decode($_COOKIE[$cookie_name], true);
+    if (!is_array($ultimos_anuncios)) {
+        $ultimos_anuncios = [];
+    }
+}
+//comprobar si el anuncio ya existe en el array y si ya existe eliminarlo y luego añadirlo
+if (($key = array_search($anuncio['id'], $ultimos_anuncios)) !== false) {
+    unset($ultimos_anuncios[$key]);
+}
+$ultimos_anuncios[] = $anuncio['id'];
+
+//nos quedsamos solo con los últimos 4 anuncios
+$ultimos_anuncios = array_slice($ultimos_anuncios, -$max_anuncios);
+
+//Guardar cookie (1 semana)
+setcookie($cookie_name, json_encode($ultimos_anuncios), time() + 7*24*60*60, "/");
+
+
+
+
 // incluir cabecera común (ya hay sesión válida aquí)
 $page_title = 'INMOLINK - Anuncio';
 require_once __DIR__ . '/includes/cabecera.php';
