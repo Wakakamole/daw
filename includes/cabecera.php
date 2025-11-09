@@ -64,7 +64,7 @@ $estilo = isset($_SESSION['estilo']) ? $_SESSION['estilo'] : '';
                             </summary>
                             <ul>
                                 <li>
-                                    <a href="mi_perfil.html">
+                                            <a href="mi_perfil.php">
                                         <?php
                                             if (isset($_SESSION['usuario'])) {
                                                 echo 'Perfil de ' . htmlspecialchars($_SESSION['usuario'], ENT_QUOTES, 'UTF-8');

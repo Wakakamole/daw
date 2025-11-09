@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/includes/control_parteprivada.php';
+
 require_once __DIR__ . '/includes/cabecera.php';
 
 // Datos ficticios de anuncios (igual que en mis_anuncios)

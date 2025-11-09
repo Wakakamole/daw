@@ -1,6 +1,9 @@
 <!-- PÁGINA PRINCIPAL CUANDO EL USUARIO TIENE LA SESION INICIADA -->
 
 <?php
+
+require_once __DIR__ . '/includes/control_parteprivada.php';
+
 require_once __DIR__ . '/includes/cabecera.php';
 
 //Saludo
