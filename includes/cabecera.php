@@ -9,8 +9,14 @@ function h_title($v){ return htmlspecialchars($v, ENT_QUOTES, 'UTF-8'); }
 // inicializar sesión y auto-login sin salida
 require_once __DIR__ . '/session.php';
 
-// Determinar estilo del usuario (si existe en sesión)
-$estilo = isset($_SESSION['estilo']) ? $_SESSION['estilo'] : '';
+//determinar estilo del usuario (por ahora desde sesión, pero preparado para cookie)
+if (isset($_COOKIE['estilo_usuario'])) {
+    $estilo = $_COOKIE['estilo_usuario'];
+} elseif (isset($_SESSION['estilo'])) {
+    $estilo = $_SESSION['estilo'];
+} else {
+    $estilo = '';
+}
 ?>
 
 <!DOCTYPE html>
