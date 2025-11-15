@@ -155,14 +155,3 @@ if (isset($_COOKIE[$cookie_name])) {
         </ul>
     </aside>
 <?php endif; ?>
-
-
-
-
-
-<?php if (!empty($_SESSION['remember_message'])): ?>
-    <section class="info-recuerdo" role="status">
-        <?php echo htmlspecialchars($_SESSION['remember_message'], ENT_QUOTES, 'UTF-8'); ?>
-    </section>
-    <?php unset($_SESSION['remember_message']); ?>
-<?php endif; ?>

@@ -1,18 +1,19 @@
-<!-- PÁGINA DE DETALLE DE ANUNCIO -->
-<!--
-    Página que muestra el detalle completo de un anuncio (de momento los pilllamos de data/anuncios.php)
-
-    Contiene:
-        - Tipo de anuncio (venta/alquiler)
-        - Tipo de vivienda (obra nueva, vivienda, oficina, local, garaje)
-        - Ciudad
-        - País
-        - Precio
-        - Fecha de publicación
--->
-
 <?php
 $id = isset($_GET['id']) ? intval($_GET['id']) : 1;
+// comprobar acceso con include centralizado (intenta auto-login desde cookies antes de redirigir)
+require_once __DIR__ . '/includes/control_parteprivada.php';
+
+// PÁGINA DE DETALLE DE ANUNCIO
+// Página que muestra el detalle completo de un anuncio (de momento los pilllamos de data/anuncios.php)
+
+// Contiene:
+//  - Tipo de anuncio (venta/alquiler)
+//  - Tipo de vivienda (obra nueva, vivienda, oficina, local, garaje)
+//  - Ciudad
+//  - País
+//  - Precio
+//  - Fecha de publicación
+
 $anuncios = [];
 // cargar datos
 if (file_exists(__DIR__ . '/data/anuncios.php')) {

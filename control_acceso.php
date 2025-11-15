@@ -45,6 +45,8 @@ if ($row && password_verify($clave, $row['Clave'])) {
     $_SESSION['estilo'] = isset($row['Estilo']) ? $row['Estilo'] : '';
     // Guardar foto en sesión para usar en la cabecera y evitar consultas adicionales
     $_SESSION['foto'] = isset($row['Foto']) ? $row['Foto'] : '';
+    // Marcar que la sesión se ha creado por un login reciente (evita mostrar el mensaje "bienvenido de vuelta" inmediatamente)
+    $_SESSION['just_logged_in'] = true;
 
     if ($remember) {
         $expire = time() + 90 * 24 * 60 * 60; // 90 días
@@ -52,6 +54,8 @@ if ($row && password_verify($clave, $row['Clave'])) {
         setcookie(session_name(), session_id(), $expire, '/', '', false, true);
         // Marcar cookie booleana para indicar que el usuario pidió ser recordado
         setcookie('remember', '1', $expire, '/', '', false, true);
+        // Guardar nombre de usuario en cookie para mostrar mensajes de bienvenida al volver
+        setcookie('remember_user', $row['NomUsuario'], $expire, '/', '', false, true);
         // Guardar última visita
         setcookie('last_visit', date('d/m/Y H:i:s'), $expire, '/', '', false, true);
     }

@@ -50,7 +50,7 @@ if (!empty($_SESSION['login']) && $_SESSION['login'] === 'ok') {
         <li>
         <article>
             <h3><?php echo htmlspecialchars($an['Titulo'], ENT_QUOTES, 'UTF-8'); ?></h3>
-            <a href="ver_anuncio.php?id=<?php echo (int)$an['IdAnuncio']; ?>">
+            <a href="detalle_anuncio.php?id=<?php echo (int)$an['IdAnuncio']; ?>">
                 <img src="<?php echo $img; ?>" alt="<?php echo htmlspecialchars($an['Titulo'], ENT_QUOTES, 'UTF-8'); ?>" width="200">
             </a>
             <footer>

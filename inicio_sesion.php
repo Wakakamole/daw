@@ -57,15 +57,15 @@ require_once __DIR__ . '/includes/cabecera.php';
       <legend>Datos de acceso</legend>
 
       <label for="usuario">Usuario:</label>
-      <input type="text" id="usuario" name="usuario" placeholder="Tu usuario" value="">
+      <input type="text" id="usuario" name="usuario" placeholder="Tu usuario" value="" autocomplete="username">
       <br><br>
 
       <label for="contrasena">Contraseña:</label>
-      <input type="password" id="contrasena" name="clave" placeholder="••••••" value="">
+      <input type="password" id="contrasena" name="clave" placeholder="••••••" value="" autocomplete="current-password">
       <br><br>
 
       <label>
-        <input type="checkbox" name="remember" value="1" <?php echo $checked; ?>> Recuérdame
+        <input type="checkbox" name="remember" value="1" <?php echo $checked; ?> autocomplete="off"> Recuérdame
       </label>
       <br><br>
 

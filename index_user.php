@@ -23,6 +23,8 @@ if ($hora >= 6 && $hora < 12) {
 setcookie('saludo', $saludo, time() + 3600, '/');
 
 require_once __DIR__ . '/includes/cabecera.php';
+// Limpiar la marca de login reciente para evitar que persista en próximas peticiones
+if (isset($_SESSION['just_logged_in'])) { unset($_SESSION['just_logged_in']); }
 ?>
 
 <main>

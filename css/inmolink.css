@@ -141,6 +141,23 @@ MENÚ DE USUARIO EN PERFIL
   color: var(--color-secundario);
 }
 
+/* Asegurar que los enlaces del menú de perfil tienen tamaño y padding consistentes
+   aunque existan reglas globales para `.boton-enlace`. */
+.perfil-menu.boton-enlace {
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1 1 180px;
+  min-width: 180px;
+  max-width: 220px;
+  padding: 0.7em 1rem !important; /* forzar padding uniforme */
+  border-radius: 12px !important;
+  box-sizing: border-box;
+  min-height: 44px !important;
+  line-height: 1 !important;
+  margin: 0.35em 0 !important;
+}
+
 
 
 
