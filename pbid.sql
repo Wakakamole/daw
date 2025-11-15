@@ -165,9 +165,9 @@ CREATE TABLE `tiposviviendas` (
 --
 
 CREATE TABLE `usuarios` (
-  `IdUsuario` int(11) NOT NULL,
+  `IdUsuario` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `NomUsuario` varchar(15) NOT NULL,
-  `Clave` varchar(15) NOT NULL,
+  `Clave` varchar(255) NOT NULL,
   `Email` varchar(254) NOT NULL,
   `Sexo` smallint(6) DEFAULT NULL,
   `FNacimiento` date DEFAULT NULL,
@@ -176,7 +176,7 @@ CREATE TABLE `usuarios` (
   `Foto` varchar(255) DEFAULT NULL,
   `FRegistro` datetime NOT NULL DEFAULT current_timestamp(),
   `Estilo` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Índices para tablas volcadas

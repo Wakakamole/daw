@@ -125,6 +125,36 @@ nav details {
   position: relative;
 }
 
+/* Alinear el summary con el avatar: mostrar el marcador a la izquierda */
+nav details summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+/* Quitar margen/estilos por defecto y asegurar imagen dentro del summary */
+nav details summary img.avatar {
+  display: block;
+  width: 40px;
+  height: 40px;
+}
+
+/* WebKit: asegurar que el marcador (flecha) quede alineado a la izquierda del contenido */
+nav details summary::-webkit-details-marker {
+  margin-right: 0.15rem;
+  vertical-align: middle;
+}
+
+/* Firefox: usar ::marker para controlar el posicionamiento si hace falta */
+nav details summary::marker {
+  margin-right: 0.15rem;
+  vertical-align: middle;
+}
+
 
 
 
@@ -236,4 +266,17 @@ footer a {
 
 footer a:hover {
   color: var(--color-primario);
+}
+
+/* Avatar usuario */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50% !important;
+  -webkit-border-radius: 50% !important;
+  object-fit: cover;
+  display: block;
+  vertical-align: middle;
+  overflow: hidden !important;
+  border: 2px solid rgba(255,255,255,0.2);
 }

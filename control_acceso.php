@@ -1,11 +1,7 @@
-
-<!-- PÁGINA DE CONTROL DE ACCESO -->
- <!-- control_acceso.php - procesa login en servidor -----CREAR----- 
-     Recibe usuario y clave vía POST desde inicio_sesion.php
-     Si usuario y clave correctos, redirige a index_user.php
-     Si no, redirige a inicio_sesion.php con error en flashdata
- -->
 <?php
+// control_acceso.php - procesa login en servidor usando la tabla Usuarios
+// Recibe usuario y clave vía POST desde inicio_sesion.php
+
 session_start();
 
 function redirect_to($path, $params = []) {
@@ -17,36 +13,46 @@ function redirect_to($path, $params = []) {
     exit;
 }
 
+require_once __DIR__ . '/includes/basedatos.php';
+
 $usuario = isset($_POST['usuario']) ? trim($_POST['usuario']) : '';
 $clave = isset($_POST['clave']) ? trim($_POST['clave']) : '';
-$remember = isset($_POST['remember']) ? true : false;
+$remember = isset($_POST['remember']) && $_POST['remember'];
 
 if ($usuario === '' || $clave === '') {
     $_SESSION['flash'] = 'Rellena usuario y contraseña.';
     redirect_to('inicio_sesion.php');
 }
 
-$usersFile = __DIR__ . '/data/usuarios.php';
-if (!file_exists($usersFile)) {
-    $_SESSION['flash'] = 'No hay usuarios configurados.';
+$db = get_db();
+$stmt = $db->prepare('SELECT IdUsuario, NomUsuario, Clave, Estilo, Foto FROM Usuarios WHERE NomUsuario = ? LIMIT 1');
+if (!$stmt) {
+    // error preparando la consulta
+    $_SESSION['flash'] = 'Error de acceso (BD).';
     redirect_to('inicio_sesion.php');
 }
+$stmt->bind_param('s', $usuario);
+$stmt->execute();
+$res = $stmt->get_result();
+$row = $res ? $res->fetch_assoc() : null;
+$stmt->close();
 
-$usuarios = require $usersFile; // devuelve array usuario=>clave
-if (isset($usuarios[$usuario]) && $usuarios[$usuario]['clave'] === $clave) {
+if ($row && password_verify($clave, $row['Clave'])) {
     // acceso correcto: crear sesión
     $_SESSION['login'] = 'ok';
-    $_SESSION['usuario'] = $usuario;
-    $_SESSION['estilo'] = $usuarios[$usuario]['estilo'];
+    $_SESSION['usuario'] = $row['NomUsuario'];
+    $_SESSION['usuario_id'] = (int)$row['IdUsuario'];
+    $_SESSION['estilo'] = isset($row['Estilo']) ? $row['Estilo'] : '';
+    // Guardar foto en sesión para usar en la cabecera y evitar consultas adicionales
+    $_SESSION['foto'] = isset($row['Foto']) ? $row['Foto'] : '';
 
-    // Si ha marcado recordar, crear cookies (no accesible desde JS: httponly)
     if ($remember) {
         $expire = time() + 90 * 24 * 60 * 60; // 90 días
-        // ruta '/' para que esté disponible en todo el sitio
-        setcookie('remember_user', $usuario, $expire, '/');
-        // marcar httponly para contraseña
-        setcookie('remember_pass', $clave, $expire, '/', '', false, true);
-        // almacenar la fecha/hora de esta primera visita que será mostrada la próxima vez
+        // Extender la cookie de sesión para persistir el login (booleana "remember me")
+        setcookie(session_name(), session_id(), $expire, '/', '', false, true);
+        // Marcar cookie booleana para indicar que el usuario pidió ser recordado
+        setcookie('remember', '1', $expire, '/', '', false, true);
+        // Guardar última visita
         setcookie('last_visit', date('d/m/Y H:i:s'), $expire, '/', '', false, true);
     }
 

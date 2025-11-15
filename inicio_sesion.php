@@ -24,10 +24,8 @@ if ($flash !== '') {
   }
 }
 
-// Prefill desde cookies si existen
-$remember_user = isset($_COOKIE['remember_user']) ? $_COOKIE['remember_user'] : '';
-$remember_pass = isset($_COOKIE['remember_pass']) ? $_COOKIE['remember_pass'] : '';
-$checked = $remember_user !== '' ? 'checked' : '';
+// Prefill del checkbox 'remember' desde cookie booleana
+$checked = isset($_COOKIE['remember']) && $_COOKIE['remember'] === '1' ? 'checked' : '';
 
 $page_title = 'INMOLINK - Inicio de Sesión';
 require_once __DIR__ . '/includes/cabecera.php';
@@ -59,11 +57,11 @@ require_once __DIR__ . '/includes/cabecera.php';
       <legend>Datos de acceso</legend>
 
       <label for="usuario">Usuario:</label>
-      <input type="text" id="usuario" name="usuario" placeholder="Tu usuario" value="<?php echo htmlspecialchars($remember_user); ?>">
+      <input type="text" id="usuario" name="usuario" placeholder="Tu usuario" value="">
       <br><br>
 
       <label for="contrasena">Contraseña:</label>
-      <input type="password" id="contrasena" name="clave" placeholder="••••••" value="<?php echo htmlspecialchars($remember_pass); ?>">
+      <input type="password" id="contrasena" name="clave" placeholder="••••••" value="">
       <br><br>
 
       <label>

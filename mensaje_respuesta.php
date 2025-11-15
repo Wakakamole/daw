@@ -9,14 +9,37 @@
 <?php
 function h($v){ return htmlspecialchars($v, ENT_QUOTES, 'UTF-8'); }
 
-$tipo = isset($_POST['tipo']) ? trim($_POST['tipo']) : '';
+// Recoger datos del formulario
+$tipo_id = isset($_POST['tipo']) ? intval($_POST['tipo']) : 0;
 $texto = isset($_POST['texto']) ? trim($_POST['texto']) : '';
 $nombre = isset($_POST['nombre']) ? trim($_POST['nombre']) : '';
 $anuncio_id = isset($_POST['anuncio_id']) ? intval($_POST['anuncio_id']) : 1;
 
-$allowed = ['consulta','interes','otro','informacion','cita','oferta'];
 $errors = [];
-if ($tipo === '' || !in_array($tipo, $allowed, true)) {
+
+// Validar tipo consultando la BD para obtener el nombre
+$tipo_nombre = '';
+if ($tipo_id > 0) {
+    require_once __DIR__ . '/includes/basedatos.php';
+    try {
+        $db = get_db();
+        $stmt = $db->prepare("SELECT NomTMensaje FROM tiposmensajes WHERE IdTMensaje = ?");
+        if ($stmt) {
+            $stmt->bind_param('i', $tipo_id);
+            $stmt->execute();
+            $res = $stmt->get_result();
+            if ($row = $res->fetch_assoc()) {
+                $tipo_nombre = $row['NomTMensaje'];
+            }
+            $res->free();
+            $stmt->close();
+        }
+    } catch (Exception $e) {
+        $tipo_nombre = '';
+    }
+}
+
+if ($tipo_id === 0 || $tipo_nombre === '') {
     $errors[] = 'Tipo de mensaje no válido';
 }
 if ($texto === '') {
@@ -51,7 +74,7 @@ require_once __DIR__ . '/includes/cabecera.php';
                 <h3 id="datos-envio">Datos del mensaje</h3>
                 <dl>
                 <dt><strong> Tipo de consulta: </strong></dt>
-                    <dd><output id="out-tipo-mensaje"><?php echo !empty($errors) ? '—' : h($tipo); ?></output></dd>
+                    <dd><output id="out-tipo-mensaje"><?php echo !empty($errors) ? '—' : h($tipo_nombre); ?></output></dd>
 
                     <dt><strong> Remitente:</strong></dt>
                     <dd><output id="out-destinatario"><?php echo !empty($errors) ? '—' : h($nombre); ?></output></dd>

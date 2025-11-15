@@ -61,12 +61,20 @@ if (isset($_COOKIE['estilo_usuario'])) {
             <ul>
                 <?php if (!empty($is_logged) && $is_logged): ?>
                     <li><a href="index_user.php"><i class="fa-solid fa-house-chimney"></i> Inicio</a></li>
-                    <li><a href="formulario_busqueda.html"><i class="fa-solid fa-magnifying-glass"></i> Buscar Propiedades</a></li>
-                    <li><a href="error_404_user.html"><i class="fa-regular fa-square-plus"></i>  Subir anuncio</a></li>
+                    <li><a href="formulario_busqueda.php"><i class="fa-solid fa-magnifying-glass"></i> Buscar Propiedades</a></li>
+                    <li><a href="crear_anuncio.php"><i class="fa-regular fa-square-plus"></i>  Subir anuncio</a></li>
                     <li>
                         <details>
                             <summary>
-                                <img src="img/user.webp" alt="Foto de perfil" width="40" height="40">
+                                <?php
+                                // Usar la foto guardada en sesión.
+                                $avatar_src = 'img/user.webp';
+                                $avatar_alt = 'Foto de perfil';
+                                if (!empty($_SESSION['foto'])) {
+                                    $avatar_src = $_SESSION['foto'];
+                                }
+                                ?>
+                                <img src="<?php echo htmlspecialchars($avatar_src, ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($avatar_alt, ENT_QUOTES, 'UTF-8'); ?>" class="avatar" width="40" height="40">
                             </summary>
                             <ul>
                                 <li>
@@ -86,7 +94,7 @@ if (isset($_COOKIE['estilo_usuario'])) {
                     </li>
                 <?php else: ?>
                     <li><a href="index.php"><i class="fa-solid fa-house-chimney"></i> Inicio</a></li>
-                    <li><a href="formulario_busqueda.html"><i class="fa-solid fa-magnifying-glass"></i> Buscar Propiedades</a></li>
+                    <li><a href="formulario_busqueda.php"><i class="fa-solid fa-magnifying-glass"></i> Buscar Propiedades</a></li>
                     <li><a href="inicio_sesion.php"><i class="fa-solid fa-user"></i> Inicio de Sesión</a></li>
                     <li><a href="registro_usuario.php"><i class="fa-solid fa-user-plus"></i> Registro de Usuario</a></li>
                 <?php endif; ?>

@@ -3,6 +3,8 @@
 require_once __DIR__ . '/includes/control_parteprivada.php';
 
 require_once __DIR__ . '/includes/cabecera.php';
+// Cargar datos maestros para selects (include reutilizable)
+require_once __DIR__ . '/includes/formulario_anuncios.php';
 ?>
 
 <main>
@@ -12,25 +14,13 @@ require_once __DIR__ . '/includes/cabecera.php';
         <form action="#" method="post" enctype="multipart/form-data">
             <fieldset>
                 <legend>Datos del anuncio</legend>
-
                 <!-- Tipo de anuncio -->
                 <label for="tipo_anuncio">Tipo de anuncio (*):</label>
-                <select id="tipo_anuncio" name="tipo_anuncio" required>
-                    <option value="">-- Selecciona --</option>
-                    <option value="Venta">Venta</option>
-                    <option value="Alquiler">Alquiler</option>
-                </select><br><br>
+                <?php render_select_from_array($tiposAnuncios, 'tipo_anuncio', 'tipo_anuncio', 'IdTAnuncio', 'NomTAnuncio', null, true); ?><br><br>
 
                 <!-- Tipo de vivienda -->
                 <label for="tipo_vivienda">Tipo de vivienda (*):</label>
-                <select id="tipo_vivienda" name="tipo_vivienda" required>
-                    <option value="">-- Selecciona --</option>
-                    <option value="Vivienda">Vivienda</option>
-                    <option value="Oficina">Oficina</option>
-                    <option value="Local">Local</option>
-                    <option value="Garaje">Garaje</option>
-                    <option value="Obra nueva">Obra nueva</option>
-                </select><br><br>
+                <?php render_select_from_array($tiposViviendas, 'tipo_vivienda', 'tipo_vivienda', 'IdTVivienda', 'NomTVivienda', null, true); ?><br><br>
 
                 <!-- Título -->
                 <label for="titulo">Título del anuncio (*):</label>
@@ -40,7 +30,7 @@ require_once __DIR__ . '/includes/cabecera.php';
                 <label for="ciudad">Ciudad (*):</label>
                 <input type="text" id="ciudad" name="ciudad" maxlength="100" required>
                 <label for="pais">País (*):</label>
-                <input type="text" id="pais" name="pais" maxlength="100" required><br><br>
+                <?php render_select_from_array($paises, 'pais', 'pais', 'IdPais', 'NomPais', null, true); ?><br><br>
 
                 <!-- Preico -->
                 <label for="precio">Precio (*):</label>
