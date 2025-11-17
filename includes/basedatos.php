@@ -1,9 +1,5 @@
 <?php
-/**
- * Módulo de conexión a la base de datos (mysqli) — versión simplificada
- */
 
-// Configuración por defecto (puedes editar aquí)
 $GLOBALS['basedatos_config'] ??= [
     'Servidor'   => '127.0.0.1',
     'Usuario'    => 'root',
