@@ -82,7 +82,7 @@ $submitText = isset($submitText) ? $submitText : ($modo === 'registro' ? 'Regist
         require_once __DIR__ . '/basedatos.php';
         $db = get_db();
         $pais_selected = $usuario['pais'] ?? '';
-        $paises_stmt = $db->prepare("SELECT IdPais, NomPais FROM Paises ORDER BY NomPais");
+        $paises_stmt = $db->prepare("SELECT IdPais, NomPais FROM paises ORDER BY NomPais");
         $paises = [];
         if ($paises_stmt) {
             $paises_stmt->execute();

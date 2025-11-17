@@ -22,8 +22,8 @@ if (!empty($_SESSION['login']) && $_SESSION['login'] === 'ok') {
     require_once __DIR__ . '/includes/basedatos.php';
     $db = get_db();
     $sql = "SELECT A.IdAnuncio, A.Titulo, A.FPrincipal, A.FRegistro, A.Ciudad, A.Precio, P.NomPais
-            FROM Anuncios A
-            LEFT JOIN Paises P ON A.Pais = P.IdPais
+            FROM anuncios A
+            LEFT JOIN paises P ON A.Pais = P.IdPais
             ORDER BY A.FRegistro DESC
             LIMIT 5";
     $ultimos = [];

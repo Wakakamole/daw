@@ -1,95 +1,122 @@
-
-<!-- PÁGINA DE RESULTADOS DE BÚSQUEDA-->
-<!--
-    Página que muestra los resultados de búsqueda (estáticos de momento)
--->
-
-
 <?php
-$query = isset($_GET['query']) ? trim($_GET['query']) : '';
-$safeQuery = htmlspecialchars($query, ENT_QUOTES, 'UTF-8');
 $page_title = 'INMOLINK - Resultados';
 require_once __DIR__ . '/includes/cabecera.php';
+require_once __DIR__ . '/includes/basedatos.php';
 
-// Cargar anuncios y filtrar por la query (búsqueda simple)
-$anuncios = [];
-if (file_exists(__DIR__ . '/data/anuncios.php')) {
-    $anuncios = require __DIR__ . '/data/anuncios.php';
-}
-$results = [];
-if ($query !== '') {
-    foreach ($anuncios as $a) {
-        if ((isset($a['titulo']) && mb_stripos($a['titulo'], $query, 0, 'UTF-8') !== false)
-            || (isset($a['descripcion']) && mb_stripos($a['descripcion'], $query, 0, 'UTF-8') !== false)
-            || (isset($a['ciudad']) && mb_stripos($a['ciudad'], $query, 0, 'UTF-8') !== false)
-            || (isset($a['pais']) && mb_stripos($a['pais'], $query, 0, 'UTF-8') !== false)) {
-            $results[] = $a;
+$conexion = get_db();
+
+// Recoger parámetros de búsqueda rápida (GET) y avanzada (POST)
+$query_rapida = trim($_GET['query'] ?? '');
+$tipo_anuncio  = $_POST['tipo_anuncio'] ?? '';
+$tipo_vivienda = $_POST['tipo_vivienda'] ?? '';
+$ciudad        = $_POST['ciudad'] ?? '';
+$pais          = $_POST['pais'] ?? '';
+$precio        = $_POST['precio'] ?? '';
+$fecha         = $_POST['fecha_publicacion'] ?? '';
+
+// Inicializamos la consulta
+$sql = "SELECT * FROM anuncios WHERE 1=1";
+
+// ---- Búsqueda rápida ----
+if ($query_rapida !== '') {
+    $stopwords = ['un','una','en','de'];
+    $palabras = array_diff(explode(' ', strtolower($query_rapida)), $stopwords);
+
+    // Diccionarios
+    $tipos_viviendas_dic = [
+        'obra nueva' => 1,
+        'vivienda'   => 2,
+        'oficina'    => 3,
+        'local'      => 4,
+        'garaje'     => 5,
+    ];
+    $tipos_anuncios_dic = [
+        'venta' => 1,
+        'alquiler' => 2
+    ];
+
+    $filtro_tipo_vivienda = null;
+    $filtro_tipo_anuncio  = null;
+    $filtro_ciudad        = null;
+
+    foreach ($tipos_viviendas_dic as $nombre => $id) {
+        if (in_array($nombre, $palabras)) {
+            $filtro_tipo_vivienda = $id;
+            break;
         }
     }
-} else {
-    $results = array_values($anuncios);
+    foreach ($tipos_anuncios_dic as $nombre => $id) {
+        if (in_array($nombre, $palabras)) {
+            $filtro_tipo_anuncio = $id;
+            break;
+        }
+    }
+    foreach ($palabras as $p) {
+        if (!array_key_exists($p, $tipos_viviendas_dic) && !array_key_exists($p, $tipos_anuncios_dic)) {
+            $filtro_ciudad = $p;
+        }
+    }
+
+    if ($filtro_tipo_vivienda)
+        $sql .= " AND TVivienda = " . (int)$filtro_tipo_vivienda;
+    if ($filtro_tipo_anuncio)
+        $sql .= " AND TAnuncio = " . (int)$filtro_tipo_anuncio;
+    if ($filtro_ciudad)
+        $sql .= " AND LOWER(Ciudad) LIKE '%" . $conexion->real_escape_string($filtro_ciudad) . "%'";
 }
-$count = count($results);
+
+// ---- Búsqueda avanzada ----
+if ($tipo_vivienda !== '') {
+    $sql .= " AND TVivienda = " . (int)$tipo_vivienda;
+}
+if ($tipo_anuncio !== '') {
+    $sql .= " AND TAnuncio = " . (int)$tipo_anuncio;
+}
+if ($ciudad !== '') {
+    $sql .= " AND LOWER(Ciudad) LIKE '%" . $conexion->real_escape_string(strtolower($ciudad)) . "%'";
+}
+if ($pais !== '') {
+    $sql .= " AND Pais = '" . $conexion->real_escape_string($pais) . "'";
+}
+if ($precio !== '') {
+    $sql .= " AND Precio <= " . (float)$precio;
+}
+if ($fecha !== '') {
+    $sql .= " AND FRegistro >= '" . $conexion->real_escape_string($fecha) . "'";
+}
+
+$sql .= " ORDER BY FRegistro DESC";
+
+$result = $conexion->query($sql);
 ?>
 
-    <main>
+<main class="resultados">
+    <h2>Resultados de búsqueda<?= $query_rapida ? ': "' . htmlspecialchars($query_rapida) . '"' : '' ?></h2>
 
-        <section>
-        <h1>RESULTADOS DE BÚSQUEDA</h1>
-        <section class="busqueda-params" aria-labelledby="params-title">
-                <h3 id="params-title">Parámetros de búsqueda
-                <span class="contador"><?php echo $count; ?> resultados</span>
-            </h3>
-            <p>
-                <?php if ($safeQuery !== ''): ?>
-                    Resultados para: <strong>&#8220;<?php echo $safeQuery; ?>&#8221;</strong>
-                <?php else: ?>
-                    <strong>No se ha introducido ningún término de búsqueda.</strong>
-                    <br>
-                    Mostrando todos los anuncios disponibles.
-                <?php endif; ?>
-            </p>
-            <?php if ($safeQuery !== ''): ?>
-                <p class="busqueda-usuario">Usted ha buscado: <strong><?php echo $safeQuery; ?></strong></p>
-            <?php endif; ?>
-            <p class="acciones">
-                <a href="resultado_busqueda.php" class="boton-enlace">Limpiar búsqueda</a>
-                <a href="formulario_busqueda.html" class="boton-enlace" style="margin-left:0.8rem">Modificar mi búsqueda</a>
-            </p>
-        </section>
-        </section>
-
-        <ul>
-            <?php if ($count === 0): ?>
+    <?php if ($result->num_rows === 0): ?>
+        <p>No se encontraron anuncios que coincidan.</p>
+    <?php else: ?>
+        <ul class="lista-anuncios">
+            <?php while ($row = $result->fetch_assoc()): ?>
                 <li>
-                    <article>
-                        <h3>No se han encontrado resultados</h3>
+                    <article class="anuncio-item">
+                        <h3><?= htmlspecialchars($row['Titulo']) ?></h3>
+
+                        <a href="detalle_anuncio.php?id=<?= $row['IdAnuncio'] ?>">
+                            <img src="<?= htmlspecialchars($row['FPrincipal']) ?>" 
+                                 alt="<?= htmlspecialchars($row['Alternativo']) ?>">
+                        </a>
+
                         <footer>
-                            <p>Prueba con otro término de búsqueda o comprueba la ortografía.</p>
+                            <p><strong>Precio:</strong> <?= htmlspecialchars($row['Precio']) ?> €</p>
+                            <p><strong>Ciudad:</strong> <?= htmlspecialchars($row['Ciudad']) ?></p>
+                            <p><strong>Superficie:</strong> <?= htmlspecialchars($row['Superficie']) ?> m²</p>
                         </footer>
                     </article>
                 </li>
-            <?php else: ?>
-                <?php foreach ($results as $r): ?>
-                    <li>
-                        <article>
-                            <h3><?php echo htmlspecialchars($r['titulo'], ENT_QUOTES, 'UTF-8'); ?></h3>
-                            <a href="detalle_anuncio.php?id=<?php echo urlencode($r['id']); ?>">
-                                <img src="<?php echo htmlspecialchars($r['foto'], ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($r['titulo'], ENT_QUOTES, 'UTF-8'); ?>" width="200">
-                            </a>
-                            <footer>
-                                <p><?php echo htmlspecialchars($r['descripcion'], ENT_QUOTES, 'UTF-8'); ?></p>
-                                <p><strong>Fecha:</strong> <?php echo htmlspecialchars($r['fecha'], ENT_QUOTES, 'UTF-8'); ?></p>
-                                <p><strong>Ciudad:</strong> <?php echo htmlspecialchars($r['ciudad'], ENT_QUOTES, 'UTF-8'); ?></p>
-                                <p><strong>País:</strong> <?php echo htmlspecialchars($r['pais'], ENT_QUOTES, 'UTF-8'); ?></p>
-                                <p><strong>Precio:</strong> <?php echo htmlspecialchars($r['precio'], ENT_QUOTES, 'UTF-8'); ?></p>
-                            </footer>
-                        </article>
-                    </li>
-                <?php endforeach; ?>
-            <?php endif; ?>
+            <?php endwhile; ?>
         </ul>
-
-    </main>
+    <?php endif; ?>
+</main>
 
 <?php require_once __DIR__ . '/includes/pie.php'; ?>

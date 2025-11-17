@@ -1,65 +1,63 @@
 <?php
-
-require_once __DIR__ . '/includes/control_parteprivada.php';
-
 require_once __DIR__ . '/includes/cabecera.php';
+require_once __DIR__ . '/includes/basedatos.php';
 
-// Datos ficticios
-$anuncios = [
-    1 => [
-        'titulo' => 'Piso en Calle Francia Bilbao',
-        'ciudad' => 'Bilbao',
-        'pais' => 'España',
-        'precio' => '320.000€',
-        'foto' => 'img/noimage.png'
-    ],
-    2 => [
-        'titulo' => 'Apartamento en Gran Vía Madrid',
-        'ciudad' => 'Madrid',
-        'pais' => 'España',
-        'precio' => '450.000€',
-        'foto' => 'img/noimage.png'
-    ],
-    3 => [
-        'titulo' => 'Chalet en La Manga',
-        'ciudad' => 'Cartagena',
-        'pais' => 'España',
-        'precio' => '280.000€',
-        'foto' => 'img/noimage.png'
-    ]
-];
+// Verificar si el usuario está logueado
+if (empty($_SESSION['login']) || $_SESSION['login'] !== 'ok') {
+    echo "<p>No se ha identificado al usuario. Por favor, inicia sesión.</p>";
+    require __DIR__ . '/includes/pie.php';
+    exit;
+}
+
+$usuario_id = $_SESSION['usuario_id'];
+
+// CARGAR ANUNCIOS DEL USUARIO
+$db = get_db();
+$sql = "SELECT IdAnuncio, Titulo, Ciudad, Pais, Precio, FPrincipal 
+        FROM anuncios 
+        WHERE Usuario = ? 
+        ORDER BY FRegistro DESC";
+$stmt = $db->prepare($sql);
+$stmt->bind_param('i', $usuario_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$mis_anuncios = [];
+while ($row = $result->fetch_assoc()) {
+    $mis_anuncios[] = $row;
+}
+$stmt->close();
+$total_anuncios = count($mis_anuncios);
 ?>
 
 <main>
     <section>
         <h1>Mis anuncios</h1>
-        <h2>Listado de tus anuncios</h2>
+        <h2>Listado de tus anuncios (Total: <?= $total_anuncios ?>)</h2>
     </section>
 
-    <ul class="lista-anuncios">
-        <?php foreach ($anuncios as $id => $anuncio): ?>
-            <li>
-                <article class="anuncio-item">
-                    <h3><?= $anuncio['titulo'] ?></h3>
-                    <a href="ver_anuncio.php?id=<?= $id ?>">
-                        <img src="<?= $anuncio['foto'] ?>" alt="<?= $anuncio['titulo'] ?>" width="200">
-                    </a>
-                    <footer>
-                        <p><strong>Ciudad:</strong> <?= $anuncio['ciudad'] ?></p>
-                        <p><strong>País:</strong> <?= $anuncio['pais'] ?></p>
-                        <p><strong>Precio:</strong> <?= $anuncio['precio'] ?></p>
-                    </footer>
-                </article>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-
-    <div class="contenedor-boton-anadir">
-        <a href="anadir_foto.php" class="boton-anadir-foto">
-            <i class="fa-solid fa-image"></i> Añadir foto a algún anuncio
-        </a>
-    </div>
-
+    <?php if ($total_anuncios === 0): ?>
+        <p>No tienes anuncios publicados.</p>
+    <?php else: ?>
+        <ul class="lista-anuncios">
+            <?php foreach ($mis_anuncios as $anuncio): ?>
+                <li>
+                    <article class="anuncio-item">
+                        <h3><?= htmlspecialchars($anuncio['Titulo'], ENT_QUOTES) ?></h3>
+                        <a href="ver_anuncio.php?id=<?= (int)$anuncio['IdAnuncio'] ?>">
+                            <img src="<?= !empty($anuncio['FPrincipal']) ? htmlspecialchars($anuncio['FPrincipal'], ENT_QUOTES) : 'img/noimage.png' ?>" 
+                                 alt="<?= htmlspecialchars($anuncio['Titulo'], ENT_QUOTES) ?>" width="200">
+                        </a>
+                        <footer>
+                            <p><strong>Ciudad:</strong> <?= htmlspecialchars($anuncio['Ciudad'], ENT_QUOTES) ?></p>
+                            <p><strong>País:</strong> <?= htmlspecialchars($anuncio['Pais'], ENT_QUOTES) ?></p>
+                            <p><strong>Precio:</strong> <?= htmlspecialchars($anuncio['Precio'], ENT_QUOTES) ?></p>
+                        </footer>
+                    </article>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
 </main>
 
 <?php require_once __DIR__ . '/includes/pie.php'; ?>

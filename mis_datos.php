@@ -17,7 +17,7 @@ if ($usuario_sess === '' && $usuario_id <= 0) {
 
 $user = null;
 if ($usuario_id > 0) {
-    $stmt = $db->prepare("SELECT IdUsuario, NomUsuario, Email, Sexo, FNacimiento, Ciudad, Pais, Foto, Estilo FROM Usuarios WHERE IdUsuario = ? LIMIT 1");
+    $stmt = $db->prepare("SELECT IdUsuario, NomUsuario, Email, Sexo, FNacimiento, Ciudad, Pais, Foto, Estilo FROM usuarios WHERE IdUsuario = ? LIMIT 1");
     if ($stmt) {
         $stmt->bind_param('i', $usuario_id);
         $stmt->execute();
@@ -29,7 +29,7 @@ if ($usuario_id > 0) {
 }
 
 if (!$user && $usuario_sess !== '') {
-    $stmt = $db->prepare("SELECT IdUsuario, NomUsuario, Email, Sexo, FNacimiento, Ciudad, Pais, Foto, Estilo FROM Usuarios WHERE NomUsuario = ? LIMIT 1");
+    $stmt = $db->prepare("SELECT IdUsuario, NomUsuario, Email, Sexo, FNacimiento, Ciudad, Pais, Foto, Estilo FROM usuarios WHERE NomUsuario = ? LIMIT 1");
     if ($stmt) {
         $stmt->bind_param('s', $usuario_sess);
         $stmt->execute();

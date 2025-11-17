@@ -8,7 +8,7 @@ $db = get_db();
 $usuario_nombre = isset($_SESSION['usuario']) ? $_SESSION['usuario'] : '';
 $usuario_id = 0;
 if ($usuario_nombre !== '') {
-    $stmt = $db->prepare("SELECT IdUsuario FROM Usuarios WHERE NomUsuario = ? LIMIT 1");
+    $stmt = $db->prepare("SELECT IdUsuario FROM usuarios WHERE NomUsuario = ? LIMIT 1");
     if ($stmt) {
         $stmt->bind_param('s', $usuario_nombre);
         $stmt->execute();
@@ -23,9 +23,9 @@ if ($usuario_nombre !== '') {
 // Obtener totales
 $enviados = 0; $recibidos = 0;
 if ($usuario_id > 0) {
-    $stmt = $db->prepare("SELECT COUNT(*) AS cnt FROM Mensajes WHERE UsuOrigen = ?");
+    $stmt = $db->prepare("SELECT COUNT(*) AS cnt FROM mensajes WHERE UsuOrigen = ?");
     if ($stmt) { $stmt->bind_param('i', $usuario_id); $stmt->execute(); $cnt = $stmt->get_result()->fetch_assoc(); $enviados = (int)$cnt['cnt']; $stmt->close(); }
-    $stmt = $db->prepare("SELECT COUNT(*) AS cnt FROM Mensajes WHERE UsuDestino = ?");
+    $stmt = $db->prepare("SELECT COUNT(*) AS cnt FROM mensajes WHERE UsuDestino = ?");
     if ($stmt) { $stmt->bind_param('i', $usuario_id); $stmt->execute(); $cnt = $stmt->get_result()->fetch_assoc(); $recibidos = (int)$cnt['cnt']; $stmt->close(); }
 }
 

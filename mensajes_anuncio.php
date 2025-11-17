@@ -11,7 +11,7 @@ function h($v){ return htmlspecialchars($v, ENT_QUOTES, 'UTF-8'); }
 $usuario_nombre = isset($_SESSION['usuario']) ? $_SESSION['usuario'] : '';
 $usuario_id = 0;
 if ($usuario_nombre !== '') {
-    $stmt = $db->prepare("SELECT IdUsuario FROM Usuarios WHERE NomUsuario = ? LIMIT 1");
+    $stmt = $db->prepare("SELECT IdUsuario FROM usuarios WHERE NomUsuario = ? LIMIT 1");
     if ($stmt) {
         $stmt->bind_param('s', $usuario_nombre);
         $stmt->execute();
@@ -32,7 +32,7 @@ if ($anuncio_id <= 0) {
 
 // Obtener datos básicos del anuncio y comprobar propietario
 $anuncio = null;
-$stmt = $db->prepare("SELECT IdAnuncio, Titulo, FPrincipal, Ciudad, Precio, Usuario FROM Anuncios WHERE IdAnuncio = ? LIMIT 1");
+$stmt = $db->prepare("SELECT IdAnuncio, Titulo, FPrincipal, Ciudad, Precio, Usuario FROM anuncios WHERE IdAnuncio = ? LIMIT 1");
 if ($stmt) {
     $stmt->bind_param('i', $anuncio_id);
     $stmt->execute();
@@ -57,7 +57,7 @@ if ($usuario_id <= 0 || (int)$anuncio['Usuario'] !== $usuario_id) {
 
 // Contar mensajes recibidos para este anuncio
 $total_mensajes = 0;
-$stmt = $db->prepare("SELECT COUNT(*) AS cnt FROM Mensajes WHERE Anuncio = ?");
+$stmt = $db->prepare("SELECT COUNT(*) AS cnt FROM mensajes WHERE Anuncio = ?");
 if ($stmt) {
     $stmt->bind_param('i', $anuncio_id);
     $stmt->execute();
@@ -69,9 +69,9 @@ if ($stmt) {
 // Obtener lista de mensajes (remitente, tipo, texto, fecha)
 $mensajes = [];
 $sql = "SELECT m.IdMensaje, m.Texto, m.FRegistro, tm.NomTMensaje AS TipoNombre, uorig.NomUsuario AS OrigenNombre
-        FROM Mensajes m
-        LEFT JOIN TiposMensajes tm ON m.TMensaje = tm.IdTMensaje
-        LEFT JOIN Usuarios uorig ON m.UsuOrigen = uorig.IdUsuario
+        FROM mensajes m
+        LEFT JOIN tiposMensajes tm ON m.TMensaje = tm.IdTMensaje
+        LEFT JOIN usuarios uorig ON m.UsuOrigen = uorig.IdUsuario
         WHERE m.Anuncio = ?
         ORDER BY m.FRegistro DESC
         LIMIT 500";

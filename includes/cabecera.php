@@ -4,19 +4,22 @@ if (!isset($page_title)) {
     $page_title = 'INMOLINK';
 }
 function h_title($v){ return htmlspecialchars($v, ENT_QUOTES, 'UTF-8'); }
-?>
-<?php
-// inicializar sesión y auto-login sin salida
+
 require_once __DIR__ . '/session.php';
 
-//determinar estilo del usuario (por ahora desde sesión, pero preparado para cookie)
-if (isset($_COOKIE['estilo_usuario'])) {
-    $estilo = $_COOKIE['estilo_usuario'];
-} elseif (isset($_SESSION['estilo'])) {
-    $estilo = $_SESSION['estilo'];
-} else {
-    $estilo = '';
-}
+// Mapeo IdEstilo -> nombre archivo CSS
+$mapa_estilos = [
+    1 => 'inmolink',
+    2 => 'alto_contraste_grande',
+    3 => 'alto_contraste',
+    4 => 'noche',
+    5 => 'texto_grande',
+    6 => 'texto_grande_dislexia'
+];
+
+// Obtener el estilo desde sesión o cookie
+$estilo_id = $_SESSION['estilo'] ?? $_COOKIE['estilo_usuario'] ?? 1;
+$estilo_css = $mapa_estilos[$estilo_id] ?? 'inmolink';
 ?>
 
 <!DOCTYPE html>
@@ -33,23 +36,22 @@ if (isset($_COOKIE['estilo_usuario'])) {
     <link rel="stylesheet" href="css/iconos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <!-- Estilos alternativos -->
+    <!-- Estilos alternativos (solo referencia) -->
     <link rel="alternate stylesheet" type="text/css" href="css/noche.css" title="noche">
     <link rel="alternate stylesheet" type="text/css" href="css/alto_contraste.css" title="alto_contraste">
     <link rel="alternate stylesheet" type="text/css" href="css/texto_grande.css" title="texto_grande">
     <link rel="alternate stylesheet" type="text/css" href="css/texto_grande_dislexia.css" title="texto_grande_dislexia">
     <link rel="alternate stylesheet" type="text/css" href="css/alto_contraste_grande.css" title="alto_contraste_grande">
-    
+
     <!-- Estilo para impresión -->
     <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print">
 
     <!-- Estilo seleccionado por el usuario -->
-    <?php if ($estilo): ?>
-        <link rel="stylesheet" href="css/<?php echo htmlspecialchars($estilo, ENT_QUOTES, 'UTF-8'); ?>.css">
-    <?php endif; ?>
+    <link rel="stylesheet" href="css/<?php echo htmlspecialchars($estilo_css, ENT_QUOTES, 'UTF-8'); ?>.css">
 
     <title><?php echo h_title($page_title); ?></title>
 </head>
+
 <body>
 
     <header>

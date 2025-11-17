@@ -25,7 +25,7 @@ if ($usuario === '' || $clave === '') {
 }
 
 $db = get_db();
-$stmt = $db->prepare('SELECT IdUsuario, NomUsuario, Clave, Estilo, Foto FROM Usuarios WHERE NomUsuario = ? LIMIT 1');
+$stmt = $db->prepare('SELECT IdUsuario, NomUsuario, Clave, Estilo, Foto FROM usuarios WHERE NomUsuario = ? LIMIT 1');
 if (!$stmt) {
     // error preparando la consulta
     $_SESSION['flash'] = 'Error de acceso (BD).';

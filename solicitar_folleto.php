@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/includes/cabecera.php';
+require_once __DIR__ . '/includes/basedatos.php';
 
 // ---- TARIFAS Y FUNCIÓN DE CÁLCULO ----
 $TARIFAS = [
@@ -32,6 +33,30 @@ function calcularCosteFolleto($numPaginas, $numFotos, $esColor, $esAltaResolucio
 
     return number_format($costeTotal, 2, ',', '') . ' €';
 }
+
+if (empty($_SESSION['login']) || $_SESSION['login'] !== 'ok') {
+    echo "<p>No se ha identificado al usuario. Por favor, inicia sesión.</p>";
+    require __DIR__ . '/includes/pie.php';
+    exit;
+}
+
+$usuario_id = $_SESSION['usuario_id'];
+
+
+// CARGAR ANUNCIOS DEL USUARIO
+$conexion = get_db();
+
+$sql = "SELECT IdAnuncio, Titulo FROM anuncios WHERE Usuario = ? ORDER BY FRegistro DESC";
+$stmt = $conexion->prepare($sql);
+$stmt->bind_param('i', $usuario_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$mis_anuncios = [];
+while ($row = $result->fetch_assoc()) {
+    $mis_anuncios[] = $row;
+}
+$stmt->close();
 ?>
 
 <main>
@@ -47,10 +72,8 @@ function calcularCosteFolleto($numPaginas, $numFotos, $esColor, $esAltaResolucio
     <section id="tabla-tarifas">
         <h3>Tarifas</h3>
 
-        <!-- Botón para mostrar/ocultar tabla PHP -->
         <button id="mostrarTablaPHP" class="boton-tabla">Mostrar Tabla (PHP)</button>
 
-        <!-- Tabla PHP -->
         <div id="tablaPHP" style="display:none;">
             <table class="tabla-costes-generada">
                 <thead>
@@ -97,7 +120,6 @@ function calcularCosteFolleto($numPaginas, $numFotos, $esColor, $esAltaResolucio
 
         <hr>
 
-        <!-- Botón para mostrar/ocultar tabla JS -->
         <button id="mostrarTabla" class="boton-tabla">Mostrar Tabla (JavaScript)</button>
         <div id="tableContainer" style="display:none;"></div>
 
@@ -118,7 +140,6 @@ function calcularCosteFolleto($numPaginas, $numFotos, $esColor, $esAltaResolucio
         </script>
     </section>
 
-
     <!-- Formulario -->
     <section id="formulario">
         <h3>Formulario de solicitud</h3>
@@ -137,56 +158,14 @@ function calcularCosteFolleto($numPaginas, $numFotos, $esColor, $esAltaResolucio
                 <label for="textoAdicional">Texto adicional:</label>
                 <textarea id="textoAdicional" name="textoAdicional" maxlength="4000" rows="4" cols="50"></textarea><br><br>
 
-                <fieldset>
-                    <legend>Dirección (*)</legend>
-                    <label for="calle">Calle:</label>
-                    <input type="text" id="calle" name="calle" required>
-                    <label for="numero">Número:</label>
-                    <input type="text" id="numero" name="numero" required>
-                    <label for="cp">CP:</label>
-                    <input type="text" id="cp" name="cp" required>
-                    <label for="localidad">Localidad:</label>
-                    <input type="text" id="localidad" name="localidad" required>
-                    <label for="input-provincia">Provincia:</label>
-                    <input list="provincias-lista" id="input-provincia" name="provincia" required>
-                    <datalist id="provincias-lista">
-                        <option value="Ciudad Real">
-                        <option value="Albacete">
-                        <option value="Toledo">
-                        <option value="Cuenca">
-                        <option value="Guadalajara">
-                        <option value="Alicante">
-                        <option value="Valencia">
-                        <option value="Castellon">
-                        <option value="A Coruña">
-                        <option value="Lugo">
-                        <option value="Ourense">
-                        <option value="Pontevedra">
-                    </datalist>
-                    <label for="pais">País:</label>
-                    <input type="text" id="pais" name="pais" required>
-                </fieldset><br><br>
-
-                <label for="telefono">Teléfono:</label>
-                <input type="tel" id="telefono" name="telefono"><br><br>
-
-                <label for="colorPortada">Color de la portada:</label>
-                <input type="color" id="colorPortada" name="colorPortada" value="#000000"><br><br>
-
-                <label for="copias">Número de copias:</label>
-                <input type="number" id="copias" name="copias" min="1" max="99" value="1"><br><br>
-
-                <label for="resolucion">Resolución de impresión:</label>
-                <select id="resolucion" name="resolucion">
-                    <option value="150">150 dpi</option>
-                    <option value="300">300 dpi</option>
-                    <option value="600">600 dpi</option>
-                </select><br><br>
-
                 <label for="anuncio">Anuncio (*):</label>
-                <select id="anuncio" name="anuncio" required>
-                    <option value="anuncio1">Anuncio 1</option>
-                    <option value="anuncio2">Anuncio 2</option>
+                <select name="anuncio" id="anuncio" required>
+                    <option value="">-- Seleccione --</option>
+                    <?php foreach ($mis_anuncios as $anuncio): ?>
+                        <option value="<?= htmlspecialchars($anuncio['IdAnuncio'], ENT_QUOTES) ?>">
+                            <?= htmlspecialchars($anuncio['Titulo'], ENT_QUOTES) ?>
+                        </option>
+                    <?php endforeach; ?>
                 </select><br><br>
 
                 <label for="fechaRecepcion">Fecha de recepción:</label>

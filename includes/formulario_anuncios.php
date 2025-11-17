@@ -17,19 +17,19 @@ try {
 if ($db) {
     // Tipos de anuncios
     try {
-        $res = $db->query("SELECT IdTAnuncio, NomTAnuncio FROM TiposAnuncios ORDER BY NomTAnuncio");
+        $res = $db->query("SELECT IdTAnuncio, NomTAnuncio FROM tiposAnuncios ORDER BY NomTAnuncio");
         if ($res) { $tiposAnuncios = $res->fetch_all(MYSQLI_ASSOC); $res->free(); }
     } catch (Exception $e) { $tiposAnuncios = []; }
 
     // Tipos de viviendas
     try {
-        $res = $db->query("SELECT IdTVivienda, NomTVivienda FROM TiposViviendas ORDER BY NomTVivienda");
+        $res = $db->query("SELECT IdTVivienda, NomTVivienda FROM tiposViviendas ORDER BY NomTVivienda");
         if ($res) { $tiposViviendas = $res->fetch_all(MYSQLI_ASSOC); $res->free(); }
     } catch (Exception $e) { $tiposViviendas = []; }
 
     // Paises
     try {
-        $res = $db->query("SELECT IdPais, NomPais FROM Paises ORDER BY NomPais");
+        $res = $db->query("SELECT IdPais, NomPais FROM paises ORDER BY NomPais");
         if ($res) { $paises = $res->fetch_all(MYSQLI_ASSOC); $res->free(); }
     } catch (Exception $e) { $paises = []; }
 }
