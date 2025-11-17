@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/includes/control_parteprivada.php';
 require_once __DIR__ . '/includes/basedatos.php';
 $conexion = get_db();
 
