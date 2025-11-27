@@ -1,5 +1,5 @@
 <?php
-// respuestaregistro.php — procesa el formulario de registro (reemplazado por versión limpia)
+// respuestaregistro_nuevo.php — procesa el formulario de registro (versión limpia)
 if (session_status() === PHP_SESSION_NONE) { session_start(); }
 
 require_once __DIR__ . '/includes/filtrado.php';
@@ -14,20 +14,13 @@ $repite = isset($_POST['repite']) ? $_POST['repite'] : '';
 $email = isset($_POST['email']) ? sanear_cadena($_POST['email']) : '';
 $sexo = isset($_POST['sexo']) ? sanear_cadena($_POST['sexo']) : '';
 $fecha = isset($_POST['fecha_nacimiento']) ? sanear_cadena($_POST['fecha_nacimiento']) : '';
-
-// Aceptar día/mes/año si no vino el hidden (ej. si JavaScript está desactivado)
-if (empty($fecha)) {
-    $d = trim((string)($_POST['dia_nacimiento'] ?? ''));
-    $m = trim((string)($_POST['mes_nacimiento'] ?? ''));
+// aceptar día/mes/año si no vino el hidden
+if (empty($fecha) && isset($_POST['dia_nacimiento'], $_POST['mes_nacimiento'], $_POST['anio_nacimiento'])) {
+    $d = str_pad((string)($_POST['dia_nacimiento'] ?? ''), 2, '0', STR_PAD_LEFT);
+    $m = str_pad((string)($_POST['mes_nacimiento'] ?? ''), 2, '0', STR_PAD_LEFT);
     $y = trim((string)($_POST['anio_nacimiento'] ?? ''));
-    // Solo armar la fecha si TODOS los campos tienen valor
-    if ($d !== '' && $m !== '' && $y !== '') {
-        $d = str_pad($d, 2, '0', STR_PAD_LEFT);
-        $m = str_pad($m, 2, '0', STR_PAD_LEFT);
-        $fecha = "$y-$m-$d";
-    }
+    if ($d !== '' && $m !== '' && $y !== '') { $fecha = "$y-$m-$d"; }
 }
-
 $ciudad = isset($_POST['ciudad']) ? sanear_cadena($_POST['ciudad']) : '';
 $pais = isset($_POST['pais']) ? sanear_cadena($_POST['pais']) : '';
 

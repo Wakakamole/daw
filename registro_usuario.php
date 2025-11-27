@@ -43,7 +43,25 @@ $mensajes = [
     'usuario' => 'El nombre de usuario es obligatorio.',
     'password_empty' => 'La contraseña no puede estar vacía.',
     'repite_empty' => 'Debes repetir la contraseña.',
-    'password_mismatch' => 'Las contraseñas no coinciden.'
+    'password_mismatch' => 'Las contraseñas no coinciden.',
+    'password_actual_empty' => 'Debes introducir tu contraseña actual para confirmar los cambios.',
+    'password_actual_invalid' => 'La contraseña actual es incorrecta.'
+];
+
+// Mensajes adicionales para validaciones servidor-side
+$mensajes += [
+    'usuario_empty' => 'El nombre de usuario es obligatorio.',
+    'usuario_format' => 'Usuario: 3-15 caracteres, empieza por letra; solo letras y números.',
+    'usuario_exists' => 'El nombre de usuario ya está en uso.',
+    'password_format' => 'Contraseña: 6-15 caracteres válidos (letras, dígitos, - y _).',
+    'password_requirements' => 'La contraseña debe contener mayúscula, minúscula y número.',
+    'email_empty' => 'La dirección de correo no puede estar vacía.',
+    'email_invalid' => 'Dirección de correo no válida.',
+    'email_exists' => 'La dirección de correo ya está registrada.',
+    'fecha_invalid' => 'Fecha de nacimiento no válida.',
+    'fecha_menor_18' => 'Debes tener al menos 18 años para registrarte.',
+    'sexo_empty' => 'Debes seleccionar un valor para el sexo.',
+    'db_error' => 'Error interno. Inténtalo más tarde.'
 ];
 
 ?>
@@ -70,6 +88,7 @@ require_once __DIR__ . '/includes/cabecera.php';
     <?php
     // Preparar datos para el formulario compartido
     $modo = 'registro';
+    $action = '/registro-process';
     $usuario = [
         'usuario' => $vals['usuario'] ?? '',
         'email' => $vals['email'] ?? '',
@@ -79,13 +98,14 @@ require_once __DIR__ . '/includes/cabecera.php';
         'pais' => $vals['pais'] ?? '',
         'foto' => ''
     ];
-    $action = 'respuestaregistro.php';
+    // usar la nueva ruta de procesamiento que implementa validación y stored en BD
+    $action = '/daw/registro';
     $submitText = 'Registrarme';
     require __DIR__ . '/includes/formulario_user.php';
     ?>
 
         <p class="registro-link"><strong>¿Ya tienes cuenta? </strong>
-            <a href="inicio_sesion.php" class="boton-enlace">Inicia sesion aqui</a>
+            <a href="/daw/login" class="boton-enlace">Inicia sesion aqui</a>
         </p>
 
     </main>

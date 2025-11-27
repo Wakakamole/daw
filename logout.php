@@ -20,5 +20,5 @@ setcookie('remember_user', '', time() - 3600, '/', '', false, true);
 
 
 // Redirigir a página pública
-header('Location: index.php');
+header('Location: /daw/');
 exit;

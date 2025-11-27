@@ -1378,3 +1378,40 @@ label[for="dia_nacimiento"], label[for="mes_nacimiento"], label[for="anio_nacimi
   font-weight: 600;
   color: var(--color-primario);
 }
+
+/* BOTÓN DE BAJA DE USUARIO */
+.contenedor-botones-baja {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.boton-baja-peligro {
+  display: block;
+  width: 100%;
+  background-color: #dc3545;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: 2px solid #a71d2a;
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.boton-baja-peligro:hover {
+  background-color: #bb2d3b;
+  border-color: #8a1a27;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(220, 53, 69, 0.4);
+}
+
+.boton-baja-peligro:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(220, 53, 69, 0.3);
+}
+

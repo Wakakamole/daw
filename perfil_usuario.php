@@ -59,7 +59,7 @@ $total_anuncios = count($mis_anuncios);
                     <li>
                         <article class="anuncio-item">
                             <h3><?= htmlspecialchars($anuncio['Titulo'], ENT_QUOTES) ?></h3>
-                            <a href="ver_anuncio.php?id=<?= (int)$anuncio['IdAnuncio'] ?>">
+                            <a href="/daw/ver_anuncio?id=<?= (int)$anuncio['IdAnuncio'] ?>">
                                 <img src="<?= !empty($anuncio['FPrincipal']) ? htmlspecialchars($anuncio['FPrincipal'], ENT_QUOTES) : 'img/noimage.png' ?>" 
                                      alt="<?= htmlspecialchars($anuncio['Titulo'], ENT_QUOTES) ?>" width="200">
                             </a>

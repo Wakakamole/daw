@@ -98,7 +98,7 @@ $costeTotal = $costeUnitario * $copias;
         <h3>Coste del folleto</h3>
         <p><strong>Coste total:</strong> <?= number_format($costeTotal, 2, ',', '') ?> €</p>
 
-        <a href="index_user.php"><button>Volver a la pagina principal</button></a>
+        <a href="/daw/inicio_user"><button>Volver a la pagina principal</button></a>
     </section>
 </main>
 

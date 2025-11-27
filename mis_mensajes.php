@@ -92,7 +92,7 @@ if ($usuario_id > 0) {
                                 — <time><?php echo htmlspecialchars(date('d/m/Y H:i', strtotime($m['FRegistro'])), ENT_QUOTES, 'UTF-8'); ?></time></p>
                             <p class="texto"><?php echo nl2br(htmlspecialchars(mb_strimwidth($m['Texto'], 0, 300, '...'), ENT_QUOTES, 'UTF-8')); ?></p>
                             <?php if (!empty($m['Anuncio'])): ?>
-                                <p><a href="detalle_anuncio.php?id=<?php echo urlencode($m['Anuncio']); ?>" class="boton-enlace">Ver anuncio relacionado</a></p>
+                                <p><a href="/daw/detalle_anuncio?id=<?php echo urlencode($m['Anuncio']); ?>" class="boton-enlace">Ver anuncio relacionado</a></p>
                             <?php endif; ?>
                         </article>
                     </li>
@@ -116,7 +116,7 @@ if ($usuario_id > 0) {
                                 — <time><?php echo htmlspecialchars(date('d/m/Y H:i', strtotime($m['FRegistro'])), ENT_QUOTES, 'UTF-8'); ?></time></p>
                             <p class="texto"><?php echo nl2br(htmlspecialchars(mb_strimwidth($m['Texto'], 0, 300, '...'), ENT_QUOTES, 'UTF-8')); ?></p>
                             <?php if (!empty($m['Anuncio'])): ?>
-                                <p><a href="detalle_anuncio.php?id=<?php echo urlencode($m['Anuncio']); ?>" class="boton-enlace">Ver anuncio relacionado</a></p>
+                                <p><a href="/daw/detalle_anuncio?id=<?php echo urlencode($m['Anuncio']); ?>" class="boton-enlace">Ver anuncio relacionado</a></p>
                             <?php endif; ?>
                         </article>
                     </li>

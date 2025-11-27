@@ -102,7 +102,7 @@ $result = $conexion->query($sql);
                     <article class="anuncio-item">
                         <h3><?= htmlspecialchars($row['Titulo']) ?></h3>
 
-                        <a href="detalle_anuncio.php?id=<?= $row['IdAnuncio'] ?>">
+                        <a href="/daw/detalle_anuncio?id=<?= $row['IdAnuncio'] ?>">
                             <img src="<?= htmlspecialchars($row['FPrincipal']) ?>" 
                                  alt="<?= htmlspecialchars($row['Alternativo']) ?>">
                         </a>

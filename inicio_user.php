@@ -1,6 +1,5 @@
-<!-- PÁGINA PRINCIPAL CUANDO EL USUARIO TIENE LA SESION INICIADA -->
-
 <?php
+// Página principal privada (usuario autenticado)
 
 require_once __DIR__ . '/includes/control_parteprivada.php';
 

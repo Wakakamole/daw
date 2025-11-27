@@ -1,69 +1,81 @@
 <?php
-// Página principal pública
-$page_title = 'INMOLINK';
-// incluir la cabecera (auto-login ya se ejecuta ahí antes de salida)
-require_once __DIR__ . '/includes/cabecera.php';
 
-// Si tras el auto-login hay sesión activa, redirigir al área privada
-if (!empty($_SESSION['login']) && $_SESSION['login'] === 'ok') {
-    header('Location: index_user.php');
-    exit;
+// ROUTER CENTRAL - Enrutador principal de la aplicación
+
+
+// Iniciar sesión PHP
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
-?>
+// Extraer la ruta del servidor
+$path = $_SERVER['PATH_INFO'] ?? '/';
 
-<main>
-    <section>
-    <h1>PÁGINA PRINCIPAL </h1>
-    <h2>Últimos anuncios publicados</h2>
-    </section>
-    <?php
-    // Obtener últimos 5 anuncios desde la base de datos
-    require_once __DIR__ . '/includes/basedatos.php';
-    $db = get_db();
-    $sql = "SELECT A.IdAnuncio, A.Titulo, A.FPrincipal, A.FRegistro, A.Ciudad, A.Precio, P.NomPais
-            FROM anuncios A
-            LEFT JOIN paises P ON A.Pais = P.IdPais
-            ORDER BY A.FRegistro DESC
-            LIMIT 5";
-    $ultimos = [];
-    try {
-        $res = $db->query($sql);
-        if ($res) {
-            $ultimos = $res->fetch_all(MYSQLI_ASSOC);
-            $res->free();
-        }
-    } catch (Exception $e) {
-        // Si falla la consulta, dejamos el array vacío y mostramos mensaje más abajo
-        error_log('Error al obtener últimos anuncios: ' . $e->getMessage());
+// Limpiar barras al inicio y final
+$path = trim($path, '/');
+
+// Dividir la ruta en segmentos
+$segments = explode('/', $path);
+
+// Obtener el controlador (primer segmento, por defecto 'inicio')
+$controller = $segments[0] ?? 'inicio';
+
+// Mapeo de rutas a archivos (GET - mostrar)
+$routes_get = [
+    '' => __DIR__ . '/inicio.php',  // Ruta vacía redirige a inicio
+    'inicio' => __DIR__ . '/inicio.php',
+    'inicio_user' => __DIR__ . '/inicio_user.php',
+    'login' => __DIR__ . '/inicio_sesion.php',
+    'registro' => __DIR__ . '/registro_usuario.php',
+    'logout' => __DIR__ . '/logout.php',
+    'detalle_anuncio' => __DIR__ . '/detalle_anuncio.php',
+    'buscar' => __DIR__ . '/resultado_busqueda.php',
+    'crear_anuncio' => __DIR__ . '/crear_anuncio.php',
+    'formulario_busqueda' => __DIR__ . '/formulario_busqueda.php',
+    'mi_perfil' => __DIR__ . '/mi_perfil.php',
+    'perfil_usuario' => __DIR__ . '/perfil_usuario.php',
+    'mis_anuncios' => __DIR__ . '/mis_anuncios.php',
+    'mis_datos' => __DIR__ . '/mis_datos.php',
+    'mis_mensajes' => __DIR__ . '/mis_mensajes.php',
+    'mensaje' => __DIR__ . '/mensaje.php',
+    'solicitar_folleto' => __DIR__ . '/solicitar_folleto.php',
+    'configuracion' => __DIR__ . '/configuracion.php',
+    'respuesta_baja' => __DIR__ . '/respuesta_baja.php',
+    'ver_fotos' => __DIR__ . '/ver_fotos.php',
+    'ver_fotos_privadas' => __DIR__ . '/ver_fotos_privadas.php',
+    'anadir_foto' => __DIR__ . '/anadir_foto.php',
+    'ver_anuncio' => __DIR__ . '/ver_anuncio.php',
+    'aviso' => __DIR__ . '/aviso.php',
+    'accesibilidad' => __DIR__ . '/accesibilidad.php',
+];
+
+// Mapeo de controladores para POST
+$routes_post = [
+    'login' => __DIR__ . '/control_acceso.php',
+    'registro' => __DIR__ . '/respuestaregistro_nuevo.php',
+    'mis_datos' => __DIR__ . '/respuestamisdatos.php',
+    'mensaje' => __DIR__ . '/mensaje_respuesta.php',
+];
+
+// Determinar qué ruta usar basado en el método HTTP
+$is_post = $_SERVER['REQUEST_METHOD'] === 'POST';
+$routes = $is_post ? $routes_post : $routes_get;
+
+// Si es POST y no hay ruta POST definida, intentar usar GET
+if ($is_post && !isset($routes[$controller])) {
+    $routes = $routes_get;
+}
+
+// Cargar la ruta si existe
+if (isset($routes[$controller]) && file_exists($routes[$controller])) {
+    require $routes[$controller];
+} else {
+    // Mostrar página de error 404 según el estado de sesión
+    http_response_code(404);
+    if (!empty($_SESSION['login']) && $_SESSION['login'] === 'ok') {
+        require_once __DIR__ . '/error_404_user.html';
+    } else {
+        require_once __DIR__ . '/error_404.html';
     }
-    ?>
-
-    <?php if (empty($ultimos)): ?>
-        <p>No hay anuncios para mostrar.</p>
-    <?php else: ?>
-    <ul>
-    <?php foreach ($ultimos as $an):
-        $img = !empty($an['FPrincipal']) ? htmlspecialchars($an['FPrincipal'], ENT_QUOTES, 'UTF-8') : 'img/noimage.png';
-        $fecha = !empty($an['FRegistro']) ? date('d/m/Y', strtotime($an['FRegistro'])) : '';
-    ?>
-        <li>
-        <article>
-            <h3><?php echo htmlspecialchars($an['Titulo'], ENT_QUOTES, 'UTF-8'); ?></h3>
-            <a href="detalle_anuncio.php?id=<?php echo (int)$an['IdAnuncio']; ?>">
-                <img src="<?php echo $img; ?>" alt="<?php echo htmlspecialchars($an['Titulo'], ENT_QUOTES, 'UTF-8'); ?>" width="200">
-            </a>
-            <footer>
-                <p><?php echo htmlspecialchars($an['Ciudad'], ENT_QUOTES, 'UTF-8'); ?></p>
-                <p><?php echo htmlspecialchars($an['NomPais'], ENT_QUOTES, 'UTF-8'); ?></p>
-                <p><strong>Fecha:</strong> <?php echo $fecha; ?></p>
-                <p><strong>Precio:</strong> <?php echo htmlspecialchars($an['Precio'], ENT_QUOTES, 'UTF-8'); ?></p>
-            </footer>
-        </article>
-        </li>
-    <?php endforeach; ?>
-    </ul>
-    <?php endif; ?>
-</main>
-
-<?php require_once __DIR__ . '/includes/pie.php'; ?>
+}
+?>

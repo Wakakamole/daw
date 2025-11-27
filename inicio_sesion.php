@@ -52,7 +52,7 @@ require_once __DIR__ . '/includes/cabecera.php';
     <?php unset($_SESSION['remember_message']); ?>
   <?php endif; ?>
 
-  <form id="loginForm" action="control_acceso.php" method="post" novalidate>
+  <form id="loginForm" action="/daw/login" method="post" novalidate>
     <fieldset>
       <legend>Datos de acceso</legend>
 
@@ -73,7 +73,7 @@ require_once __DIR__ . '/includes/cabecera.php';
     </fieldset>
   </form>
 
-  <p><strong>¿No tienes una cuenta?</strong> <a href="registro_usuario.php">Regístrate aquí</a></p>
+  <p><strong>¿No tienes una cuenta?</strong> <a href="/daw/registro">Regístrate aquí</a></p>
 </main>
 
 <?php require_once __DIR__ . '/includes/pie.php'; ?>

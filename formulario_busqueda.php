@@ -52,7 +52,7 @@ function render_select($array, $name, $selected = '') {
         <h1>BÚSQUEDA AVANZADA</h1>
     </section>
 
-    <form action="resultado_busqueda.php" method="post">
+    <form action="/daw/buscar" method="post">
         <fieldset>
             <legend>Filtros de búsqueda</legend>
             <br>

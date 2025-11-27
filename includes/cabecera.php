@@ -55,16 +55,16 @@ $estilo_css = $mapa_estilos[$estilo_id] ?? 'inmolink';
 <body>
 
     <header>
-        <a href="<?php echo (isset($is_logged) && $is_logged) ? 'index_user.php' : 'index.php'; ?>">
+        <a href="<?php echo (isset($is_logged) && $is_logged) ? '/daw/inicio_user' : '/daw/'; ?>">
             <img src="img/logo.png" alt="Logo INMOLINK" width="100" height="100" class="logo-normal">
             <img src="img/!logo.png" alt="Logo INMOLINK blanco" width="100" height="100" class="logo-contraste">
         </a>
         <nav>
             <ul>
                 <?php if (!empty($is_logged) && $is_logged): ?>
-                    <li><a href="index_user.php"><i class="fa-solid fa-house-chimney"></i> Inicio</a></li>
-                    <li><a href="formulario_busqueda.php"><i class="fa-solid fa-magnifying-glass"></i> Buscar Propiedades</a></li>
-                    <li><a href="crear_anuncio.php"><i class="fa-regular fa-square-plus"></i>  Subir anuncio</a></li>
+                    <li><a href="/daw/inicio_user"><i class="fa-solid fa-house-chimney"></i> Inicio</a></li>
+                    <li><a href="/daw/formulario_busqueda"><i class="fa-solid fa-magnifying-glass"></i> Buscar Propiedades</a></li>
+                    <li><a href="/daw/crear_anuncio"><i class="fa-regular fa-square-plus"></i>  Subir anuncio</a></li>
                     <li>
                         <details>
                             <summary>
@@ -80,7 +80,7 @@ $estilo_css = $mapa_estilos[$estilo_id] ?? 'inmolink';
                             </summary>
                             <ul>
                                 <li>
-                                            <a href="mi_perfil.php">
+                                            <a href="/daw/mi_perfil">
                                         <?php
                                             if (isset($_SESSION['usuario'])) {
                                                 echo 'Perfil de ' . htmlspecialchars($_SESSION['usuario'], ENT_QUOTES, 'UTF-8');
@@ -90,21 +90,21 @@ $estilo_css = $mapa_estilos[$estilo_id] ?? 'inmolink';
                                         ?>
                                     </a>
                                 </li>
-                                <li><a href="logout.php">Cerrar Sesión</a></li>
+                                <li><a href="/daw/logout">Cerrar Sesión</a></li>
                             </ul>
                         </details>
                     </li>
                 <?php else: ?>
-                    <li><a href="index.php"><i class="fa-solid fa-house-chimney"></i> Inicio</a></li>
-                    <li><a href="formulario_busqueda.php"><i class="fa-solid fa-magnifying-glass"></i> Buscar Propiedades</a></li>
-                    <li><a href="inicio_sesion.php"><i class="fa-solid fa-user"></i> Inicio de Sesión</a></li>
-                    <li><a href="registro_usuario.php"><i class="fa-solid fa-user-plus"></i> Registro de Usuario</a></li>
+                    <li><a href="/daw/"><i class="fa-solid fa-house-chimney"></i> Inicio</a></li>
+                    <li><a href="/daw/formulario_busqueda"><i class="fa-solid fa-magnifying-glass"></i> Buscar Propiedades</a></li>
+                    <li><a href="/daw/login"><i class="fa-solid fa-user"></i> Inicio de Sesión</a></li>
+                    <li><a href="/daw/registro"><i class="fa-solid fa-user-plus"></i> Registro de Usuario</a></li>
                 <?php endif; ?>
             </ul>
         </nav>
         <search>
             <h2>Búsqueda rápida</h2>
-            <form action="resultado_busqueda.php" method="GET">
+            <form action="/daw/buscar" method="GET">
                 <input type="text" name="query" placeholder="Escribe aquí...">
                 <button type="submit">Intro</button>
             </form>
@@ -143,7 +143,7 @@ if (isset($_COOKIE[$cookie_name])) {
                 <li>
                     <article class="anuncio-item mini-anuncio">
                         <h3><?= htmlspecialchars($a['titulo']) ?></h3>
-                        <a href="detalle_anuncio.php?id=<?= $a['id'] ?>">
+                        <a href="/daw/detalle_anuncio?id=<?= $a['id'] ?>">
                             <img src="<?= htmlspecialchars($a['foto']) ?>" alt="<?= htmlspecialchars($a['titulo']) ?>">
                         </a>
                         <footer>

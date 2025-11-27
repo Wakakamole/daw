@@ -5,7 +5,8 @@ if (!isset($modo)) { $modo = 'registro'; }
 if (!isset($usuario) || !is_array($usuario)) { $usuario = []; }
 if (!function_exists('h')) { function h($s){ return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); } }
 
-$action = isset($action) ? $action : 'respuestaregistro.php';
+// Usar la acción especificada o valor por defecto
+$action = isset($action) ? $action : '/daw/registro';
 $submitText = isset($submitText) ? $submitText : ($modo === 'registro' ? 'Registrarme' : 'Guardar cambios');
 
 ?>
@@ -18,14 +19,19 @@ $submitText = isset($submitText) ? $submitText : ($modo === 'registro' ? 'Regist
         <input type="text" id="usuario" name="usuario" placeholder="Nombre de usuario" value="<?php echo h($usuario['usuario'] ?? ''); ?>" <?php echo ($modo === 'edicion') ? 'readonly' : ''; ?>>
         <br><br>
 
-        <label for="contrasena">Contraseña: </label>
-        <input type="password" id="contrasena" name="password" placeholder="Contraseña">
+        <label for="contrasena">
+            <?php echo ($modo === 'registro') ? 'Contraseña:' : 'Nueva contraseña:'; ?>
+        </label>
+        <input type="password" id="contrasena" name="password" placeholder="<?php echo ($modo === 'registro') ? 'Contraseña' : 'Nueva contraseña'; ?>">
         <?php if ($modo === 'registro'): ?>
             <br><br>
             <label for="confirmar_contrasena">Confirmar Contraseña: </label>
             <input type="password" id="confirmar_contrasena" name="repite" placeholder="Confirmar Contraseña">
         <?php else: ?>
-            <p class="help">Dejar en blanco si no deseas cambiar la contraseña.</p>
+            <br><br>
+            <label for="repetir_contrasena">Repetir nueva contraseña: </label>
+            <input type="password" id="repetir_contrasena" name="repite" placeholder="Repetir nueva contraseña">
+            <p class="help">Dejar ambos campos en blanco si no deseas cambiar la contraseña.</p>
         <?php endif; ?>
         <br><br>
 
@@ -56,11 +62,16 @@ $submitText = isset($submitText) ? $submitText : ($modo === 'registro' ? 'Regist
         $d = $m = $y = '';
         if ($fn) {
             $parts = explode('-', $fn);
-            if (count($parts) === 3) { $y = $parts[0]; $m = $parts[1]; $d = ltrim($parts[2], '0'); }
+            if (count($parts) === 3) { 
+                $y = $parts[0]; 
+                $m = $parts[1];  // Mantener con ceros (ej: '01', '02')
+                $d = ltrim($parts[2], '0') ?: '0';  // Convertir a número quitando ceros, pero si es 0 mantenerlo
+            }
         }
         ?>
-        <input type="number" id="dia_nacimiento" name="dia_nacimiento" placeholder="Día" style="width:70px" min="1" max="31" step="1" value="<?php echo h($d); ?>"> 
+        <input type="number" id="dia_nacimiento" name="dia_nacimiento" placeholder="Día" style="width:70px" min="1" max="31" step="1" value="<?php echo ($d !== '' && $d !== '0') ? h($d) : ''; ?>"> 
         <select id="mes_nacimiento" name="mes_nacimiento" aria-label="Mes">
+            <option value="">-- Selecciona mes --</option>
             <?php
             $meses = [ '01'=>'Enero','02'=>'Febrero','03'=>'Marzo','04'=>'Abril','05'=>'Mayo','06'=>'Junio','07'=>'Julio','08'=>'Agosto','09'=>'Septiembre','10'=>'Octubre','11'=>'Noviembre','12'=>'Diciembre' ];
             foreach ($meses as $valm=>$nom) {
@@ -69,8 +80,7 @@ $submitText = isset($submitText) ? $submitText : ($modo === 'registro' ? 'Regist
             }
             ?>
         </select>
-        <input type="text" id="anio_nacimiento" name="anio_nacimiento" placeholder="Año" style="width:90px" maxlength="4" inputmode="numeric" value="<?php echo h($y); ?>">
-        <input type="hidden" id="fecha_nacimiento" name="fecha_nacimiento" value="<?php echo h($usuario['fecha_nacimiento'] ?? ''); ?>">
+        <input type="text" id="anio_nacimiento" name="anio_nacimiento" placeholder="Año" style="width:90px" maxlength="4" inputmode="numeric" value="<?php echo ($y !== '') ? h($y) : ''; ?>">
         <br><br>
 
         <label for="ciudad">Ciudad</label>
@@ -111,26 +121,16 @@ $submitText = isset($submitText) ? $submitText : ($modo === 'registro' ? 'Regist
         <?php endif; ?>
         <input type="hidden" name="modo" value="<?php echo h($modo); ?>">
 
+        <?php if ($modo === 'edicion'): ?>
+            <label for="password_actual">Contraseña actual (obligatoria para confirmar cambios): </label>
+            <input type="password" id="password_actual" name="password_actual" placeholder="Contraseña actual" required>
+            <br><br>
+        <?php endif; ?>
+
         <button type="submit"><?php echo h($submitText); ?></button>
     </fieldset>
 </form>
-
 <?php
-// small script to compose hidden fecha_nacimiento from day/month/year on submit
+
 ?>
-<script>
-document.addEventListener('DOMContentLoaded', function(){
-    var form = document.getElementById('userForm');
-    if (!form) return;
-    form.addEventListener('submit', function(){
-        var d = document.getElementById('dia_nacimiento').value || '';
-        var m = document.getElementById('mes_nacimiento').value || '';
-        var y = document.getElementById('anio_nacimiento').value || '';
-        var hidden = document.getElementById('fecha_nacimiento');
-        if (d && m && y) {
-            if (d.length === 1) d = '0' + d;
-            hidden.value = y + '-' + m + '-' + d;
-        }
-    });
-});
-</script>
+

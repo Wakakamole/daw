@@ -1,15 +1,20 @@
 <?php
 // control_acceso.php - procesa login en servidor usando la tabla Usuarios
 // Recibe usuario y clave vía POST desde inicio_sesion.php
-
-session_start();
+// Nota: session_start() ya se ejecuta en index.php (router)
 
 function redirect_to($path, $params = []) {
     $host = $_SERVER['HTTP_HOST'];
-    $uri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
     $qs = '';
     if (!empty($params)) { $qs = '?' . http_build_query($params); }
-    header("Location: http://$host$uri/$path$qs");
+    // Convertir rutas antiguas a rutas del router
+    $route_map = [
+        'inicio_sesion.php' => '/daw/login',
+        'index_user.php' => '/daw/inicio_user',
+        'index.php' => '/daw/',
+    ];
+    $target_path = isset($route_map[$path]) ? $route_map[$path] : '/daw/' . str_replace('.php', '', $path);
+    header("Location: http://$host$target_path$qs");
     exit;
 }
 

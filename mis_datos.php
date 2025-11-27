@@ -79,14 +79,68 @@ $usuario = [
 ];
 
 $modo = 'edicion';
-$action = 'respuestaregistro.php';
+$action = '/daw/mis_datos';
 $submitText = 'Guardar cambios';
+
+// Gestionar mensajes de error y valores previos
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
+
+$errors = [];
+if (!empty($_SESSION['errors'])) {
+    $errors = $_SESSION['errors'];
+    unset($_SESSION['errors']);
+}
+
+// Mapa de mensajes legibles
+$mensajes = [
+    'usuario' => 'El nombre de usuario es obligatorio.',
+    'password_empty' => 'La contraseña no puede estar vacía.',
+    'repite_empty' => 'Debes repetir la contraseña.',
+    'password_mismatch' => 'Las contraseñas no coinciden.',
+    'password_actual_empty' => 'Debes introducir tu contraseña actual para confirmar los cambios.',
+    'password_actual_invalid' => 'La contraseña actual es incorrecta.',
+    'usuario_empty' => 'El nombre de usuario es obligatorio.',
+    'usuario_format' => 'Usuario: 3-15 caracteres, empieza por letra; solo letras y números.',
+    'usuario_exists' => 'El nombre de usuario ya está en uso.',
+    'password_format' => 'Contraseña: 6-15 caracteres válidos (letras, dígitos, - y _).',
+    'password_requirements' => 'La contraseña debe contener mayúscula, minúscula y número.',
+    'email_empty' => 'La dirección de correo no puede estar vacía.',
+    'email_invalid' => 'Dirección de correo no válida.',
+    'email_exists' => 'La dirección de correo ya está registrada.',
+    'fecha_invalid' => 'Fecha de nacimiento no válida.',
+    'fecha_menor_18' => 'Debes tener al menos 18 años.',
+    'sexo_empty' => 'Debes seleccionar un valor para el sexo.',
+    'db_error' => 'Error interno. Inténtalo más tarde.'
+];
+
+// Si hay valores previos en sesión, actualizar usuario
+if (!empty($_SESSION['old'])) {
+    $old = $_SESSION['old'];
+    $usuario['usuario'] = $old['usuario'] ?? $usuario['usuario'];
+    $usuario['email'] = $old['email'] ?? $usuario['email'];
+    $usuario['sexo'] = $old['sexo'] ?? $usuario['sexo'];
+    $usuario['fecha_nacimiento'] = $old['fecha_nacimiento'] ?? $usuario['fecha_nacimiento'];
+    $usuario['ciudad'] = $old['ciudad'] ?? $usuario['ciudad'];
+    $usuario['pais'] = $old['pais'] ?? $usuario['pais'];
+    unset($_SESSION['old']);
+}
 
 ?>
 
 <main>
     <h1>Mis datos</h1>
-    <p>A continuación puedes ver tus datos.</p>
+    <p>A continuación puedes modificar tus datos. Debes introducir tu contraseña actual para confirmar los cambios.</p>
+
+    <?php if (!empty($errors)): ?>
+        <section class="error-summary" role="alert" aria-live="assertive">
+            <p><strong>Se han encontrado errores:</strong></p>
+            <ul>
+            <?php foreach ($errors as $e): ?>
+                <li><?php echo h(isset($mensajes[$e]) ? $mensajes[$e] : $e); ?></li>
+            <?php endforeach; ?>
+            </ul>
+        </section>
+    <?php endif; ?>
 
     <?php require __DIR__ . '/includes/formulario_user.php'; ?>
 

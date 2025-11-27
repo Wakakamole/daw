@@ -95,8 +95,8 @@ if ($stmt) {
         <?php endif; ?>
         <p><strong>Ciudad:</strong> <?php echo h($anuncio['Ciudad']); ?> — <strong>Precio:</strong> <?php echo h($anuncio['Precio']); ?></p>
         <p><strong>Total de mensajes:</strong> <?php echo $total_mensajes; ?></p>
-        <p><a class="boton-enlace" href="detalle_anuncio.php?id=<?php echo urlencode($anuncio_id); ?>">Ver anuncio</a>
-           &nbsp; <a class="boton-enlace" href="mis_mensajes.php">Volver a mis mensajes</a></p>
+        <p><a class="boton-enlace" href="/daw/detalle_anuncio?id=<?php echo urlencode($anuncio_id); ?>">Ver anuncio</a>
+           &nbsp; <a class="boton-enlace" href="/daw/mis_mensajes">Volver a mis mensajes</a></p>
     </section>
 
     <section>

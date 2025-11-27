@@ -145,7 +145,7 @@ $stmt->close();
         <h3>Formulario de solicitud</h3>
         <p>Rellena el siguiente formulario aportando todos los detalles para confeccionar tu folleto publicitario.</p>
 
-        <form action="solicitar_folleto_respuesta.php" method="post">
+        <form action="/daw/solicitar_folleto" method="post">
             <fieldset>
                 <legend>Datos Personales</legend>
 

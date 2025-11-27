@@ -27,7 +27,7 @@ require_once __DIR__ . '/includes/cabecera.php';
         <section>
         <h1>CONTACTAR AL ANUNCIANTE</h1>
 
-    <form action="mensaje_respuesta.php" method="post" novalidate>
+    <form action="/daw/mensaje" method="post" novalidate>
         <!-- campo oculto para recibir el id del anuncio (rellenado por PHP) -->
         <input type="hidden" id="anuncio_id" name="anuncio_id" value="<?php echo h($anuncio_id); ?>">
             <fieldset>
