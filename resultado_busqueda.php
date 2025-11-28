@@ -5,6 +5,30 @@ require_once __DIR__ . '/includes/basedatos.php';
 
 $conexion = get_db();
 
+// Cargar listas desde la base de datos
+
+//tipos de anuncio
+$tipos_anuncios_dic = [];
+$res = $conexion->query("SELECT IdTAnuncio, NomTAnuncio FROM tiposanuncios");
+while ($row = $res->fetch_assoc()) {
+    $tipos_anuncios_dic[strtolower($row['NomTAnuncio'])] = (int)$row['IdTAnuncio'];
+}
+
+//tipos de vivienda
+$tipos_viviendas_dic = [];
+$res = $conexion->query("SELECT IdTVivienda, NomTVivienda FROM tiposviviendas");
+while ($row = $res->fetch_assoc()) {
+    $tipos_viviendas_dic[strtolower($row['NomTVivienda'])] = (int)$row['IdTVivienda'];
+}
+
+//paises
+$paises_dic = [];
+$res = $conexion->query("SELECT IdPais, NomPais FROM paises");
+while ($row = $res->fetch_assoc()) {
+    $paises_dic[strtolower($row['NomPais'])] = (int)$row['IdPais'];
+}
+
+
 // Recoger parámetros de búsqueda rápida (GET) y avanzada (POST)
 $query_rapida = trim($_GET['query'] ?? '');
 $tipo_anuncio  = $_POST['tipo_anuncio'] ?? '';
@@ -22,18 +46,7 @@ if ($query_rapida !== '') {
     $stopwords = ['un','una','en','de'];
     $palabras = array_diff(explode(' ', strtolower($query_rapida)), $stopwords);
 
-    // Diccionarios
-    $tipos_viviendas_dic = [
-        'obra nueva' => 1,
-        'vivienda'   => 2,
-        'oficina'    => 3,
-        'local'      => 4,
-        'garaje'     => 5,
-    ];
-    $tipos_anuncios_dic = [
-        'venta' => 1,
-        'alquiler' => 2
-    ];
+    
 
     $filtro_tipo_vivienda = null;
     $filtro_tipo_anuncio  = null;
