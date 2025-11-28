@@ -3,7 +3,7 @@ function h($s){ return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
 
 $errors = [];
 
-// Preferir errores de sesión (flash) cuando vengan de un submit; esto unifica comportamiento con inicio_sesion
+// Preferir errores de sesión (flash) cuando vengan de un submit
 if (session_status() === PHP_SESSION_NONE) { session_start(); }
 if (!empty($_SESSION['errors'])) {
     $errors = $_SESSION['errors'];
@@ -16,7 +16,7 @@ elseif (!empty($_GET['errors'])) {
 
 $vals = [];
 $fields = ['usuario','email','sexo','fecha_nacimiento','ciudad','pais'];
-// Priorizar repoblado desde sesión ($_SESSION['old']) si existe
+// Priorizar repoblado desde sesión ($_SESSION['old'])
 if (!empty($_SESSION['old'])) {
     $old = $_SESSION['old'];
     foreach ($fields as $f) { $vals[$f] = isset($old[$f]) ? $old[$f] : ''; }
@@ -25,7 +25,7 @@ if (!empty($_SESSION['old'])) {
     foreach ($fields as $f) { $vals[$f] = isset($_GET[$f]) ? $_GET[$f] : ''; }
 }
 
-// Si hay fecha_nacimiento la parseamos para rellenar día/mes/año por separado
+// Si hay fecha_nacimiento parsea para rellenar día mes año por separado
 $d = '';
 $m = '';
 $y = '';
@@ -82,6 +82,10 @@ require_once __DIR__ . '/includes/cabecera.php';
                     <li><?php echo h(isset($mensajes[$e]) ? $mensajes[$e] : $e); ?></li>
                 <?php endforeach; ?>
                 </ul>
+                <?php if (!empty($_SESSION['error_detalle'])): ?>
+                    <p style="color: #d32f2f; margin-top: 10px;"><strong>Detalle técnico:</strong> <?php echo h($_SESSION['error_detalle']); ?></p>
+                    <?php unset($_SESSION['error_detalle']); ?>
+                <?php endif; ?>
             </section>
         <?php endif; ?>
 

@@ -72,17 +72,41 @@ function validar_sexo($s)
 function validar_fecha_mayor_18($fecha)
 {
     if (!$fecha) return null; // campo no obligatorio en enunciado (pero se pide comprobar si existe)
-    // aceptar formatos YYYY-MM-DD
-    $d = DateTime::createFromFormat('Y-m-d', $fecha);
-    $errors = DateTime::getLastErrors();
-    if ($d === false || !is_array($errors) || $errors['warning_count'] || $errors['error_count']) return 'fecha_invalid';
+    
+    // Primero, validar que el formato sea YYYY-MM-DD 
+    if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $fecha)) {
+        error_log("Formato fecha incorrecto: '$fecha'");
+        return 'fecha_invalid';
+    }
+    
+    // Dividir y validar
+    $partes = explode('-', $fecha);
+    if (count($partes) !== 3) return 'fecha_invalid';
+    
+    $y = (int)$partes[0];
+    $m = (int)$partes[1];
+    $d = (int)$partes[2];
+    
+    // checkdate valida si la fecha es real
+    if (!checkdate($m, $d, $y)) {
+        error_log("Fecha inexistente: y=$y m=$m d=$d");
+        return 'fecha_invalid';
+    }
+    
+    // Comprobar que sea mayor de 18 años
     $hoy = new DateTime();
-    $diff = $hoy->diff($d);
-    if ($diff->y < 18) return 'fecha_menor_18';
+    $fecha_nac = new DateTime("$y-$m-$d");
+    $diff = $hoy->diff($fecha_nac);
+    
+    if ($diff->y < 18) {
+        error_log("Menor de 18: y=$y m=$m d=$d, edad={$diff->y}");
+        return 'fecha_menor_18';
+    }
+    
     return null;
 }
 
-// helper: transformar sexo textual a entero según esquema de la BD
+// transformar sexo a numero
 function sexo_a_int($s)
 {
     switch ($s) {

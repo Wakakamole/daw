@@ -52,7 +52,7 @@ $routes_get = [
 // Mapeo de controladores para POST
 $routes_post = [
     'login' => __DIR__ . '/control_acceso.php',
-    'registro' => __DIR__ . '/respuestaregistro_nuevo.php',
+    'registro' => __DIR__ . '/respuestaregistro.php',
     'mis_datos' => __DIR__ . '/respuestamisdatos.php',
     'mensaje' => __DIR__ . '/mensaje_respuesta.php',
 ];

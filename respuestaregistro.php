@@ -1,5 +1,5 @@
 <?php
-// respuestaregistro.php — procesa el formulario de registro (reemplazado por versión limpia)
+// procesa el formulario de registro
 if (session_status() === PHP_SESSION_NONE) { session_start(); }
 
 require_once __DIR__ . '/includes/filtrado.php';
@@ -79,6 +79,39 @@ try {
     $pais_int = ($pais === '') ? null : ((int)$pais ?: null);
     $foto = null;
 
+    /* GESTIÓN DE FOTO
+    // Procesar foto
+    if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+        $file = $_FILES['foto'];
+        $nombre_temporal = $file['tmp_name'];
+        $nombre_original = $file['name'];
+        $tipo_mime = $file['type'];
+        $tamaño = $file['size'];
+
+        // Validar tipo de archivo
+        $tipos_permitidos = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        if (in_array($tipo_mime, $tipos_permitidos, true)) {
+            // Validar tamaño (máximo 5MB)
+            if ($tamaño <= 5 * 1024 * 1024) {
+                // Generar nombre único para la foto
+                $extension = pathinfo($nombre_original, PATHINFO_EXTENSION);
+                $extension = strtolower($extension);
+                $nombre_archivo = $usuario . '_' . time() . '.' . $extension;
+                $ruta_destino = __DIR__ . '/img/usuarios/' . $nombre_archivo;
+
+                // Mover archivo a la carpeta de destino
+                if (move_uploaded_file($nombre_temporal, $ruta_destino)) {
+                    // Guardar la ruta relativa en la BD
+                    $foto = '/daw/img/usuarios/' . $nombre_archivo;
+                }
+                // Si falla move_uploaded_file, continuar sin foto
+            }
+            // Si tamaño es muy grande, continuar sin foto
+        }
+        // Si tipo no permitido, continuar sin foto
+    }
+    */
+
     $ins = $db->prepare('INSERT INTO usuarios (NomUsuario, Clave, Email, Sexo, FNacimiento, Ciudad, Pais, Foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
     if (!$ins) throw new Exception('Error preparando insert: ' . $db->error);
     $ins->bind_param('sssissis', $usuario, $hash, $email, $sexo_int, $fn, $ciudad, $pais_int, $foto);
@@ -86,9 +119,11 @@ try {
     $ins->close();
 
 } catch (Exception $ex) {
-    error_log('Error registro: ' . $ex->getMessage());
+    $mensaje_error = $ex->getMessage();
+    error_log('Error registro: ' . $mensaje_error);
     $_SESSION['errors'] = ['db_error'];
     $_SESSION['old'] = [ 'usuario'=>$usuario, 'email'=>$email, 'sexo'=>$sexo, 'fecha_nacimiento'=>$fecha, 'ciudad'=>$ciudad, 'pais'=>$pais ];
+    $_SESSION['error_detalle'] = $mensaje_error;
     header("Location: http://{$_SERVER['HTTP_HOST']}/daw/registro");
     exit;
 }

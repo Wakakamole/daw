@@ -56,42 +56,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_baja'])) {
         exit;
     }
 
-    // Proceder a borrar el usuario y todos sus datos
+    // borrar usuario y todos sus datos
+    // EN BD existe ON DELETE CASCADE
+    // - X usuario automaticamente se eliminan sus anuncios
+    // - X anuncios automaticamente se eliminan sus fotos
+    // - Los mensajes se ponen a null () ON DELETE SET NULL no se eliminan pero no tienen usuario asociado
     try {
-        $db->begin_transaction();
-
-        // El motor InnoDB con claves ajenas en cascada debería borrar automáticamente
-        // los anuncios, fotos y mensajes asociados. Si no está configurado, lo hacemos manualmente.
-        
-        // Borrar mensajes donde el usuario es origen o destino
-        $stmt = $db->prepare('DELETE FROM mensajes WHERE UsuOrigen = ? OR UsuDestino = ?');
-        if (!$stmt) throw new Exception('Error preparando delete mensajes');
-        $stmt->bind_param('ii', $usuario_id, $usuario_id);
-        $stmt->execute();
-        $stmt->close();
-
-        // Borrar fotos de los anuncios del usuario
-        $stmt = $db->prepare('DELETE FROM fotos WHERE Anuncio IN (SELECT IdAnuncio FROM anuncios WHERE Usuario = ?)');
-        if (!$stmt) throw new Exception('Error preparando delete fotos');
-        $stmt->bind_param('i', $usuario_id);
-        $stmt->execute();
-        $stmt->close();
-
-        // Borrar anuncios del usuario
-        $stmt = $db->prepare('DELETE FROM anuncios WHERE Usuario = ?');
-        if (!$stmt) throw new Exception('Error preparando delete anuncios');
-        $stmt->bind_param('i', $usuario_id);
-        $stmt->execute();
-        $stmt->close();
-
         // Borrar usuario
         $stmt = $db->prepare('DELETE FROM usuarios WHERE IdUsuario = ?');
         if (!$stmt) throw new Exception('Error preparando delete usuario');
         $stmt->bind_param('i', $usuario_id);
         $stmt->execute();
         $stmt->close();
-
-        $db->commit();
 
         // Destruir sesión
         session_unset();
@@ -131,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_baja'])) {
     }
 }
 
-// PASO 1: Mostrar confirmación con resumen de datos
+// Mostrar confirmación con resumen de datos
 try {
     // Obtener anuncios del usuario
     $stmt = $db->prepare('SELECT IdAnuncio, Titulo FROM anuncios WHERE Usuario = ? ORDER BY IdAnuncio');
