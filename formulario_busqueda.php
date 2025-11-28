@@ -2,32 +2,33 @@
 // Usar la cabecera común
 $page_title = 'INMOLINK - Búsqueda';
 require __DIR__ . '/includes/cabecera.php';
+require __DIR__ . '/includes/basedatos.php';
 
-// Arrays para los selects
-$tiposAnuncios = [
-    1 => 'Venta',
-    2 => 'Alquiler'
-];
+$conexion = get_db();
 
-$tiposViviendas = [
-    1 => 'Vivienda',
-    2 => 'Piso',
-    3 => 'Oficina',
-    4 => 'Local',
-    5 => 'Garaje',
-    6 => 'Chalet',
-    7 => 'Ático'
-];
+// CARGAR LISTAS DESDE LA BD
+// Tipos de anuncio
+$tiposAnuncios = [];
+$res = $conexion->query("SELECT IdTAnuncio, NomTAnuncio FROM tiposanuncios");
+while ($row = $res->fetch_assoc()) {
+    $tiposAnuncios[$row['IdTAnuncio']] = $row['NomTAnuncio'];
+}
 
-$paises = [
-    1 => 'España',
-    2 => 'Reino Unido',
-    3 => 'Francia',
-    4 => 'Alemania',
-    5 => 'Estados Unidos'
-];
+// Tipos de vivienda
+$tiposViviendas = [];
+$res = $conexion->query("SELECT IdTVivienda, NomTVivienda FROM tiposviviendas");
+while ($row = $res->fetch_assoc()) {
+    $tiposViviendas[$row['IdTVivienda']] = $row['NomTVivienda'];
+}
 
-// Valores previos (para mantener selección después de enviar)
+// Países
+$paises = [];
+$res = $conexion->query("SELECT IdPais, NomPais FROM paises");
+while ($row = $res->fetch_assoc()) {
+    $paises[$row['IdPais']] = $row['NomPais'];
+}
+
+// Valores previos del formulario
 $prev_tipo_anuncio  = $_POST['tipo_anuncio'] ?? '';
 $prev_tipo_vivienda = $_POST['tipo_vivienda'] ?? '';
 $prev_ciudad        = $_POST['ciudad'] ?? '';

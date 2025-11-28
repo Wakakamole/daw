@@ -1,11 +1,14 @@
 <?php
 require_once __DIR__ . '/includes/cabecera.php';
+require_once __DIR__ . '/includes/basedatos.php';
 
 if (empty($_SESSION['login']) || $_SESSION['login'] !== 'ok') {
     echo "<p>Debes iniciar sesión para cambiar la configuración.</p>";
     require __DIR__ . '/includes/pie.php';
     exit;
 }
+
+$conexion = get_db();
 
 // Guardar estilo seleccionado
 if (isset($_POST['estilo'])) {
@@ -15,14 +18,12 @@ if (isset($_POST['estilo'])) {
     echo "<p>Estilo actualizado correctamente.</p>";
 }
 
-$estilos = [
-    1 => 'Normal',
-    2 => 'Alto contraste grande',
-    3 => 'Alto contraste',
-    4 => 'Noche',
-    5 => 'Texto grande',
-    6 => 'Dislexia'
-];
+//cargo los estilos de la base de datos
+$estilos = [];
+$res = $conexion->query("SELECT IdEstilo, Nombre FROM estilos ORDER BY Nombre ASC");
+while ($row = $res->fetch_assoc()) {
+    $estilos[(int)$row['IdEstilo']] = $row['Nombre'];
+}
 
 $estilo_actual = $_SESSION['estilo'] ?? $_COOKIE['estilo_usuario'] ?? 1;
 ?>
