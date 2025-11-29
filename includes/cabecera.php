@@ -7,19 +7,38 @@ function h_title($v){ return htmlspecialchars($v, ENT_QUOTES, 'UTF-8'); }
 
 require_once __DIR__ . '/session.php';
 
-// Mapeo IdEstilo -> nombre archivo CSS
-$mapa_estilos = [
-    1 => 'inmolink',
-    2 => 'alto_contraste_grande',
-    3 => 'alto_contraste',
-    4 => 'noche',
-    5 => 'texto_grande',
-    6 => 'texto_grande_dislexia'
-];
+require_once __DIR__ . '/basedatos.php';
+$conexion = get_db();
 
-// Obtener el estilo desde sesión o cookie
-$estilo_id = $_SESSION['estilo'] ?? $_COOKIE['estilo_usuario'] ?? 1;
-$estilo_css = $mapa_estilos[$estilo_id] ?? 'inmolink';
+//obtengo id estilo de sesión o cookie o por defecto 1
+//$estilo_id = $_SESSION['estilo'] ?? $_COOKIE['estilo_usuario'] ?? 1;
+
+$estilo_id = 1; //valor por defecto
+
+if (!empty($_SESSION['usuario_id'])) {
+    $userId = (int) $_SESSION['usuario_id'];
+    $stmt = $conexion->prepare("SELECT Estilo FROM usuarios WHERE IdUsuario = ?");
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $stmt->bind_result($estilo_id_db);
+    if ($stmt->fetch()) {
+        $estilo_id = (int)$estilo_id_db;
+    }
+    $stmt->close();
+}
+
+//obtengo el fichero css del estilo seleccionado por el usuario de la base de datos
+$stmt = $conexion->prepare("SELECT Fichero FROM estilos WHERE IdEstilo = ?");
+$stmt->bind_param("i", $estilo_id);
+$stmt->execute();
+$stmt->bind_result($estilo_css);
+$stmt->fetch();
+$stmt->close();
+
+if (!$estilo_css) {
+    $estilo_css = "css/inmolink.css";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +66,7 @@ $estilo_css = $mapa_estilos[$estilo_id] ?? 'inmolink';
     <link rel="stylesheet" type="text/css" href="css/imprimir.css" media="print">
 
     <!-- Estilo seleccionado por el usuario -->
-    <link rel="stylesheet" href="css/<?php echo htmlspecialchars($estilo_css, ENT_QUOTES, 'UTF-8'); ?>.css">
+    <link rel="stylesheet" href="<?php echo htmlspecialchars($estilo_css); ?>">
 
     <title><?php echo h_title($page_title); ?></title>
 </head>

@@ -124,18 +124,18 @@ setcookie($cookie_name, json_encode($ultimos_anuncios), time() + 7*24*60*60, "/"
     <!-- Ver fotos del anuncio -->
     <section id="ver-fotos-anuncio">
         <p>
-            <a class="boton-enlace" href="/daw/ver_fotos?id=<?= h($anuncio['IdAnuncio']) ?>">
+            <a class="boton-enlace" href="ver_fotos.php?id=<?= h($anuncio['IdAnuncio']) ?>">
                 Ver todas las fotos del anuncio
             </a>
         </p>
 
         <p>
-            <a class="boton-enlace" href="/daw/ver_fotos_privadas?id=<?= h($anuncio['IdAnuncio']) ?>">
-                Ver todas las fotos del anuncio privada
+            <a class="boton-enlace" href="ver_fotos_privadas.php?id=<?= h($anuncio['IdAnuncio']) ?>">
+                Ver todas las fotos del anuncio (privada)
             </a>
         </p>
-        
     </section>
+
 
 
     <!-- Contacto -->

@@ -117,7 +117,7 @@ $page_title = 'INMOLINK - Anuncio';
     <!-- Enlace a añadir foto -->
     <section id="contacto-anunciante">
         <p>
-            <a class="boton-enlace" href="/daw/anadir_foto?id=<?= h($anuncio['id']); ?>">Añadir foto al anuncio</a>
+            <a class="boton-enlace" href="/daw/anadir_foto?id=<?= h($anuncio['IdAnuncio']); ?>">Añadir foto al anuncio</a>
         </p>
     </section>
 </main>

@@ -10,13 +10,26 @@ if (empty($_SESSION['login']) || $_SESSION['login'] !== 'ok') {
 
 $conexion = get_db();
 
-// Guardar estilo seleccionado
 if (isset($_POST['estilo'])) {
     $nuevo_estilo_id = intval($_POST['estilo']);
+    
+    // guardo el estilo en la sesión y cookie
     $_SESSION['estilo'] = $nuevo_estilo_id;
     setcookie('estilo_usuario', $nuevo_estilo_id, time() + 60*60*24*30, "/"); // 30 días
+    
+    // ahora lo guardo en la base de datos
+    $userId = $_SESSION['usuario_id'] ?? null;
+    if ($userId) {
+        $stmt = $conexion->prepare("UPDATE usuarios SET Estilo = ? WHERE IdUsuario = ?");
+        $stmt->bind_param("ii", $nuevo_estilo_id, $userId);
+        $stmt->execute();
+        $stmt->close();
+    }
+
     echo "<p>Estilo actualizado correctamente.</p>";
 }
+
+
 
 //cargo los estilos de la base de datos
 $estilos = [];

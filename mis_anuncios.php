@@ -9,9 +9,14 @@ if (empty($_SESSION['login']) || $_SESSION['login'] !== 'ok') {
     exit;
 }
 
+//sis se ha eliminado un anuncio, muestro este mensaje
+if (isset($_GET['deleted']) && $_GET['deleted'] == 1) {
+    echo "<p style='color:green;'>El anuncio se ha eliminado correctamente.</p>";
+}
+
 $usuario_id = $_SESSION['usuario_id'];
 
-// CARGAR ANUNCIOS DEL USUARIO
+//cargamos los anuncios del usuario
 $db = get_db();
 $sql = "SELECT IdAnuncio, Titulo, Ciudad, Pais, Precio, FPrincipal 
         FROM anuncios 
@@ -52,6 +57,10 @@ $total_anuncios = count($mis_anuncios);
                             <p><strong>Ciudad:</strong> <?= htmlspecialchars($anuncio['Ciudad'], ENT_QUOTES) ?></p>
                             <p><strong>País:</strong> <?= htmlspecialchars($anuncio['Pais'], ENT_QUOTES) ?></p>
                             <p><strong>Precio:</strong> <?= htmlspecialchars($anuncio['Precio'], ENT_QUOTES) ?></p>
+                            <p>
+                                <a class="boton-enlace" href="/daw/modificar_anuncio.php?id=<?= (int)$anuncio['IdAnuncio'] ?>">Modificar anuncio</a><br>
+                                <a class="boton-enlace" href="/daw/eliminar_anuncio.php?id=<?= (int)$anuncio['IdAnuncio'] ?>">Eliminar anuncio</a>
+                            </p>
                         </footer>
                     </article>
                 </li>
