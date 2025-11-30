@@ -8,9 +8,11 @@ $conexion = get_db();
 $errores = [];
 $exito = false;
 
+// obtengo id del anuncio a modificar
 $id_anuncio = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($id_anuncio <= 0) die("Anuncio no válido.");
 
+// compruebo que el anuncio pertenece al usuario
 $stmt = $conexion->prepare("SELECT * FROM anuncios WHERE IdAnuncio=? AND Usuario=?");
 $stmt->bind_param("ii",$id_anuncio,$_SESSION['usuario_id']);
 $stmt->execute();
@@ -19,11 +21,13 @@ if ($res->num_rows === 0) die("No tienes permiso para modificar este anuncio.");
 $anuncio = $res->fetch_assoc();
 $stmt->close();
 
+// cargo datos para los selects
 $tiposAnuncios=[]; $tiposViviendas=[]; $paises=[];
 foreach($conexion->query("SELECT IdTAnuncio, NomTAnuncio FROM tiposanuncios ORDER BY NomTAnuncio") as $fila) $tiposAnuncios[]=$fila;
 foreach($conexion->query("SELECT IdTVivienda, NomTVivienda FROM tiposviviendas ORDER BY NomTVivienda") as $fila) $tiposViviendas[]=$fila;
 foreach($conexion->query("SELECT IdPais, NomPais FROM paises ORDER BY NomPais") as $fila) $paises[]=$fila;
 
+//Si el usuario le da a modificar anuncio
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $validar_foto = false; // no obligatorio al modificar
     require __DIR__ . '/includes/filtrado_anuncio.php';
@@ -37,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         else $errores[]="Error al subir la nueva foto principal.";
     }
 
+//Si no hay errores, actualizo el anuncio en la base de datos
     if(empty($errores)){
         $stmt = $conexion->prepare("
             UPDATE anuncios SET 
@@ -57,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if($stmt->execute()){
             $exito=true;
-            header("Location: mis_anuncios.php");
+            header("Location: mis_anuncios.php");   //redirigir a mis anuncios
             exit;
         } else {
             $errores[]="Error al actualizar el anuncio: ".$stmt->error;

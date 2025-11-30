@@ -1,8 +1,4 @@
 <?php
-/**
- * filtrado_anuncio.php
- * Recoge $_POST y devuelve [$datos, $errores]
- */
 
 $errores = [];
 $datos = [];
@@ -32,7 +28,7 @@ if ($datos['ciudad'] === '') $errores[] = "La ciudad es obligatoria.";
 if ($datos['pais'] <= 0) $errores[] = "Seleccione un país.";
 if ($datos['precio'] <= 0) $errores[] = "El precio es obligatorio y debe ser mayor que 0.";
 
-// Para crear anuncio, se puede validar foto
+//Validamos si se ha subido una footo si era necesario subirla
 if ($validar_foto ?? false) {
     if (!isset($_FILES['foto_principal']) || $_FILES['foto_principal']['error'] !== UPLOAD_ERR_OK) {
         $errores[] = "Debe subir una foto principal válida.";

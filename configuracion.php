@@ -15,7 +15,7 @@ if (isset($_POST['estilo'])) {
     
     // guardo el estilo en la sesión y cookie
     $_SESSION['estilo'] = $nuevo_estilo_id;
-    setcookie('estilo_usuario', $nuevo_estilo_id, time() + 60*60*24*30, "/"); // 30 días
+    setcookie('estilo_usuario', $nuevo_estilo_id, time() + 60*60*24*30, "/"); //30 dias
     
     // ahora lo guardo en la base de datos
     $userId = $_SESSION['usuario_id'] ?? null;

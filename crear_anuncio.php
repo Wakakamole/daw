@@ -21,17 +21,20 @@ $paises = [];
 $res = $conexion->query("SELECT IdPais, NomPais FROM paises");
 while ($fila = $res->fetch_assoc()) $paises[] = $fila;
 
+//Si el usuario le da a crear anuncio
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $validar_foto = true; // obligatorio en crear anuncio
     require __DIR__ . '/includes/filtrado_anuncio.php'; // llena $datos y $errores
 
     if (empty($errores)) {
+        //subo foto principal
         $foto_principal = $_FILES['foto_principal'];
         $nombre_archivo = 'img/' . time() . '_' . basename($foto_principal['name']);
 
         if (!move_uploaded_file($foto_principal['tmp_name'], __DIR__ . '/' . $nombre_archivo)) {
             $errores[] = "Error al guardar la foto principal.";
         } else {
+            //inserto anuncio en la base de datos
             $stmt = $conexion->prepare("
                 INSERT INTO anuncios 
                 (TAnuncio, TVivienda, FPrincipal, Alternativo, Titulo, Precio, Texto, Ciudad, Pais,
@@ -40,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ");
 
             $alternativo = $datos['descripcion'];
-            $usuario = $_SESSION['usuario_id'] ?? $_SESSION['id_usuario'] ?? null;
+            $usuario = $_SESSION['usuario_id'] ?? $_SESSION['id_usuario'] ?? null;  //guardo el id del usuario que crea el anuncio
 
             if (!$usuario) {
                 $errores[] = "No se ha podido determinar el usuario que crea el anuncio.";

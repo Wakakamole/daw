@@ -1,19 +1,30 @@
 <?php
-require_once __DIR__ . '/includes/cabecera.php';
+require_once __DIR__ . '/includes/control_parteprivada.php';
 require_once __DIR__ . '/includes/basedatos.php';
 
-// ---- TARIFAS Y FUNCIÓN DE CÁLCULO ----
+$conexion = get_db();
+$errores = [];
+
+define('FOTOS_POR_PAGINA', 3);
+
+//Tarifas
 $TARIFAS = [
-    'COSTO_ENVIO' => 10.00,
+    'COSTO_ENVIO' => 10.0,
     'PAGINAS' => [
-        ['max' => 4, 'precio' => 2.00],
-        ['max' => 10, 'precio' => 1.80],
-        ['max' => INF, 'precio' => 1.60],
+        ['max' => 4, 'precio' => 2.0],
+        ['max' => 10, 'precio' => 1.8],
+        ['max' => INF, 'precio' => 1.6],
     ],
-    'COLOR' => 0.50,
-    'RESOLUCION_ALTA' => 0.20
+    'COLOR' => 0.5,
+    'RESOLUCION_ALTA' => 0.2
 ];
 
+// Obtener anuncios para el select
+$anuncios = [];
+$res = $conexion->query("SELECT IdAnuncio, Titulo FROM anuncios ORDER BY FRegistro DESC");
+while ($fila = $res->fetch_assoc()) $anuncios[] = $fila;
+
+// Función para calcular coste del folleto
 function calcularCosteFolleto($numPaginas, $numFotos, $esColor, $esAltaResolucion, $tarifas) {
     $costePaginas = 0.0;
     $paginasRestantes = $numPaginas;
@@ -31,231 +42,136 @@ function calcularCosteFolleto($numPaginas, $numFotos, $esColor, $esAltaResolucio
     if ($esColor) $costeTotal += $numFotos * $tarifas['COLOR'];
     if ($esAltaResolucion) $costeTotal += $numFotos * $tarifas['RESOLUCION_ALTA'];
 
-    return round($costeTotal, 2);
+    return $costeTotal;
 }
 
-// Validar sesión
-if (empty($_SESSION['login']) || $_SESSION['login'] !== 'ok') {
-    echo "<p>No se ha identificado al usuario. Por favor, inicia sesión.</p>";
-    require __DIR__ . '/includes/pie.php';
-    exit;
-}
-
-$usuario_id = $_SESSION['usuario_id'];
-
-// CARGAR ANUNCIOS DEL USUARIO
-$conexion = get_db();
-$sql = "SELECT IdAnuncio, Titulo, Superficie, NHabitaciones, NBanyos, FPrincipal FROM anuncios WHERE Usuario = ? ORDER BY FRegistro DESC";
-$stmt = $conexion->prepare($sql);
-$stmt->bind_param('i', $usuario_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$mis_anuncios = [];
-while ($row = $result->fetch_assoc()) $mis_anuncios[] = $row;
-$stmt->close();
-
-$errores = [];
-$exito = false;
-$costeCalculado = null;
-
-// PROCESAR FORMULARIO
+// Procesar formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $id_anuncio = intval($_POST['anuncio'] ?? 0);
+    $colorImpresion = $_POST['color'] ?? 'Blanco';
+    $esAltaResolucion = isset($_POST['alta_resolucion']);
     $nombre = trim($_POST['nombre'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $textoAdicional = trim($_POST['textoAdicional'] ?? '');
-    $id_anuncio = intval($_POST['anuncio'] ?? 0);
-    $fechaRecepcion = $_POST['fechaRecepcion'] ?? null;
-    $colorImpresion = $_POST['colorImpresion'] ?? 'byn';
-    $impresionPrecio = $_POST['impresionPrecio'] ?? 'no';
+    $direccion = trim($_POST['direccion'] ?? '');
+    $fechaEntrega = $_POST['fechaEntrega'] ?? null;
+    $imprimirPrecio = isset($_POST['impresionPrecio']) ? 1 : 0;
 
     // Validaciones
-    if ($nombre === '') $errores[] = "El nombre es obligatorio.";
-    if ($email === '') $errores[] = "El correo electrónico es obligatorio.";
-    if ($id_anuncio <= 0) $errores[] = "Debe seleccionar un anuncio válido.";
+    if (!$id_anuncio) $errores[] = "Debe seleccionar un anuncio.";
+    if (!$nombre) $errores[] = "Debe indicar su nombre.";
+    if (!$email) $errores[] = "Debe indicar su correo electrónico.";
+    if (!$direccion) $errores[] = "Debe indicar la dirección de entrega.";
+    if (!$fechaEntrega) $errores[] = "Debe indicar la fecha de entrega.";
 
-    // Comprobar que el anuncio pertenece al usuario
-    $anuncioSeleccionado = null;
-    foreach ($mis_anuncios as $a) {
-        if ($a['IdAnuncio'] === $id_anuncio) {
-            $anuncioSeleccionado = $a;
-            break;
+    if (empty($errores)) {
+        // Contar fotos del anuncio
+        $stmt = $conexion->prepare("SELECT COUNT(*) AS numFotos FROM fotos WHERE Anuncio = ?");
+        $stmt->bind_param("i", $id_anuncio);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $fila = $result->fetch_assoc();
+        $numFotosAnuncio = intval($fila['numFotos'] ?? 0);
+        $stmt->close();
+
+        if ($numFotosAnuncio === 0) {
+            $errores[] = "Este anuncio no tiene fotos para generar un folleto.";
+        } else {
+            // Calcular número de páginas
+            $numPaginas = ceil($numFotosAnuncio / FOTOS_POR_PAGINA);
+
+            // Calcular coste
+            $costeTotal = calcularCosteFolleto($numPaginas, $numFotosAnuncio, $colorImpresion === 'Color', $esAltaResolucion, $TARIFAS);
+
+            // Guardar datos en SESSION y redirigir
+            session_start();
+            $_SESSION['datosFolleto'] = [
+                'nombre' => $nombre,
+                'email' => $email,
+                'direccion' => $direccion,
+                'fechaEntrega' => $fechaEntrega,
+                'textoAdicional' => $textoAdicional,
+                'id_anuncio' => $id_anuncio,
+                'colorImpresion' => $colorImpresion,
+                'altaResolucion' => $esAltaResolucion,
+                'imprimirPrecio' => $imprimirPrecio,
+                'numFotos' => $numFotosAnuncio,
+                'numPaginas' => $numPaginas,
+                'costeTotal' => $costeTotal
+            ];
+
+            header("Location: solicitar_folleto_respuesta.php");
+            exit;
         }
     }
-    if (!$anuncioSeleccionado) $errores[] = "Anuncio no válido o no pertenece al usuario.";
-
-    // Si no hay errores, calcular coste y guardar solicitud
-    if (empty($errores)) {
-        // Usar datos del anuncio para cálculo real
-        $numPaginas = 8; // por ejemplo, podrías personalizar
-        $numFotos = 3;   // por ejemplo, o contar fotos reales si quieres
-        $esColor = ($colorImpresion === 'color');
-        $esAltaResolucion = true; // por defecto
-
-        $costeCalculado = calcularCosteFolleto($numPaginas, $numFotos, $esColor, $esAltaResolucion, $TARIFAS);
-
-        // Insertar solicitud en la BD
-        $stmt = $conexion->prepare("
-            INSERT INTO solicitudes_folleto 
-            (Usuario, Anuncio, Nombre, Email, TextoAdicional, FechaRecepcion, Color, ImpresionPrecio, Coste)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ");
-        $stmt->bind_param(
-            "iissssssd",
-            $usuario_id,
-            $id_anuncio,
-            $nombre,
-            $email,
-            $textoAdicional,
-            $fechaRecepcion,
-            $colorImpresion,
-            $impresionPrecio,
-            $costeCalculado
-        );
-
-        if ($stmt->execute()) $exito = true;
-        else $errores[] = "Error al guardar la solicitud: ".$stmt->error;
-        $stmt->close();
-    }
 }
+
+require_once __DIR__ . '/includes/cabecera.php';
+
 ?>
 
 <main>
-    <section id="descripcion-folleto">
-        <h1>SOLICITUD DE IMPRESIÓN DE FOLLETO PUBLICITARIO</h1>
-        <p>
-            Mediante esta opción puedes solicitar la impresión y envío de uno de tus anuncios.
-            El precio variará en función del número de páginas, fotos y opciones de impresión.
-        </p>
-    </section>
+<section>
+    <h1>Solicitar folleto</h1>
 
-    <!-- Tabla de tarifas -->
-    <section id="tabla-tarifas">
-        <h3>Tarifas</h3>
-
-        <button id="mostrarTablaPHP" class="boton-tabla">Mostrar Tabla (PHP)</button>
-
-        <div id="tablaPHP" style="display:none;">
-            <table class="tabla-costes-generada">
-                <thead>
-                    <tr>
-                        <th rowspan="2">Número de páginas</th>
-                        <th rowspan="2">Número de fotos</th>
-                        <th colspan="2">Blanco y negro</th>
-                        <th colspan="2">Color</th>
-                    </tr>
-                    <tr>
-                        <th>150-300 dpi</th>
-                        <th>450-900 dpi</th>
-                        <th>150-300 dpi</th>
-                        <th>450-900 dpi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    for ($i = 1; $i <= 15; $i++) {
-                        $paginas = $i;
-                        $fotos = $i * 3;
-                        echo "<tr>";
-                        echo "<td>{$paginas}</td>";
-                        echo "<td>{$fotos}</td>";
-
-                        $combinaciones = [
-                            [false, false],
-                            [false, true],
-                            [true, false],
-                            [true, true]
-                        ];
-
-                        foreach ($combinaciones as [$color, $alta]) {
-                            $coste = calcularCosteFolleto($paginas, $fotos, $color, $alta, $TARIFAS);
-                            echo "<td>".number_format($coste, 2, ',', '')." €</td>";
-                        }
-
-                        echo "</tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-
-        <hr>
-
-        <button id="mostrarTabla" class="boton-tabla">Mostrar Tabla (JavaScript)</button>
-        <div id="tableContainer" style="display:none;"></div>
-
-        <script src="js/tabla_costes.js"></script>
-        <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const botonPHP = document.getElementById("mostrarTablaPHP");
-            const tablaPHP = document.getElementById("tablaPHP");
-
-            botonPHP.addEventListener("click", () => {
-                const visible = tablaPHP.style.display === "block";
-                tablaPHP.style.display = visible ? "none" : "block";
-                botonPHP.textContent = visible
-                    ? "Mostrar Tabla (PHP)"
-                    : "Ocultar Tabla (PHP)";
-            });
-        });
-        </script>
-    </section>
-
-    <!-- Mensajes -->
-    <?php if(!empty($errores)): ?>
+    <?php if (!empty($errores)): ?>
         <div class="errores">
-            <ul><?php foreach($errores as $error): ?><li><?=htmlspecialchars($error)?></li><?php endforeach;?></ul>
-        </div>
-    <?php elseif($exito): ?>
-        <div class="exito">
-            <p>Solicitud enviada correctamente. Coste calculado: <?=number_format($costeCalculado,2,',','')?> €</p>
+            <ul><?php foreach ($errores as $error): ?><li><?= htmlspecialchars($error) ?></li><?php endforeach; ?></ul>
         </div>
     <?php endif; ?>
 
-    <!-- Formulario -->
-    <section id="formulario">
-        <form action="solicitar_folleto_respuesta.php" method="post">
-            <fieldset>
-                <legend>Datos Personales</legend>
+    <form action="#" method="post">
+        <fieldset>
+            <legend>Datos del solicitante</legend>
 
-                <label for="nombre">Nombre completo (*):</label>
-                <input type="text" id="nombre" name="nombre" maxlength="200" required><br><br>
+            <label for="nombre">Nombre (*):</label>
+            <input type="text" name="nombre" id="nombre" required value="<?= htmlspecialchars($_POST['nombre'] ?? '') ?>"><br><br>
 
-                <label for="email">Correo electrónico (*):</label>
-                <input type="email" id="email" name="email" maxlength="200" required><br><br>
+            <label for="email">Correo electrónico (*):</label>
+            <input type="email" name="email" id="email" required value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"><br><br>
 
-                <label for="textoAdicional">Texto adicional:</label>
-                <textarea id="textoAdicional" name="textoAdicional" maxlength="4000" rows="4" cols="50"></textarea><br><br>
+            <label for="direccion">Dirección de entrega (*):</label>
+            <input type="text" name="direccion" id="direccion" required value="<?= htmlspecialchars($_POST['direccion'] ?? '') ?>"><br><br>
 
-                <label for="anuncio">Anuncio (*):</label>
-                <select name="anuncio" id="anuncio" required>
-                    <option value="">-- Seleccione --</option>
-                    <?php foreach ($mis_anuncios as $anuncio): ?>
-                        <option value="<?= htmlspecialchars($anuncio['IdAnuncio'], ENT_QUOTES) ?>">
-                            <?= htmlspecialchars($anuncio['Titulo'], ENT_QUOTES) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select><br><br>
+            <label for="fechaEntrega">Fecha de entrega (*):</label>
+            <input type="date" name="fechaEntrega" id="fechaEntrega" required value="<?= htmlspecialchars($_POST['fechaEntrega'] ?? '') ?>"><br><br>
 
-                <label for="fechaRecepcion">Fecha de recepción:</label>
-                <input type="date" id="fechaRecepcion" name="fechaRecepcion"><br><br>
+            <label for="textoAdicional">Texto adicional:</label><br>
+            <textarea name="textoAdicional" id="textoAdicional" rows="4" cols="50"><?= htmlspecialchars($_POST['textoAdicional'] ?? '') ?></textarea><br><br>
+        </fieldset>
 
-                <p>Color de la impresión</p>
-                <input type="radio" id="aColor" name="colorImpresion" value="color">
-                <label for="aColor">Color</label>
-                <input type="radio" id="colorNo" name="colorImpresion" value="byn">
-                <label for="colorNo">Blanco y negro</label><br><br>
+        <fieldset>
+            <legend>Datos del anuncio</legend>
 
-                <p>¿Imprimir el precio en el folleto?</p>
-                <input type="radio" id="precioSi" name="impresionPrecio" value="si">
-                <label for="precioSi">Sí</label>
-                <input type="radio" id="precioNo" name="impresionPrecio" value="no">
-                <label for="precioNo">No</label><br><br>
+            <label for="anuncio">Selecciona el anuncio (*):</label>
+            <select id="anuncio" name="anuncio" required>
+                <option value="">-- Seleccione --</option>
+                <?php foreach ($anuncios as $a): ?>
+                    <option value="<?= (int)$a['IdAnuncio'] ?>" <?= (isset($_POST['anuncio']) && $_POST['anuncio'] == $a['IdAnuncio']) ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($a['Titulo']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select><br><br>
 
-                <button type="submit">Solicitar</button>
-            </fieldset>
-        </form>
+            <label for="color">Color de impresión:</label>
+            <select id="color" name="color">
+                <option value="Blanco" <?= (isset($_POST['color']) && $_POST['color'] === 'Blanco') ? 'selected' : '' ?>>Blanco y negro</option>
+                <option value="Color" <?= (isset($_POST['color']) && $_POST['color'] === 'Color') ? 'selected' : '' ?>>Color</option>
+            </select><br><br>
 
-    </section>
+            <label>
+                <input type="checkbox" name="alta_resolucion" <?= isset($_POST['alta_resolucion']) ? 'checked' : '' ?>> Alta resolución
+            </label><br><br>
+
+            <label>
+                <input type="checkbox" name="impresionPrecio" <?= isset($_POST['impresionPrecio']) ? 'checked' : '' ?>> Imprimir el precio en el folleto
+            </label><br><br>
+
+            <button type="submit">Solicitar folleto</button>
+        </fieldset>
+    </form>
+</section>
 </main>
 
 <?php require_once __DIR__ . '/includes/pie.php'; ?>

@@ -17,6 +17,7 @@ $estilo_id = 1; //valor por defecto
 
 if (!empty($_SESSION['usuario_id'])) {
     $userId = (int) $_SESSION['usuario_id'];
+    //obtengo el estilo del usuario de la base de datos
     $stmt = $conexion->prepare("SELECT Estilo FROM usuarios WHERE IdUsuario = ?");
     $stmt->bind_param("i", $userId);
     $stmt->execute();

@@ -29,6 +29,7 @@ if ($res->num_rows === 0) {
 $anuncio = $res->fetch_assoc();
 $stmt->close();
 
+
 $errores = [];
 $exito = false;
 
@@ -50,12 +51,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errores[] = "El texto alternativo no debe empezar con 'foto', 'imagen' o 'texto'.";
     }
 
-    // Validar y mover fichero subido
+    // Validacion de la foto
     if (!isset($_FILES['foto']) || $_FILES['foto']['error'] !== UPLOAD_ERR_OK) {
         $errores[] = "Debes seleccionar una imagen válida.";
     } else {
         $nombre_archivo = basename($_FILES['foto']['name']);
-        $foto_ruta = 'img/' . $nombre_archivo;
+        $foto_ruta = 'img/' . $nombre_archivo;  //muevo la imagen a la carpeta img/
         if (!move_uploaded_file($_FILES['foto']['tmp_name'], $foto_ruta)) {
             $errores[] = "Error al subir la imagen al servidor.";
         }
