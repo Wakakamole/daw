@@ -15,7 +15,7 @@ function validar_usuario($u)
 {
     $u = (string)$u;
     if ($u === '') return 'usuario_empty';
-    // Debe empezar por letra, contener solo letras y dígitos, longitud 3-15
+    // Debe empezar por letra, contener solo letras y dígitos longitud 3-15
     if (!preg_match('/^[A-Za-z][A-Za-z0-9]{2,14}$/', $u)) return 'usuario_format';
     return null;
 }
@@ -24,9 +24,9 @@ function validar_contrasena($p)
 {
     $p = (string)$p;
     if ($p === '') return 'password_empty';
-    // permitido: letras inglesas, dígitos, guion y guion bajo; longitud 6-15
+    // permitido letras inglesas, dígitos, guion y guion bajo longitud 6-15
     if (!preg_match('/^[A-Za-z0-9_-]{6,15}$/', $p)) return 'password_format';
-    // requerimientos: al menos una mayúscula, una minúscula y un dígito
+    // requerimientos al menos una mayúscula, una minúscula y un dígito
     if (!preg_match('/[A-Z]/', $p) || !preg_match('/[a-z]/', $p) || !preg_match('/[0-9]/', $p)) {
         return 'password_requirements';
     }
@@ -42,7 +42,7 @@ function validar_email($e)
     // Comprobación básica con FILTER_VALIDATE_EMAIL
     if (!filter_var($e, FILTER_VALIDATE_EMAIL)) return 'email_invalid';
 
-    // Más comprobaciones: parte-local y dominio
+    // Más comprobaciones parte local y dominio
     $parts = explode('@', $e);
     if (count($parts) !== 2) return 'email_invalid';
     list($local, $dom) = $parts;
@@ -51,7 +51,7 @@ function validar_email($e)
     // local no puede empezar/terminar por punto ni tener dos puntos seguidos
     if ($local[0] === '.' || substr($local, -1) === '.' || strpos($local, '..') !== false) return 'email_invalid_local';
 
-    // dominio: secuencia de subdominios separados por punto, cada uno <=63
+    // dominio secuencia de subdominios separados por punto, cada uno <=63
     $labels = explode('.', $dom);
     foreach ($labels as $lab) {
         if ($lab === '' || strlen($lab) > 63) return 'email_invalid_domain';
@@ -71,7 +71,7 @@ function validar_sexo($s)
 
 function validar_fecha_mayor_18($fecha)
 {
-    if (!$fecha) return null; // campo no obligatorio en enunciado (pero se pide comprobar si existe)
+    if (!$fecha) return null;
     
     // Primero, validar que el formato sea YYYY-MM-DD 
     if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $fecha)) {
