@@ -1,0 +1,27 @@
+---INICIO ANUNCIO---
+IdAnuncio: 1
+Experto: Samantha Weels
+Comentario: Amo este anuncio todo super bien estructurado.
+---INICIO ANUNCIO---
+IdAnuncio: 2
+Experto: María Rodríguez
+Comentario: Ubicación privilegiada  100%
+---FIN ANUNCIO---
+
+---INICIO ANUNCIO---
+IdAnuncio: 6
+Experto: Pedro Guau
+Comentario: Pero que maravilla de anuncio
+---FIN ANUNCIO---
+
+---INICIO ANUNCIO---
+IdAnuncio: 9
+Experto: Carolina Herrera
+Comentario: Despacho ideal para profesionales.
+---FIN ANUNCIO---
+
+---INICIO ANUNCIO---
+IdAnuncio: 13
+Experto: Roberto Roberto
+Comentario: una sola palabra, murcia.
+---FIN ANUNCIO---

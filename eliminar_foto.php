@@ -36,6 +36,12 @@ $stmt = $conexion->prepare("DELETE FROM fotos WHERE Foto = ? AND Anuncio = ?");
 $stmt->bind_param("si", $foto, $id_anuncio);
 $stmt->execute();
 
+// Borrar el fichero del servidor
+$ruta_foto = __DIR__ . '/' . $foto;
+if (file_exists($ruta_foto)) {
+    @unlink($ruta_foto);
+}
+
 //si la foto eliminada era la principal, poner FPrincipal = NULL
 $stmt2 = $conexion->prepare("SELECT FPrincipal FROM anuncios WHERE IdAnuncio = ?");
 $stmt2->bind_param("i", $id_anuncio);

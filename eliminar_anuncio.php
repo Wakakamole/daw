@@ -35,7 +35,24 @@ $stmt->close();
 
 //si el usuario lo confirma, borramos todo
 if (isset($_POST['confirmar']) && $_POST['confirmar'] === 'sí') {
-    //Borrar
+    //AÑADIDO PAR ALA ULTIMA PRACTICA Primero borrar ficheros, luego registros de BD
+    
+    // Obtener todas las fotos del anuncio
+    $stmt = $conexion->prepare("SELECT Foto FROM fotos WHERE Anuncio = ?");
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    
+    // Borrar cada fichero del servidor
+    while ($foto = $res->fetch_assoc()) {
+        $ruta_foto = __DIR__ . '/' . $foto['Foto'];
+        if (file_exists($ruta_foto)) {
+            @unlink($ruta_foto);
+        }
+    }
+    $stmt->close();
+    
+    //Borrar registros de BD (CASCADE eliminará las fotos automáticamente)
     //las fotos
     $stmt = $conexion->prepare("DELETE FROM fotos WHERE Anuncio = ?");
     $stmt->bind_param('i', $id);

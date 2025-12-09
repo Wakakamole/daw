@@ -62,7 +62,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirmar_baja'])) {
     // - X anuncios automaticamente se eliminan sus fotos
     // - Los mensajes se ponen a null () ON DELETE SET NULL no se eliminan pero no tienen usuario asociado
     try {
-        // Borrar usuario
+        // ULTIMA PRÄCTICA AÑADIDO : Primero borrar ficheros, luego registros de BD
+        // Obtener todos los anuncios del usuario
+        $stmt = $db->prepare('SELECT IdAnuncio FROM anuncios WHERE Usuario = ?');
+        if (!$stmt) throw new Exception('Error preparando select anuncios');
+        $stmt->bind_param('i', $usuario_id);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        
+        // Para cada anuncio, obtener y borrar sus fotos
+        while ($anuncio = $res->fetch_assoc()) {
+            $id_anuncio = $anuncio['IdAnuncio'];
+            
+            // Obtener todas las fotos del anuncio
+            $stmt_fotos = $db->prepare('SELECT Foto FROM fotos WHERE Anuncio = ?');
+            if (!$stmt_fotos) throw new Exception('Error preparando select fotos');
+            $stmt_fotos->bind_param('i', $id_anuncio);
+            $stmt_fotos->execute();
+            $res_fotos = $stmt_fotos->get_result();
+            
+            // Borrar cada fichero del servidor
+            while ($foto = $res_fotos->fetch_assoc()) {
+                $ruta_foto = __DIR__ . '/' . $foto['Foto'];
+                if (file_exists($ruta_foto)) {
+                    @unlink($ruta_foto);
+                }
+            }
+            $stmt_fotos->close();
+        }
+        $stmt->close();
+        
+        // Borrar usuario (CASCADE eliminará anuncios, y por CASCADE también fotos)
         $stmt = $db->prepare('DELETE FROM usuarios WHERE IdUsuario = ?');
         if (!$stmt) throw new Exception('Error preparando delete usuario');
         $stmt->bind_param('i', $usuario_id);

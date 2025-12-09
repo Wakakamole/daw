@@ -1,0 +1,42 @@
+[
+  {
+    "categoria": "Compra",
+    "importancia": "Baja",
+    "descripcion": "Haz una lista de deseos y necesidades de lo que necesitas para ser feliz en tu nueva vivienda."
+  },
+  {
+    "categoria": "Venta",
+    "importancia": "Baja",
+    "descripcion": "Si no tienes prisa por vender, primero fija un precio de venta alto y baja el precio poco a poco para maximizar tu beneficio."
+  },
+  {
+    "categoria": "Compra",
+    "importancia": "Media",
+    "descripcion": "Hazte un cuadro comparativo con todas las viviendas que has visitado para tomar una decisión informada."
+  },
+  {
+    "categoria": "Venta",
+    "importancia": "Media",
+    "descripcion": "Limpia, repasa la pintura, solventa los desperfectos, mejora algunas estructuras, etc. para aumentar el valor de tu propiedad."
+  },
+  {
+    "categoria": "Compra",
+    "importancia": "Alta",
+    "descripcion": "Si compras una vivienda con tu pareja, asegúrate de que os llevéis bien: con ella podrás cortar, con la hipoteca no."
+  },
+  {
+    "categoria": "Venta",
+    "importancia": "Alta",
+    "descripcion": "Contrata a un buen agente inmobiliario con experiencia. La comisión merece la pena si vende rápido y al mejor precio."
+  },
+  {
+    "categoria": "Compra",
+    "importancia": "Media",
+    "descripcion": "Revisa minuciosamente el estado del tejado, las tuberías y el sistema eléctrico antes de hacer tu oferta final."
+  },
+  {
+    "categoria": "Venta",
+    "importancia": "Baja",
+    "descripcion": "Realiza mejoras cosméticas como pintura fresca y decoración acogedora para atraer a más compradores potenciales."
+  }
+]
