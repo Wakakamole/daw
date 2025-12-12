@@ -90,11 +90,11 @@ if (!$estilo_css) {
                             <summary>
                                 <?php
                                 // Usar la foto guardada en sesión.
-                                $avatar_src = 'img/user.webp';
-                                $avatar_alt = 'Foto de perfil';
+                                $avatar_src = '/daw/img/usuarios/default.png';
                                 if (!empty($_SESSION['foto'])) {
                                     $avatar_src = $_SESSION['foto'];
                                 }
+
                                 ?>
                                 <img src="<?php echo htmlspecialchars($avatar_src, ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($avatar_alt, ENT_QUOTES, 'UTF-8'); ?>" class="avatar" width="40" height="40">
                             </summary>

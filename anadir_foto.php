@@ -29,7 +29,6 @@ if ($res->num_rows === 0) {
 $anuncio = $res->fetch_assoc();
 $stmt->close();
 
-
 $errores = [];
 $exito = false;
 
@@ -55,10 +54,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_FILES['foto']) || $_FILES['foto']['error'] !== UPLOAD_ERR_OK) {
         $errores[] = "Debes seleccionar una imagen válida.";
     } else {
-        $nombre_archivo = basename($_FILES['foto']['name']);
-        $foto_ruta = 'img/' . $nombre_archivo;  //muevo la imagen a la carpeta img/
-        if (!move_uploaded_file($_FILES['foto']['tmp_name'], $foto_ruta)) {
-            $errores[] = "Error al subir la imagen al servidor.";
+        $temp = $_FILES['foto']['tmp_name'];
+        $original = $_FILES['foto']['name'];
+        $mime = mime_content_type($temp);
+        $size = $_FILES['foto']['size'];
+
+        // Tipos permitidos
+        $permitidos = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/gif' => 'gif', 'image/webp' => 'webp'];
+
+        if (!isset($permitidos[$mime])) {
+            $errores[] = "Formato de imagen no permitido.";
+        } elseif ($size > 5 * 1024 * 1024) {
+            $errores[] = "La imagen no puede superar 5MB.";
+        } else {
+            // Crear carpeta si no existe
+            $carpeta_fotos = __DIR__ . '/img/usuarios/';
+            if (!is_dir($carpeta_fotos)) {
+                mkdir($carpeta_fotos, 0755, true);
+            }
+
+            // Generar nombre único: usuarioID_anuncioID_uniqid.ext
+            $extension = $permitidos[$mime];
+            $nombre_archivo = $usuario_id . '_' . $id_anuncio . '_' . uniqid() . '.' . $extension;
+            $destino = $carpeta_fotos . $nombre_archivo;
+
+            if (move_uploaded_file($temp, $destino)) {
+                $foto_ruta = 'img/usuarios/' . $nombre_archivo;
+            } else {
+                $errores[] = "Error al subir la imagen al servidor.";
+            }
         }
     }
 
@@ -74,7 +98,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
     }
 }
-
 ?>
 
 <main>
@@ -105,7 +128,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <label for="foto">Selecciona la imagen (*):</label>
             <input type="file" id="foto" name="foto" accept="image/*" required><br><br>
-
 
             <button type="submit">Añadir foto</button>
         </form>

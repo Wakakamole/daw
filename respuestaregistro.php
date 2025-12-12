@@ -79,38 +79,42 @@ try {
     $pais_int = ($pais === '') ? null : ((int)$pais ?: null);
     $foto = null;
 
-    /* GESTIÓN DE FOTO
+
     // Procesar foto
-    if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
-        $file = $_FILES['foto'];
-        $nombre_temporal = $file['tmp_name'];
-        $nombre_original = $file['name'];
-        $tipo_mime = $file['type'];
-        $tamaño = $file['size'];
+    // Procesar foto de usuario
+    $carpeta_fotos = __DIR__ . '/img/usuarios/';
+    $base_url_fotos = '/daw/img/usuarios/';
 
-        // Validar tipo de archivo
-        $tipos_permitidos = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-        if (in_array($tipo_mime, $tipos_permitidos, true)) {
-            // Validar tamaño (máximo 5MB)
-            if ($tamaño <= 5 * 1024 * 1024) {
-                // Generar nombre único para la foto
-                $extension = pathinfo($nombre_original, PATHINFO_EXTENSION);
-                $extension = strtolower($extension);
-                $nombre_archivo = $usuario . '_' . time() . '.' . $extension;
-                $ruta_destino = __DIR__ . '/img/usuarios/' . $nombre_archivo;
-
-                // Mover archivo a la carpeta de destino
-                if (move_uploaded_file($nombre_temporal, $ruta_destino)) {
-                    // Guardar la ruta relativa en la BD
-                    $foto = '/daw/img/usuarios/' . $nombre_archivo;
-                }
-                // Si falla move_uploaded_file, continuar sin foto
-            }
-            // Si tamaño es muy grande, continuar sin foto
-        }
-        // Si tipo no permitido, continuar sin foto
+    if (!is_dir($carpeta_fotos)) {
+        mkdir($carpeta_fotos, 0755, true);
     }
-    */
+
+
+    if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+
+        $temp = $_FILES['foto']['tmp_name'];
+        $original = $_FILES['foto']['name'];
+        $mime = mime_content_type($temp);
+        $size = $_FILES['foto']['size'];
+
+        $permitidos = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/gif' => 'gif', 'image/webp' => 'webp'];
+
+        if (isset($permitidos[$mime])) {
+            if ($size <= 5 * 1024 * 1024) {
+
+                // Generamos nombre único
+                $extension = $permitidos[$mime];
+                $nombre_archivo = $usuario . '_' . uniqid() . '.' . $extension;
+
+                $destino = __DIR__ . '/img/usuarios/' . $nombre_archivo;
+
+                if (move_uploaded_file($temp, $destino)) {
+                    $foto = '/daw/img/usuarios/' . $nombre_archivo; // Ruta para la BD
+                }
+            }
+        }
+    }
+
 
     $ins = $db->prepare('INSERT INTO usuarios (NomUsuario, Clave, Email, Sexo, FNacimiento, Ciudad, Pais, Foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
     if (!$ins) throw new Exception('Error preparando insert: ' . $db->error);
@@ -160,6 +164,12 @@ require_once __DIR__ . '/includes/cabecera.php';
 
                     <dt>País</dt>
                     <dd><?php echo h($pais ?: '—'); ?></dd>
+
+                    <?php if (!empty($foto)): ?>
+                        <dt>Foto subida</dt>
+                        <dd><img src="<?php echo h($foto); ?>" alt="Foto de perfil" width="120"></dd>
+                    <?php endif; ?>
+
                 </dl>
             </section>
 

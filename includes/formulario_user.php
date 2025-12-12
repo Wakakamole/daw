@@ -109,12 +109,19 @@ $submitText = isset($submitText) ? $submitText : ($modo === 'registro' ? 'Regist
         </select>
         <br><br>
 
+
         <label for="foto">Foto de perfil: </label>
         <input type="file" id="foto" name="foto" accept="image/*">
         <?php if (!empty($usuario['foto'])): ?>
             <p>Foto actual: <img src="<?php echo h($usuario['foto']); ?>" alt="Foto" width="80"></p>
+
+            <label>
+                <input type="checkbox" name="eliminar_foto" value="1">
+                Eliminar foto actual
+            </label>
         <?php endif; ?>
         <br><br>
+
 
         <?php if ($modo === 'edicion' && !empty($usuario['id'])): ?>
             <input type="hidden" name="idusuario" value="<?php echo (int)$usuario['id']; ?>">
