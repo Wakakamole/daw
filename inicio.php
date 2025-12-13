@@ -16,7 +16,7 @@ if (!empty($_SESSION['login']) && $_SESSION['login'] === 'ok') {
     <section>
     <h1>PÁGINA PRINCIPAL </h1>
     
-    <!-- SECCIÓN: ANUNCIO ESCOGIDO -->
+    <!-- ANUNCIO ESCOGIDO -->
     <h2>Anuncio del día</h2>
     <?php
     require_once __DIR__ . '/includes/basedatos.php';
@@ -56,28 +56,43 @@ if (!empty($_SESSION['login']) && $_SESSION['login'] === 'ok') {
         }
     }
     
-    // Seleccionar uno aleatoriamente
+    // Seleccionar uno aleatoriamente (con reintentos hasta encontrar válido)
     $anuncio_mostrado = null;
     if (!empty($anuncios_escogidos)) {
-        $idx = array_rand($anuncios_escogidos);
-        $anuncio_escogido = $anuncios_escogidos[$idx];
+        $indices_intentados = [];
+        $max_intentos = count($anuncios_escogidos);
+        $intento = 0;
         
-        // Verificar que existe en la BD
-        $sql_check = "SELECT A.IdAnuncio, A.Titulo, A.FPrincipal, A.Ciudad, A.Precio, P.NomPais
-                      FROM anuncios A
-                      LEFT JOIN paises P ON A.Pais = P.IdPais
-                      WHERE A.IdAnuncio = ?";
-        $stmt = $db->prepare($sql_check);
-        if ($stmt) {
-            $stmt->bind_param('i', $anuncio_escogido['IdAnuncio']);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            if ($result && $result->num_rows > 0) {
-                $anuncio_mostrado = $result->fetch_assoc();
-                $anuncio_mostrado['Experto'] = $anuncio_escogido['Experto'];
-                $anuncio_mostrado['Comentario'] = $anuncio_escogido['Comentario'];
+        while ($intento < $max_intentos && !$anuncio_mostrado) {
+            $idx = array_rand($anuncios_escogidos);
+            
+            // Evitar intentar el mismo índice dos veces
+            if (in_array($idx, $indices_intentados)) {
+                $intento++;
+                continue;
             }
-            $stmt->close();
+            $indices_intentados[] = $idx;
+            $intento++;
+            
+            $anuncio_escogido = $anuncios_escogidos[$idx];
+            
+            // Verificar que existe en la BD
+            $sql_check = "SELECT A.IdAnuncio, A.Titulo, A.FPrincipal, A.Ciudad, A.Precio, P.NomPais
+                          FROM anuncios A
+                          LEFT JOIN paises P ON A.Pais = P.IdPais
+                          WHERE A.IdAnuncio = ?";
+            $stmt = $db->prepare($sql_check);
+            if ($stmt) {
+                $stmt->bind_param('i', $anuncio_escogido['IdAnuncio']);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                if ($result && $result->num_rows > 0) {
+                    $anuncio_mostrado = $result->fetch_assoc();
+                    $anuncio_mostrado['Experto'] = $anuncio_escogido['Experto'];
+                    $anuncio_mostrado['Comentario'] = $anuncio_escogido['Comentario'];
+                }
+                $stmt->close();
+            }
         }
     }
     ?>
